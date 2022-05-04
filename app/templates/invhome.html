@@ -1,0 +1,36 @@
+{% extends 'engbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Inventory Manager</h1>
+    <br>
+    <!-- <h3 align='center'>Upload Inventory File</h3> -->
+    <br>
+    <body>
+        <form method="POST" enctype=multipart/form-data action ="{{url_for('invhome')}}">
+            <input type="file" name="user_file">
+            <label for="cust">Customer Code: </label>
+            <input type="text" id="cust" name="cust"><br><br>
+            <input type="submit">
+        </form>
+        <br>
+        <br>
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Part No</th>
+                    <th scope="col">E2 Qty</th>
+                    <th scope="col">Pallet Qty</th>
+                    <th scope="col">Pallet</th>
+                    <th scope="col">Action</th>
+                </tr>
+            {% for e in eng %}
+                <tr id={{ e[0] }}>
+                    <td align='center'> {{ e[0] }} </td>
+                    <td align='center'> {{ e[3] }} </td>
+                    <td align='center'> {{ e[5] }} </td>
+                    <td align='center'> {{ e[6] }} </td>
+                    <td align='center'> {{ e[8] }} </td>
+                </tr>
+            {% endfor %}
+            </table>
+    </body>
+{% endblock %}

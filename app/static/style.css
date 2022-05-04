@@ -1,0 +1,355 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    /* font-size: 1.1em; */
+    /* font-weight: 300; */
+    /* line-height: 1.7em; */
+}
+
+/* ---------------------------------------------------
+    TABLE STYLE
+----------------------------------------------------- */
+
+#myInput {
+    background-image: url('https://www.w3schools.com/css/searchicon.png');
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+ 
+#myTable {
+    border-collapse: collapse;
+    /* table-layout: fixed; */
+    width: 100%;
+    font-size: 16px;
+}
+
+#myTable th, #myTable td { 
+    text-align: center; 
+    padding: 12px; 
+} 
+
+#myTable th { 
+    background: #ffffff; 
+    border-top: 1px solid #ddd; 
+    border-bottom: 2px solid #ddd; 
+} 
+
+#myTable tr { 
+    border-bottom: 1px solid #ddd; 
+} 
+
+#myTable tr:nth-child(even) { 
+    background-color: #f2f2f2; 
+}
+
+#myTable tr.header, #myTable tr:hover { 
+    background-color: #ddd; 
+} 
+
+th { 
+    text-align: center; 
+} 
+
+.disabled { 
+    pointer-events: none; 
+    background: #ffffff; 
+} 
+
+
+if(document.getElementById("test").checked) { 
+    document.getElementById("testhidden").disabled = true; 
+} 
+
+/* ---------------------------------------------------
+    NAVBAR/PAGE STYLE
+----------------------------------------------------- */
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #D22B2B;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #B82626;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    /* color: #7386D5; */
+    color: #000000;
+    background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #D22B2B;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background-color: #D1BBA8;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #B82626;
+    color: #fff;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 2px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+#navdrop {
+    background-color: #D1BBA8;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+#sidebarCollapse {
+    background: #B82626;
+    color: #fff;
+}
+
+.navcent {
+    font-size: 1.1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a.disabledLink {
+    pointer-events: none;
+    cursor: default;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MODAL STYLE
+----------------------------------------------------- */
+
+.modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #D1BBA8;
+    font-size: 1.1em;
+    font-weight: bold;
+ }
+
+ .modal-title {
+    white-space: pre;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------------------------------------------------
+    CUT LIST BUTTON
+----------------------------------------------------- */
+
+.clBtn, .clBtn:active, .clBtn:focus {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: black;
+}
+
+.clBtn:hover {
+    background-color: #D22B2B !important;
+}
+
+/* ---------------------------------------------------
+    PAGE NOTES
+----------------------------------------------------- */
+
+.pnotes {
+    border: solid 1px;
+    border-radius: 5px;
+    height: 500px;
+    margin: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: pre-wrap;
+    box-shadow: 5px 10px #888888;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+.pnBtn {
+    float: right;
+    margin-right: 20px;
+}
+
+.noteBtn {
+    float: right;
+    margin-right: 20px;
+    margin-top: 15px;
+    background-color: #B82626;
+    border: solid 1px black;
+}
+
+/* ---------------------------------------------------
+    JOB NOTES
+----------------------------------------------------- */
+.formJob, .formModel, .formEng, .formWIP, .formHold, .formHoldRsn, .formQC, .formQCNote, .formGood, .formMtl, .formMtlN, .formOrder, .formDate, .formVerify, .formNote, .formName {
+    margin-bottom: 20px;
+}
+
+#holdcb, #wipcb, #modelcb, #aprcb, #qccb, #mtlcb, #pgmcb, #tlhcb, #donecb, #verf {
+    accent-color: #B82626;
+}
+
+.formBtn {
+    background-color: #B82626;
+}
+
+.formTitle {
+    color: black;
+    margin-bottom: 0;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}

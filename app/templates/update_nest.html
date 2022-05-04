@@ -1,0 +1,50 @@
+{% extends 'engbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Edit Job</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            Job Number <input type="text" class="form-control" name="job" value="{{ data.job }}" placeholder="Job Number" readonly>
+        </div>
+        <div class="form-group">
+            <input id='modelcb' type="hidden" type="checkbox" value='on' name="model" {% if data.model == 'on' %} checked {% else %} {% endif %}>
+            <input id='modelcbhidden' type="hidden" value='' name="model">
+        </div>
+        <div class="form-group">
+            <input type="hidden" type="text" class="form-control" name="eng" value="{{ data.eng }}">
+        </div>
+        <div class="form-group">
+            <input id='wipcb' type="hidden" type="checkbox" value='on' name="wip" {% if data.wip == 'on' %} checked {% else %} {% endif %}>
+            <input id='wipcbhidden' type="hidden" value='' name="wip">
+        </div>
+        <div class="form-group">
+            <input id='holdcb' type="hidden" type="checkbox" type="hidden" value='on' name="hold" {% if data.hold == 'on' %} checked {% else %} {% endif %}>
+            <input id='holdcbhidden' type="hidden" value='' name="hold">
+        </div>
+        <div class="form-group">
+            <input type="hidden" type="text" class="form-control" name="hrsn" value="{{ data.hrsn }}">
+        </div>
+        <div class="form-group">
+            <input id='qccb' type="hidden" type="checkbox" value='on' name="qc" {% if data.qc == 'on' %} checked {% else %} {% endif %}>
+            <input id='qccbhidden' type="hidden" value='' name="qc">
+        </div>
+        <div class="form-group">
+            <input type="hidden" type="text" type="hidden" class="form-control" name="qcn" value="{{ data.qcn }}">
+        </div>
+        <div class="form-group">
+            <input id='aprcb' type="hidden" type="checkbox" value='on' name="apr" {% if data.apr == 'on' %} checked {% else %} {% endif %}>  
+            <input id='aprcbhidden' type="hidden" value='' name="apr">
+        </div>
+        <div class="form-group">
+            <input id='nestcb' type="checkbox" value='on' name="nest" {% if data.nest == 'on' %} checked {% else %} {% endif %}> Nested 
+            <input id='nestcbhidden' type="hidden" value='' name="nest">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Update</button>
+    </form>
+{% endblock %}

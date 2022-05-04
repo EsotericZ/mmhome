@@ -1,0 +1,38 @@
+{% extends 'entbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Edit Job</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Program Name</p>  <input type="text" class="form-control formJob" name="name" value="{{ data.name }}" placeholder="Job Number" readonly>
+        </div>
+        <div class="form-group">
+            <input id='mtlcb' class="formMtl" type="checkbox" value='on' name="need" {% if data.need == 'on' %} checked {% else %} {% endif %}> Material Needed
+            <input id='mtlcbhidden' type="hidden" value='' name="need">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Material Notes</p>  <textarea type="text" class="form-control formMtlN" name="needn" value="{{ data.needn }}">{{ data.needn }}</textarea>
+        </div>
+        <div class="form-group">
+            <input id='pgmcb' class="formOrder" type="checkbox" value='on' name="ordr" {% if data.ordr == 'on' %} checked {% else %} {% endif %}> On Order
+            <input id='pgmcbhidden' type="hidden" value='' name="ordr">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Expected Date</p>  <input type="text" class="form-control formDate" name="ordrn" value="{{ data.ordrn }}">
+        </div>
+        <div class="form-group">
+            <input id='tlhcb' class="formVerify" type="checkbox" value='on' name="verf" {% if data.verf == 'on' %} checked {% else %} {% endif %}> Material Verified
+            <input id='tlhcbhidden' type="hidden" value='' name="verf">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Program Notes</p> <textarea type="text" class="form-control formNote" name="verfn" value="{{ data.verfn }}">{{ data.verfn }}</textarea>
+        </div>
+        <div class="form-group">
+            <input id='donecb' class="formVerify" type="checkbox" value='on' name="done" {% if data.done == 'on' %} checked {% else %} {% endif %}> Job Completed
+            <input id='donecbhidden' type="hidden" value='' name="done">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Update</button>
+    </form>
+{% endblock %}

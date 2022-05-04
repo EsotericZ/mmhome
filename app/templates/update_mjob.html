@@ -1,0 +1,27 @@
+{% extends 'machbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Edit Job</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Job Number</p>  <input type="text" class="form-control formJob" name="job" value="{{ data.job }}" placeholder="Job Number" readonly>
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Engineer</p>  <input type="text" class="form-control formEng" name="eng" value="{{ data.eng }}">
+        </div>
+        <div class="form-group">
+            <input id='wipcb' class="formWIP" type="checkbox" value='on' name="wip" {% if data.wip == 'on' %} checked {% else %} {% endif %}> Currenty Working 
+            <input id='wipcbhidden' type="hidden" value='' name="wip">
+        </div>
+        <div class="form-group">
+            <input id='holdcb' class="formHold" type="checkbox" value='on' name="hold" {% if data.hold == 'on' %} checked {% else %} {% endif %}> On Hold 
+            <input id='holdcbhidden' type="hidden" value='' name="hold">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Hold Reason</p> <input type="text" class="form-control formHold" name="hrsn" value="{{ data.hrsn }}">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Update</button>
+    </form>
+{% endblock %}

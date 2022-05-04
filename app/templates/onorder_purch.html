@@ -1,0 +1,194 @@
+{% extends 'purchbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Material On Order</h1>
+    <body>
+        <div class="line"></div>
+        <!-- <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table"> -->
+            <h2 align='center'>Laser</h2>
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Program</th>
+                    <th scope="col">Material Notes</th>
+                    <th scope="col">Date Expected</th>
+                </tr>
+            {% for t in ent %}
+                {% if t.done != 'on' and t.ordr == 'on' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_ent/{{ t.id }}"><span style="font-weight:bold">{{ t.name }}</span></a></th>
+                        <td align='center'> {{ t.needn }} </td>
+                        <td align='center'> {{ t.ordrn }} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </table>
+            <br>
+            <br>
+            <br>
+            {% if tl %}
+                <h2 align='center'>Tube Laser</h2>
+                <table id="myTable">
+                    <tr class="header">
+                        <th scope="col">Job No</th>
+                        <th scope="col">Order No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                        <th scope="col">Material Notes</th>
+                    </tr>
+                {% for t in tl %}
+                    <tr id={{ t[10] }}>
+                        <td><a href="/edit_tlaser/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                        <td align='center'> {{ t[9] }} </td>
+                        <td align='center'> {{ t[1] }} </td>
+                        <td align='center'> {{ t[4] }} </td>
+                        <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td>
+                    </tr>
+                {% endfor %}
+                </table>
+                <br>
+                <br>
+                <br>
+            {% endif %}
+            {% if sl %}
+                <h2 align='center'>Static Laser</h2>
+                <table id="myTable">
+                    <tr class="header">
+                        <th scope="col">Job No</th>
+                        <th scope="col">Order No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                        <th scope="col">Material Notes</th>
+                    </tr>
+                {% for t in sl %}
+                    <tr id={{ t[10] }}>
+                        <td><a href="/edit_slaser/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                        <td align='center'> {{ t[9] }} </td>
+                        <td align='center'> {{ t[1] }} </td>
+                        <td align='center'> {{ t[4] }} </td>
+                        <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td>
+                    </tr>
+                {% endfor %}
+                </table>
+                <br>
+                <br>
+                <br>
+            {% endif %}
+            {% if fl %}
+                <h2 align='center'>Fixture Laser</h2>
+                <table id="myTable">
+                    <tr class="header">
+                        <th scope="col">Job No</th>
+                        <th scope="col">Order No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                        <th scope="col">Material Notes</th>
+                    </tr>
+                {% for t in fl %}
+                    <tr id={{ t[10] }}>
+                        <td><a href="/edit_flaser/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                        <td align='center'> {{ t[9] }} </td>
+                        <td align='center'> {{ t[1] }} </td>
+                        <td align='center'> {{ t[4] }} </td>
+                        <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td>
+                    </tr>
+                {% endfor %}
+                </table>
+                <br>
+                <br>
+                <br>
+            {% endif %}
+            {% if sa %}
+                <h2 align='center'>Saw</h2>
+                <table id="myTable">
+                    <tr class="header">
+                        <th scope="col">Job No</th>
+                        <th scope="col">Order No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                        <th scope="col">Material Notes</th>
+                    </tr>
+                {% for t in sa %}
+                    <tr id={{ t[10] }}>
+                        <td><a href="/edit_saw/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                        <td align='center'> {{ t[9] }} </td>
+                        <td align='center'> {{ t[1] }} </td>
+                        <td align='center'> {{ t[4] }} </td>
+                        <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td>
+                    </tr>
+                {% endfor %}
+                </table>
+                <br>
+                <br>
+                <br>
+            {% endif %}
+            {% if sh %}
+                <h2 align='center'>Shear</h2>
+                <table id="myTable">
+                    <tr class="header">
+                        <th scope="col">Job No</th>
+                        <th scope="col">Order No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                        <th scope="col">Material Notes</th>
+                    </tr>
+                {% for t in sh %}
+                    <tr id={{ t[10] }}>
+                        <td><a href="/edit_shear/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                        <td align='center'> {{ t[9] }} </td>
+                        <td align='center'> {{ t[1] }} </td>
+                        <td align='center'> {{ t[4] }} </td>
+                        <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td>
+                    </tr>
+                {% endfor %}
+                </table>
+                <br>
+                <br>
+                <br>
+            {% endif %}
+            {% if pu %}
+                <h2 align='center'>Punch</h2>
+                <table id="myTable">
+                    <tr class="header">
+                        <th scope="col">Job No</th>
+                        <th scope="col">Order No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                        <th scope="col">Material Notes</th>
+                    </tr>
+                {% for t in pu %}
+                    <tr id={{ t[10] }}>
+                        <td><a href="/edit_punch/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                        <td align='center'> {{ t[9] }} </td>
+                        <td align='center'> {{ t[1] }} </td>
+                        <td align='center'> {{ t[4] }} </td>
+                        <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td>
+                    </tr>
+                {% endfor %}
+                </table>
+            {% endif %}
+
+<!-- <script> -->
+<!-- function filterTable(event) { -->
+<!--     var filter = event.target.value.toUpperCase(); -->
+<!--     var rows = document.querySelector("#myTable tbody").rows; -->
+    
+<!--     for (var i = 1; i < rows.length; i++) { -->
+<!--         var firstCol = rows[i].cells[0].textContent.toUpperCase(); -->
+<!--         var secondCol = rows[i].cells[1].textContent.toUpperCase(); -->
+<!--         var thirdCol = rows[i].cells[2].textContent.toUpperCase(); -->
+<!--         var fourthCol = rows[i].cells[3].textContent.toUpperCase(); -->
+<!--         var fifthCol = rows[i].cells[4].textContent.toUpperCase(); -->
+<!--         if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1) { -->
+<!--             rows[i].style.display = ""; -->
+<!--         } else { -->
+<!--             rows[i].style.display = "none"; -->
+<!--         } -->      
+<!--     } -->
+<!-- } -->
+
+<!-- document.querySelector('#myInput').addEventListener('keyup', filterTable, false); -->
+<!-- </script> -->
+
+    </body>
+
+{% endblock %}

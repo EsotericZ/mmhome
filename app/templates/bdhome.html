@@ -1,0 +1,44 @@
+{% extends 'bdbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Bend Deduction Home</h1>
+    <br>
+    <br>
+    <h2 align='center'><u>Forming Notes</u></h2>
+    <h3 align='center'>Bottom Die Calculation: (5 x Material Thickness) + Radius</h3>
+    <h3 align='center'>Bend Angles Tighter Than 85&#176  -  Use Neutral Arc</h3>
+    <h3 align='center'>16Ga & Thinner  -  HEM on Safan</h3>
+    <h3 align='center'>BRITZ Standard HEM Size  -  0.375"</h3>
+    <br>
+    <br>
+    <br>
+    <h2 align='center'><u>Bend Deduction Calculator</u></h2>
+    <br>
+    <form>
+        Material Thickness <input type="text" id="t" /><br>
+        Bend Radius <input type="text" id="r" /><br>
+        Bend Angle <input type="text" id="a" /><br>
+        <input type="button" onClick="bendd()" Value="Calculate" />
+    </form>
+    <br>
+    <p> Bend Deduction <br>
+    <span id = "result"></span>
+    </p>
+        <script>
+            var t, r, a, bd1, bd2, bd3, bd;
+            var p = Math.PI;
+            function bendd(){
+                t = document.getElementById("t").value;
+                r = document.getElementById("r").value;
+                a = document.getElementById("a").value;
+                if(a>95)
+                    bd = "Angle to Large - Use Neutral Arc";
+                else
+                    bd = ((2*(Math.tan(a*(p/180)/2)))*(Number(r)+Number(t)) - ((Number((p/180)*r)+Number(.0078*t))*a)).toFixed(3);
+                    <!-- bd = bd1.toFixed(3); -->
+                document.getElementById("result").innerHTML = bd;
+            }
+        </script>
+    </body>
+    <br>
+{% endblock %}

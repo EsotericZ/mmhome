@@ -1,0 +1,23 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Tube Laser Material Calculator</h1>
+    <br>
+    <form method="POST" enctype=multipart/form-data action ="{{url_for('tubecsvc')}}">
+        <input type="file" name="user_file">
+        <input type="submit">
+    </form>
+    <br>
+    <br>
+    <a href="http://10.0.1.78/monarch_jobdisplay">
+        <img alt="Display List"
+                src="https://archive.org/download/tl-excel/TL%20Excel.png"
+                width="800" height="600">
+    </a>
+    </body>
+    <br>
+{% endblock %}

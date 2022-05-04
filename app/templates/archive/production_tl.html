@@ -1,0 +1,45 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Production Ready</h1>
+    <br>
+    <div class="table-responsive">
+        <table class="table" id="df4">
+            <thead>
+                <tr>
+                    <th scope="col">Job No</th>
+                    <th scope="col">Order No</th>
+                    <th scope="col">Part No</th>
+                    <!-- <th scope="col">Revision</th> -->
+                    <!-- <th scope="col">Qty</th> -->
+                    <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                    <!-- <th scope="col">Cust</th> -->
+                    <!-- <th scope="col">Material</th> -->
+                    <th scope="col">Program Notes</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for t in tl %}
+                <tr id={{ t[10] }}>
+                    <th scope="row">{{ t[0] }}</th>
+                    <td align='center'> {{ t[9] }} </td>
+                    <td align='center'> {{ t[1] }} </td>
+                    <!-- <td align='center'> {{ t[2] }} </td> -->
+                    <!-- <td align='center'> {{ t[3] }} </td> -->
+                    <td align='center'> {{ t[4] }} </td>
+                    <!-- <td align='center'> {{ t[5] }} </td> -->
+                    <!-- <td align='center'> {% if t[11] == 'on' %} X {% else %} {% endif %} </td> -->
+                    <!-- <td align='center'> {{ t[12] }} </td> -->
+                    <td align='center'> {% if t[14] == 'None' %}  {% else %} {{ t[14] }} {% endif %} </td>
+                    <td align='center'> <a href="/edit_tl/{{ t[10] }}">Edit</a> </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

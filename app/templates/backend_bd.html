@@ -1,0 +1,41 @@
+{% extends 'bdbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Add Bend Deduction</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <input type="text" class="form-control" name="matl" placeholder="Material Type">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="desc" placeholder="Description">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="gauge" placeholder="Gauge">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="thick" placeholder="Material Thickness">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="rad" placeholder="Radius">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="bd" placeholder="Bend Deduction">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="pt" placeholder="Punch Tooling">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="dt" placeholder="Die Tooling">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="notes" placeholder="Notes">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+    </form>
+{% endblock %}

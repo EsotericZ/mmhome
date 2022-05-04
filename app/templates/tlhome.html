@@ -1,0 +1,18 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Tube Laser Scheduler</h1>
+    <h3 align='center'>Advanced Options - [Cntrl] + [Shift] + [Alt] + i</h3>
+    <div class="line"></div>
+    {% for n in note %}
+        <h1 align='center'>Notes</h1>
+        <div class="pnotes">
+            <h3 align='center'>{{ n.notes }}</h3>
+        </div>
+        <a href="/edit_pn/{{ n.id }}"><span class="pnBtn" style="font-weight:bold">Edit</span></a>
+    {% endfor %}
+    <div class="line"></div>
+    <h2 align='center'><u>Resources</u></h2>
+    <h3 align='center'><a href="{{ url_for('tubecalc') }}">Material Calculator</a></h3>
+    <h3 align='center'><a href="{{ url_for('tubecsvc') }}">Material Calculator (Excel)</a></h3>
+{% endblock %}

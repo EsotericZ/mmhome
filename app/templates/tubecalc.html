@@ -1,0 +1,77 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Tube Laser Material Calculator</h1>
+    <br>
+    <h3 align='center'>Do not use decimals right now - Fixing</h3>
+    <br>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <table id="myTable">
+            <tr class="header">
+                <th scope="col">Common Cut Left</th>
+                <th scope="col">Length</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Common Cut Right</th>
+            </tr>
+                <td align='center'> {{ form.ccl1() }} </td>
+                <td align='center'> {{ form.lng1(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty1(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr1 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl2() }} </td>
+                <td align='center'> {{ form.lng2(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty2(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr2 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl3() }} </td>
+                <td align='center'> {{ form.lng3(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty3(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr3 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl4() }} </td>
+                <td align='center'> {{ form.lng4(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty4(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr4 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl5() }} </td>
+                <td align='center'> {{ form.lng5(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty5(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr5 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl6() }} </td>
+                <td align='center'> {{ form.lng6(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty6(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr6 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl7() }} </td>
+                <td align='center'> {{ form.lng7(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty7(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr7 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl8() }} </td>
+                <td align='center'> {{ form.lng8(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty8(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr8 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl9() }} </td>
+                <td align='center'> {{ form.lng9(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty9(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr9 }} </td>
+            </tr>
+                <td align='center'> {{ form.ccl10() }} </td>
+                <td align='center'> {{ form.lng10(size=8, value=0) }} </td>
+                <td align='center'> {{ form.qty10(size=8, value=0) }} </td>
+                <td align='center'> {{ form.ccr10 }} </td>
+            </tr>
+            </table>
+            <br>
+        <p>{{ form.submit() }}</p>
+    </form>
+    </body>
+    <br>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'engbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Edit Job</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Job Number</p> <input type="text" class="form-control formJob" name="job" value="{{ data.job }}" placeholder="Job Number" readonly>
+        </div>
+        <div class="form-group">
+            <input id='modelcb' class="formModel" type="checkbox" value='on' name="model" {% if data.model == 'on' %} checked {% else %} {% endif %}> Customer Supplied Model 
+            <input id='modelcbhidden' type="hidden" value='' name="model">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Engineer</p> <input type="text" class="form-control formEng" name="eng" value="{{ data.eng }}">
+        </div>
+        <div class="form-group">
+            <input id='wipcb' class="formWIP" type="checkbox" value='on' name="wip" {% if data.wip == 'on' %} checked {% else %} {% endif %}> Currenty Working 
+            <input id='wipcbhidden' type="hidden" value='' name="wip">
+        </div>
+        <div class="form-group">
+            <input id='holdcb' class="formHold" type="checkbox" value='on' name="hold" {% if data.hold == 'on' %} checked {% else %} {% endif %}> On Hold 
+            <input id='holdcbhidden' type="hidden" value='' name="hold">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Hold Reason</p> <input type="text" class="form-control formHoldRsn" name="hrsn" value="{{ data.hrsn }}">
+        </div>
+        <div class="form-group">
+            <input id='qccb' class="formQC" type="checkbox" value='on' name="qc" {% if data.qc == 'on' %} checked {% else %} {% endif %}> Quality Check
+            <input id='qccbhidden' type="hidden" value='' name="qc">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Quality Notes</p> <input type="text" class="form-control formQCNote" name="qcn" value="{{ data.qcn }}">
+        </div>
+        <div class="form-group">
+            <input id='aprcb' class="formGood" type="checkbox" value='on' name="apr" {% if data.apr == 'on' %} checked {% else %} {% endif %}> Approved 
+            <input id='aprcbhidden' type="hidden" value='' name="apr">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Update</button>
+    </form>
+{% endblock %}

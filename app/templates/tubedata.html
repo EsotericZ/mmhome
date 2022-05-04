@@ -1,0 +1,34 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Tube Laser Material Results</h1>
+    <br>
+    </body>
+        <table id="myTable">
+            <tr class="header">
+                <th scope="col">Stick Length</th>
+                <th scope="col">Qty Needed</th>
+                <th scope="col">Length Used</th>
+                <th scope="col">Percentage Waste</th>
+            </tr>
+        {% for t in tubes %}
+            <tr>
+                <td align='center'> {{ t.0 }} </td>
+                <td align='center'> {{ t.1 }} </td>
+                <td align='center'> {{ t.2 }} </td>
+                <td align='center'> {{ t.3 }} </td>
+            </tr>
+        {% endfor %}
+        </table>
+    <br>
+    <h4><a href="{{ url_for('tubecalc') }}">Reset (Manual)</a></h4>
+    <h4><a href="{{ url_for('tubecsvc') }}">Reset (Excel)</a></h4>
+    <br>
+    <br>
+    <h3 align='center'><a href="{{ url_for('tlhome') }}">Tube Laser Home</a></h3>
+    <h3 align='center'><a href="{{ url_for('index') }}">Monarch Home</a></h3>
+{% endblock %}

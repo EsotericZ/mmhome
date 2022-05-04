@@ -1,0 +1,50 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Add New Job</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <input type="text" class="form-control" name="job" placeholder="Job No">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="eng" placeholder="Part No">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="wip" placeholder="Customer">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="hold" placeholder="Quantity">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="hrsn" placeholder="Material">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="qc" placeholder="Engineering/QC">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="apr" placeholder="Program Number">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="qcn" placeholder="Quality Notes">
+        </div>
+        <!-- <div class="form-group"> -->
+        <!--     <input type="text" class="form-control" name="mtl" placeholder="Program Number"> -->
+        <!-- </div> -->
+        <!-- <div class="form-group"> -->
+        <!--     <input type="text" class="form-control" name="mtln" placeholder="Program Number"> -->
+        <!-- </div> -->
+        <!-- <div class="form-group"> -->
+        <!--     <input type="text" class="form-control" name="pgm" placeholder="Program Number"> -->
+        <!-- </div> -->
+        <!-- <div class="form-group"> -->
+        <!--     <input type="text" class="form-control" name="pgmn" placeholder="Program Number"> -->
+        <!-- </div> -->
+
+        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+    </form>
+{% endblock %}

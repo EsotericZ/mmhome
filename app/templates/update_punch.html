@@ -1,0 +1,34 @@
+{% extends 'punchbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Edit Job</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Job Number</p> <input type="text" class="form-control formJob" name="job" value="{{ data.job }}" placeholder="Job Number" readonly>
+        </div>
+        <div class="form-group">
+            <input id='mtlcb' class="formMtl" type="checkbox" value='on' name="mtl" {% if data.mtl == 'on' %} checked {% else %} {% endif %}> Material Needed
+            <input id='mtlcbhidden' type="hidden" value='' name="mtl">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Material Notes</p> <textarea type="text" class="form-control formNote" name="mtln" value="{{ data.mtln }}">{{ data.mtln }}</textarea>
+        </div>
+        <div class="form-group">
+            <input id='pgmcb' class="formOrder" type="checkbox" value='on' name="pgm" {% if data.pgm == 'on' %} checked {% else %} {% endif %}> On Order
+            <input id='pgmcbhidden' type="hidden" value='' name="pgm">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Expected Date</p> <input type="text" class="form-control formDate" name="pgmn" value="{{ data.pgmn }}">
+        </div>
+        <div class="form-group">
+            <input id='tlhcb' class="formVerify" type="checkbox" value='on' name="tlh" {% if data.tlh == 'on' %} checked {% else %} {% endif %}> Material Verified
+            <input id='tlhcbhidden' type="hidden" value='' name="tlh">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Notes</p> <input type="text" class="form-control formNote" name="tlhn" value="{{ data.tlhn }}">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Update</button>
+    </form>
+{% endblock %}

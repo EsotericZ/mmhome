@@ -1,0 +1,29 @@
+{% extends 'jobbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Engineering Home</h1>
+    <br>
+    <br>
+    <h2 align='center'><u>Engineering Notes</u></h2>
+    <h3 align='center'>Minimum Hole Size  -  62-65% Material Thickness </h3>
+    <h3 align='center'>All Hardware Holes  -  Add 0.002"</h3>
+    <h3 align='center'>Add 'Not Symmetrical' To Prints And Callout Reference Dimension</h3>
+    <h3 align='center'>Add Notes To All Shop Prints That Are Vital</h3>
+    <h3 align='center'>Pulsar  -  Use 2 Cutting Conditions For Tight Tolerances (Within 0.005" Total)</h3>
+    <br>
+    <h2 align='center'><u>Tapped Holes</u></h2>
+    <h3 align='center'>1/2-13 in 1/2" Material  -  Laser to &#216;0.375, Drill to &#216;0.422</h3>
+    <h3 align='center'>5/16-18 in 1/2" Material  -  No Hole</h3>
+    <h3 align='center'>9/16-12 in 3/4" Material  -  No Hole</h3>
+    <h3 align='center'>5/8-11 in 3/4" Material  -  No Hole</h3>
+    <h3 align='center'>3/4-10 in 1" Material  -  No Hole</h3>
+    <br>
+    <h2 align='center'><u>Resources</u></h2>
+    <h3 align='center'><a href="{{ url_for('bdhome') }}">Bend Deduction Chart</a></h3>
+    <h3 align='center'><a href="{{ url_for('remove') }}">Static Laser</a></h3>
+    <br>
+{% endblock %}

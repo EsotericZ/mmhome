@@ -1,0 +1,13 @@
+{% extends 'machbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Machining</h1>
+    <div class="line"></div>
+    {% for n in note %}
+        <h1 align='center'>Notes</h1>
+        <div class="pnotes">
+            <h3 align='center'>{{ n.notes }}</h3>
+        </div>
+        <a href="/edit_machiningn/{{ n.id }}"><span class="pnBtn" style="font-weight:bold">Edit</span></a>
+    {% endfor %}
+{% endblock %}

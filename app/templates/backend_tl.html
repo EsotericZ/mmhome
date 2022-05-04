@@ -1,0 +1,35 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Add New Job</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <input type="text" class="form-control" name="job" placeholder="Job No">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="mtl" placeholder="Engineer">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="mtln" placeholder="WIP">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="pgm" placeholder="On Hold">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="pgmn" placeholder="Hold Reason">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="tlh" placeholder="QC Check">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="tlhn" placeholder="Approved">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+    </form>
+{% endblock %}

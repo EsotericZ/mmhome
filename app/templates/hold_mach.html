@@ -1,0 +1,118 @@
+{% extends 'machbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Jobs On Hold</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Job No</th>
+                    <th scope="col">Part No</th>
+                    <th scope="col">Revision</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                    <th scope="col">Cust</th>
+                    <th scope="col">Engineer</th>
+                    <th scope="col">Reason</th>
+                </tr>
+            {% for e in mach %}
+                <tr id={{ e[10] }}>
+                    <td><a href="/edit_mach/{{ e[10] }}"><span style="font-weight:bold">{{ e[0] }}</span></a></th>
+                    <td align='center'> {{ e[1] }} </td>
+                    <td align='center'> {{ e[2] }} </td>
+                    <td align='center'> {{ e[3] }} </td>
+                    <td align='center'> {{ e[4] }} </td>
+                    <td align='center'> {{ e[5] }} </td>
+                    <td align='center'> {{ e[11] }} </td>
+                    <td align='center'> {{ e[14] }} </td>
+                </tr>
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[1].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[4].textContent.toUpperCase();
+        var fourthCol = rows[i].cells[5].textContent.toUpperCase();
+        var fifthCol = rows[i].cells[6].textContent.toUpperCase();
+        var sixthCol = rows[i].cells[7].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1 || sixthCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+    </body>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <br> -->
+    <!-- <br> -->
+    <!-- <br> -->
+    <!-- <br> -->
+    <!-- <h1 align='center'>Jobs On Hold</h1> -->
+    <!-- <br> -->
+    <!-- <div class="table-responsive"> -->
+    <!--     <table class="table" id="df4"> -->
+    <!--         <thead> -->
+    <!--             <tr> -->
+    <!--                 <th scope="col">Job No</th> -->
+    <!--                 <th scope="col">Part No</th> -->
+    <!--                 <th scope="col">Revision</th> -->
+    <!--                 <th scope="col">Qty</th> -->
+    <!--                 <th scope="col"><time datetime="MM-YYYY">Due Date</time></th> -->
+    <!--                 <th scope="col">Cust</th> -->
+    <!--                 <!-1- <th scope="col">Status</th> -1-> -->
+    <!--                 <th scope="col">Engineer</th> -->
+    <!--                 <!-1- <th scope="col">WIP</th> -1-> -->
+    <!--                 <!-1- <th scope="col">Hold</th> -1-> -->
+    <!--                 <th scope="col">Reason</th> -->
+    <!--                 <!-1- <th scope="col">Approved</th> -1-> -->
+    <!--                 <!-1- <th scope="col">Action</th> -1-> -->
+    <!--             </tr> -->
+    <!--         </thead> -->
+    <!--         <tbody> -->
+    <!--         {% for e in mach %} -->
+    <!--             <tr id={{ e[10] }}> -->
+    <!--                 <th scope="row"><a href="/edit_mach/{{ e[10] }}">{{ e[0] }}</a></th> -->
+    <!--                 <td align='center'> {{ e[1] }} </td> -->
+    <!--                 <td align='center'> {{ e[2] }} </td> -->
+    <!--                 <td align='center'> {{ e[3] }} </td> -->
+    <!--                 <td align='center'> {{ e[4] }} </td> -->
+    <!--                 <td align='center'> {{ e[5] }} </td> -->
+    <!--                 <!-1- <td align='center'> {{ e[6] }} </td> -1-> -->
+    <!--                 <td align='center'> {{ e[11] }} </td> -->
+    <!--                 <td align='center'> {{ e[14] }} </td> -->
+    <!--                 <!-1- <td align='center'> {% if e[11] == 'on' %} X {% else %} {% endif %} </td> -1-> -->
+    <!--                 <!-1- <td align='center'> {% if e[12] == 'on' %} X {% else %} {% endif %} </td> -1-> -->
+    <!--                 <!-1- <td align='center'> {% if e[15] == 'on' %} X {% else %} {% endif %} </td> -1-> -->
+    <!--                 <!-1- <td align='center'> {% if e[15] == 'on' %} X {% else %} {% endif %} </td> -1-> -->
+    <!--                 <!-1- <td align='center'> {% if e[16] == 'on' %} X {% else %} {% endif %} </td> -1-> -->
+    <!--                 <!-1- <td align='center'> <a href="/edit_tl/{{ e[10] }}">Edit</a> </td> -1-> -->
+    <!--             </tr> -->
+    <!--         {% endfor %} -->
+    <!--         </tbody> -->
+    <!--     </table> -->
+    <!-- </div> -->

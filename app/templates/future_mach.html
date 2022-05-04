@@ -1,0 +1,66 @@
+{% extends 'machbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Future Jobs</h1>
+    <br>
+
+    <body>
+    <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+
+        <table id="myTable">
+            <tr class="header">
+                <th scope="col">Job No</th>
+                <th scope="col">Step No</th>
+                <th scope="col">Part No</th>
+                <th scope="col">Revision</th>
+                <th scope="col">Qty</th>
+                <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                <th scope="col">Cust</th>
+                <th scope="col">Status</th>
+                <th scope="col">Engineer</th>
+                <th scope="col">WIP</th>
+                <th scope="col">Hold</th>
+            </tr>
+            {% for e in mach %}
+                <tr id={{ e[10] }}>
+                    <td align="center"><a href="/edit_mach/{{ e[10] }}">{{ e[0] }}</a></th>
+                    <td align='center'> {{ e[15] }} </td>
+                    <td align='center'> {{ e[1] }} </td>
+                    <td align='center'> {{ e[2] }} </td>
+                    <td align='center'> {{ e[3] }} </td>
+                    <td align='center'> {{ e[4] }} </td>
+                    <td align='center'> {{ e[5] }} </td>
+                    <td align='center'> {{ e[6] }} </td>
+                    <td align='center'> {{ e[11] }} </td>
+                    <td align='center'> {% if e[12] == 'on' %} X {% else %} {% endif %} </td>
+                    <td align='center'> {% if e[13] == 'on' %} X {% else %} {% endif %} </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[2].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[5].textContent.toUpperCase();
+        var fourthCol = rows[i].cells[6].textContent.toUpperCase();
+        var fifthCol = rows[i].cells[7].textContent.toUpperCase();
+        var sixthCol = rows[i].cells[8].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1 || sixthCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+
+    </body>
+{% endblock %}

@@ -1,0 +1,581 @@
+from __future__ import unicode_literals
+from xlwt import Workbook
+import io
+from werkzeug import secure_filename
+
+from flask import Flask, render_template, flash, redirect, request, url_for, jsonify
+from app import app
+from app.forms import LoginForm
+from flask_login import current_user, login_user, logout_user, login_required
+from app.models import User, Job, TJob, MJob
+from werkzeug.urls import url_parse
+from database import db_session
+from datetime import datetime
+from app.dbcn import dbtl, dbeng, dbmach
+import pusher
+import os
+import pandas as pd
+
+import xlrd
+
+pusher_client = pusher.Pusher(
+    app_id='807301',
+    key='32d695007f6b78ffea0d',
+    secret='a8f64240ccb736372743',
+    cluster='us3',
+    ssl=True)
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
+@app.route('/')
+@app.route('/index')
+# @login_required
+def index():
+    user = 'CJ'
+    return render_template('index.html', title='Monarch Home')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid Username or Password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+    return render_template('login.html', title='Login', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@app.route('/test')
+@login_required
+def test():
+    return render_template('test.html')
+
+
+
+
+
+# CHECK INTO THESE
+
+@app.route('/jobs')
+def jobs():
+    jobs = Job.query.all()
+    return render_template('jobs.html', jobs=jobs)
+
+@app.route('/review')
+def review():
+    jobs = Job.query.all()
+    return render_template('review.html', jobs=jobs)
+
+@app.route('/engineering')
+def engineering():
+    jobs = Job.query.all()
+    return render_template('engineering.html', jobs=jobs)
+
+@app.route('/production')
+def production():
+    jobs = Job.query.all()
+    return render_template('production.html', jobs=jobs)
+
+@app.route('/completed')
+def completed():
+    jobs = Job.query.all()
+    return render_template('completed.html', jobs=jobs)
+
+@app.route('/construction')
+def construction():
+    return render_template('construction.html', title="Under Construction")
+
+
+
+
+
+# # # ENGINEERING # # #
+
+@app.route('/enghome')
+def enghome():
+    dbeng()
+    return render_template('enghome.html')
+
+@app.route('/tbr_eng')
+def tbr_eng():
+    df6 = dbeng()[1]
+    eng = df6.values.tolist()
+    return render_template('tbr_eng.html', eng=eng)
+
+@app.route('/future_eng')
+def future_eng():
+    df7 = dbeng()[2]
+    eng = df7.values.tolist()
+    return render_template('future_eng.html', eng=eng)
+
+@app.route('/repeat')
+def repeat():
+    df8 = dbeng()[3]
+    df81 = df8.sort_values(by=['WorkCntr_y'])
+    df82 = df81.drop_duplicates(subset = ['JobNo'])
+    df83 = df82.sort_values(by = ['DueDate'])
+    en = df83.values.tolist()
+    eng = []
+    for e in en:
+        cust = e[13]
+        part = e[5]
+        server = '/run/user/1000/gvfs/smb-share:server=tower,share=production/'
+        d = os.path.exists(server+'/'+cust+'/'+part)
+        if d == True:
+            eng.append(e)
+    print(eng)
+    return render_template('repeat.html', eng=eng)
+
+@app.route('/repeat_add')
+def repeat_add():
+    df8 = dbeng()[3]
+    df81 = df8.sort_values(by=['WorkCntr_y'])
+    df82 = df81.drop_duplicates(subset = ['JobNo'])
+    df83 = df82.sort_values(by = ['DueDate'])
+    en = df83.values.tolist()
+    eng = []
+    for e in en:
+        cust = e[13]
+        part = e[5]
+        server = '/run/user/1000/gvfs/smb-share:server=tower,share=production/'
+        d = os.path.exists(server+'/'+cust+'/'+part)
+        if d == False:
+            eng.append(e)
+    return render_template('repeat_add.html', eng=eng)
+
+@app.route('/quality')
+def quality():
+    df9 = dbeng()[4]
+    en = df9.values.tolist()
+    eng = []
+    for e in en:
+        if e[16] != 'on':
+            eng.append(e)
+    return render_template('quality.html', eng=eng)
+
+@app.route('/hold_eng')
+def hold_eng():
+    df10 = dbeng()[5]
+    eng = df10.values.tolist()
+    return render_template('hold_eng.html', eng=eng)
+
+@app.route('/active')
+def active():
+    df5 = dbeng()[0]
+    eng = df5.values.tolist()
+    return render_template('active.html', eng=eng)
+
+@app.route('/backend', methods=["POST", "GET"])
+def backend():
+    if request.method == "POST":
+        job = request.form["job"]
+        eng = request.form["eng"]
+        wip = request.form["wip"]
+        hold = request.form["hold"]
+        hrsn = request.form["hrsn"]
+        qc = request.form["qc"]
+        apr = request.form["apr"]
+        qcn = request.form["qcn"]
+
+        new_job = Job(job, eng, wip, hold, hrsn, qc, apr, qcn)
+        db_session.add(new_job)
+        db_session.commit()
+
+        data = {
+            "id": new_job.id,
+            "job": job,
+            "eng": eng,
+            "wip": wip,
+            "hold": hold,
+            "hrsn": hrsn,
+            "qc": qc,
+            "apr": apr,
+            "qcn": qcn
+        }
+
+        pusher_client.trigger('table', 'new-record', {'data': data })
+
+        return redirect("/backend", code=302)
+    else:
+        jobs = Job.query.all()
+        return render_template('backend.html', jobs=jobs)
+
+@app.route('/edit/<int:id>', methods=["POST", "GET"])
+def update_record(id):
+    if request.method == "POST":
+        job = request.form["job"]
+        eng = request.form["eng"]
+        wip = request.form["wip"]
+        hold = request.form["hold"]
+        hrsn = request.form["hrsn"]
+        qc = request.form["qc"]
+        apr = request.form["apr"]
+        qcn = request.form["qcn"]
+
+        update_job = Job.query.get(id)
+        update_job.job = job
+        update_job.eng = eng
+        update_job.wip = wip
+        update_job.hold = hold
+        update_job.hrsn = hrsn
+        update_job.qc = qc
+        update_job.apr = apr
+        update_job.qcn = qcn
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "job": job,
+            "eng": eng,
+            "wip": wip,
+            "hold": hold,
+            "hrsn": hrsn,
+            "qc": qc,
+            "apr": apr,
+            "qcn": qcn
+        }
+
+        pusher_client.trigger('table', 'update-record', {'data': data })
+
+        return redirect("/active", code=302)
+    else:
+        new_job = Job.query.get(id)
+
+        return render_template('update_job.html', data=new_job)
+
+
+
+
+
+# # # MACHINING # # #
+
+@app.route('/machhome')
+def machhome():
+    dbeng()
+    return render_template('machhome.html')
+
+@app.route('/tbr_mach')
+def tbr_mach():
+    df6 = dbmach()[1]
+    mach = df6.values.tolist()
+    return render_template('tbr_mach.html', mach=mach)
+
+@app.route('/future_mach')
+def future_mach():
+    df7 = dbmach()[2]
+    mach = df7.values.tolist()
+    return render_template('future_mach.html', mach=mach)
+
+@app.route('/repeat_mach')
+def repeat_mach():
+    df8 = dbmach()[3]
+    df81 = df8.sort_values(by=['WorkCntr_y'])
+    df82 = df81.drop_duplicates(subset = ['JobNo'])
+    df83 = df82.sort_values(by = ['DueDate'])
+    en = df83.values.tolist()
+    mach = []
+    for e in en:
+        cust = e[13]
+        part = e[5]
+        server = '/run/user/1000/gvfs/smb-share:server=tower,share=production/'
+        d = os.path.exists(server+'/'+cust+'/'+part)
+        if d == True:
+            mach.append(e)
+    print(mach)
+    return render_template('repeat_mach.html', mach=mach)
+
+@app.route('/repeat_madd')
+def repeat_madd():
+    df8 = dbmach()[3]
+    df81 = df8.sort_values(by=['WorkCntr_y'])
+    df82 = df81.drop_duplicates(subset = ['JobNo'])
+    df83 = df82.sort_values(by = ['DueDate'])
+    en = df83.values.tolist()
+    mach = []
+    for e in en:
+        cust = e[13]
+        part = e[5]
+        server = '/run/user/1000/gvfs/smb-share:server=tower,share=production/'
+        d = os.path.exists(server+'/'+cust+'/'+part)
+        if d == False:
+            mach.append(e)
+    return render_template('repeat_madd.html', mach=mach)
+
+# @app.route('/quality')
+# def quality():
+#     df9 = dbeng()[4]
+#     en = df9.values.tolist()
+#     eng = []
+#     for e in en:
+#         if e[16] != 'on':
+#             eng.append(e)
+#     return render_template('quality.html', eng=eng)
+
+@app.route('/hold_mach')
+def hold_mach():
+    df10 = dbmach()[4]
+    mach = df10.values.tolist()
+    return render_template('hold_mach.html', mach=mach)
+
+@app.route('/active_mach')
+def active_mach():
+    df5 = dbmach()[0]
+    mach = df5.values.tolist()
+    return render_template('active_mach.html', mach=mach)
+
+# @app.route('/backend', methods=["POST", "GET"])
+# def backend():
+#     if request.method == "POST":
+#         job = request.form["job"]
+#         eng = request.form["eng"]
+#         wip = request.form["wip"]
+#         hold = request.form["hold"]
+#         hrsn = request.form["hrsn"]
+#         qc = request.form["qc"]
+#         apr = request.form["apr"]
+#         qcn = request.form["qcn"]
+
+#         new_job = Job(job, eng, wip, hold, hrsn, qc, apr, qcn)
+#         db_session.add(new_job)
+#         db_session.commit()
+
+#         data = {
+#             "id": new_job.id,
+#             "job": job,
+#             "eng": eng,
+#             "wip": wip,
+#             "hold": hold,
+#             "hrsn": hrsn,
+#             "qc": qc,
+#             "apr": apr,
+#             "qcn": qcn
+#         }
+
+#         pusher_client.trigger('table', 'new-record', {'data': data })
+
+#         return redirect("/backend", code=302)
+#     else:
+#         jobs = Job.query.all()
+#         return render_template('backend.html', jobs=jobs)
+
+@app.route('/edit_mach/<int:id>', methods=["POST", "GET"])
+def update_record_mach(id):
+    if request.method == "POST":
+        job = request.form["job"]
+        eng = request.form["eng"]
+        wip = request.form["wip"]
+        hold = request.form["hold"]
+        hrsn = request.form["hrsn"]
+
+        update_mjob = MJob.query.get(id)
+        print('mjob')
+        print(update_mjob)
+        update_mjob.job = job
+        update_mjob.eng = eng
+        update_mjob.wip = wip
+        update_mjob.hold = hold
+        update_mjob.hrsn = hrsn
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "job": job,
+            "eng": eng,
+            "wip": wip,
+            "hold": hold,
+            "hrsn": hrsn
+        }
+
+        pusher_client.trigger('table', 'update-record_mach', {'data': data })
+
+        return redirect("/active_mach", code=302)
+    else:
+        new_mjob = MJob.query.get(id)
+        print('new mjob')
+        print(new_mjob)
+
+        return render_template('update_mjob.html', data=new_mjob)
+
+
+
+
+
+# # # TUBE LASER SCHEDULER # # #
+
+@app.route('/tlhome')
+def tlhome():
+    return render_template('tlhome.html')
+
+@app.route('/tbr_tl')
+def tbr_tl():
+    df6 = dbtl()[1]
+    tl = df6.values.tolist()
+    return render_template('tbr_tl.html', tl=tl)
+
+@app.route('/future_tl')
+def future_tl():
+    df7 = dbtl()[2]
+    tl = df7.values.tolist()
+    return render_template('future_tl.html', tl=tl)
+
+@app.route('/material_tl')
+def material_tl():
+    df8 = dbtl()[3]
+    tl = df8.values.tolist()
+    return render_template('material_tl.html', tl=tl)
+
+@app.route('/production_tl')
+def production_tl():
+    df9 = dbtl()[4]
+    tl = df9.values.tolist()
+    return render_template('production_tl.html', tl=tl)
+
+@app.route('/hold_tl')
+def hold_tl():
+    df10 = dbtl()[5]
+    tl = df10.values.tolist()
+    return render_template('hold_tl.html', tl=tl)
+
+@app.route('/active_tl')
+def active_tl():
+    df5 = dbtl()[0]
+    tl = df5.values.tolist()
+    return render_template('active_tl.html', tl=tl)
+
+@app.route('/backend_tl', methods=["POST", "GET"])
+def backend_tl():
+    if request.method == "POST":
+        job = request.form["job"]
+        mtl = request.form["mtl"]
+        mtln = request.form["mtln"]
+        pgm = request.form["pgm"]
+        pgmn = request.form["pgmn"]
+        tlh = request.form["tlh"]
+        tlhn = request.form["tlhn"]
+
+        new_tjob = TJob(job, mtl, mtln, pgm, pgmn, tlh, tlhn)
+        db_session.add(new_tjob)
+        db_session.commit()
+
+        data = {
+            "id": new_tjob.id,
+            "job": job,
+            "mtl": mtl,
+            "mtln": mtln,
+            "pgm": pgm,
+            "pgmn": pgmn,
+            "tlh": tlh,
+            "tlhn": tlhn
+        }
+
+        pusher_client.trigger('table', 'new-record_tl', {'data': data })
+
+        return redirect("/backend_tl", code=302)
+    else:
+        tjobs = TJob.query.all()
+        return render_template('backend_tl.html', tjobs=tjobs)
+
+@app.route('/edit_tl/<int:id>', methods=["POST", "GET"])
+def update_record_tl(id):
+    if request.method == "POST":
+        job = request.form["job"]
+        mtl = request.form["mtl"]
+        mtln = request.form["mtln"]
+        pgm = request.form["pgm"]
+        pgmn = request.form["pgmn"]
+        tlh = request.form["tlh"]
+        tlhn = request.form["tlhn"]
+
+        update_tjob = TJob.query.get(id)
+        update_tjob.job = job
+        update_tjob.mtl = mtl
+        update_tjob.mtln = mtln
+        update_tjob.pgm = pgm
+        update_tjob.pgmn = pgmn
+        update_tjob.tlh = tlh
+        update_tjob.tlhn = tlhn
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "job": job,
+            "mtl": mtl,
+            "mtln": mtln,
+            "pgm": pgm,
+            "pgmn": pgmn,
+            "tlh": tlh,
+            "tlhn": tlhn
+        }
+
+        pusher_client.trigger('table', 'update-record_tl', {'data': data })
+
+        return redirect("/active_tl", code=302)
+    else:
+        new_tjob = TJob.query.get(id)
+
+        return render_template('update_tjob.html', data=new_tjob)
+
+
+
+
+
+# CONVERTER
+
+uploads_dir = os.path.join(app.instance_path, 'uploads')
+# os.makedirs(uploads_dir)
+
+@app.route('/cnvthome', methods = ['GET', 'POST'])
+def cnvthome():
+    # if request.method == 'POST' and 'user_file' in request.files:
+    if request.method == 'POST':
+        f = request.files['user_file']
+        print('uploaded')
+        f.save(os.path.join(uploads_dir, secure_filename('PO.XLS')))
+
+        filename = r'PO.XLS'
+        # filename = '/Projects/mmhome/instance/uploads/'+filename
+        # filename = r'/Projects/mmhome/instance/uploads/PO.XLS'
+        # filename = r'\instance\uploads\PO.XLS'
+        print(filename)
+        file1 = io.open(filename, "r", encoding="iso-8859-1")
+        data = file1.readlines()
+
+        xldoc = Workbook()
+        sheet = xldoc.add_sheet("Sheet1", cell_overwrite_ok=True)
+        for i, row in enumerate(data):
+            for j, val in enumerate(row.replace('\n', '').split('\t')):
+                sheet.write(i, j, val)
+        xldoc.save('myexcel.xls')
+
+
+        # data_xls = pd.read_excel(f)
+        # file1 = io.open(f, "r", encoding="utf-16")
+
+        # mem = f.read()
+        # data = pd.read_html(mem)
+        # print(data)
+        # xlrd.open_workbook(f)
+        # print(mem)
+        # b = xlrd.open_workbook(f)
+        # pe.save_book_as(file_name=f, dest_file_name='new.xlsx')
+        # excel = win32.gencache.EnsureDispatch('Excel.Application')
+        # wb = excel.Workbooks.Open(f)
+        print('open')
+
+    return render_template('cnvthome.html')

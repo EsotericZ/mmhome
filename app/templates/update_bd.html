@@ -1,0 +1,41 @@
+{% extends 'bdbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Edit Bend Deduction</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            Material <input type="text" class="form-control" name="matl" value="{{ data.matl }}" placeholder="Material" readonly>
+        </div>
+        <div class="form-group">
+            Description <input type="text" class="form-control" name="desc" value="{{ data.desc }}" placeholder="Description" readonly>
+        </div>
+        <div class="form-group">
+            Gauge <input type="text" class="form-control" name="gauge" value="{{ data.gauge }}" placeholder="Gauge" readonly>
+        </div>
+        <div class="form-group">
+            Thickness <input type="text" class="form-control" name="thick" value="{{ data.thick }}">
+        </div>
+        <div class="form-group">
+            Radius <input type="text" class="form-control" name="rad" value="{{ data.rad }}">
+        </div>
+        <div class="form-group">
+            Bend Deduction <input type="text" class="form-control" name="bd" value="{{ data.bd }}">
+        </div>
+        <div class="form-group">
+            Punch Tooling <input type="text" class="form-control" name="pt" value="{{ data.pt }}">
+        </div>
+        <div class="form-group">
+            Die Tooling <input type="text" class="form-control" name="dt" value="{{ data.dt }}">
+        </div>
+        <div class="form-group">
+            Notes <input type="text" class="form-control" name="notes" value="{{ data.notes }}">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Update</button>
+    </form>
+{% endblock %}

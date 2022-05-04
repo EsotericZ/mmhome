@@ -1,0 +1,27 @@
+{% extends 'shipbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Update Shipping</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            Job Number <input type="text" class="form-control" name="job" value="{{ data.job }}" placeholder="Job Number" readonly>
+        </div>
+        <div class="form-group">
+            Date Shipped <input type="text" class="form-control" name="date" value="{{ data.date }}">
+        </div>
+        <div class="form-group">
+            Tracking Number <input type="text" class="form-control" name="track" value="{{ data.track }}">
+        </div>
+        <div class="form-group">
+            <input id='qccb' type="checkbox" value='on' name="delv" {% if data.delv == 'on' %} checked {% else %} {% endif %}> Delivered
+            <input id='qccbhidden' type="hidden" value='' name="delv">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Update</button>
+    </form>
+{% endblock %}

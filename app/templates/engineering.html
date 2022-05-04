@@ -1,0 +1,115 @@
+{% extends 'tlbase.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 align='center'>Jobs - Engineering</h1>
+    <br>
+    <div class="chat-container" style="overflow: auto; max-height: 80vh">
+        <div class="table-responsive">
+            <table class="table" id="jobs">
+                <thead>
+                    <h5 align='center'>TBR Jobs</h5>
+                    <tr bgcolor='#ab82ff'>
+                        <th scope="col">Job No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Material</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for job in jobs %}
+                    {% if job.status == 'TBR' and job.eng != 'X' %}
+                        <tr id={{ job.id }}>
+                            <th scope="row">{{ job.job }}</th>
+                            <td> {{ job.part }} </td>
+                            <td align='center'> {{ job.cust }} </td>
+                            <td align='center'> {{ job.qty }} </td>
+                            <td align='center'> {{ job.duedate.strftime('%m/%d') }} </td>
+                            <td align='center' style="white-space:break-word" width='180px'> {{ job.matl }} </td>
+                            <td align='center'> <a href="/edit/{{ job.id }}">Edit</a> </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- <p align="right"><a href="{{ url_for('active') }}">Edit</a></p> -->
+    </div>
+    <br>
+    <div class="chat-container" style="overflow: auto; max-height: 80vh">
+        <div class="table-responsive">
+            <table class="table" id="jobs">
+                <thead>
+                    <h5 align='center'>Hot Jobs</h5>
+                    <tr bgcolor='#FF0000'>
+                        <th scope="col">Job No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Material</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for job in jobs %}
+                    {% if job.status == 'Hot' and job.eng != 'X' %}
+                        <tr id={{ job.id }}>
+                            <th scope="row">{{ job.job }}</th>
+                            <td> {{ job.part }} </td>
+                            <td align='center'> {{ job.cust }} </td>
+                            <td align='center'> {{ job.qty }} </td>
+                            <td align='center'> {{ job.duedate.strftime('%m/%d') }} </td>
+                            <td align='center' style="white-space:break-word" width='180px'> {{ job.matl }} </td>
+                            <td align='center'> <a href="/edit/{{ job.id }}">Edit</a> </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- <p align="right"><a href="{{ url_for('active') }}">Edit</a></p> -->
+    </div>
+    <br>
+    <div class="chat-container" style="overflow: auto; max-height: 80vh">
+        <div class="table-responsive">
+            <table class="table" id="jobs">
+                <thead>
+                    <h5 align='center'>Office Jobs</h5>
+                    <tr bgcolor='#00ee76'>
+                        <th scope="col">Job No</th>
+                        <th scope="col">Part No</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Material</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for job in jobs %}
+                    {% if job.status == 'Office' and job.eng != 'X' %}
+                        <tr id={{ job.id }}>
+                            <th scope="row">{{ job.job }}</th>
+                            <td> {{ job.part }} </td>
+                            <td align='center'> {{ job.cust }} </td>
+                            <td align='center'> {{ job.qty }} </td>
+                            <td align='center'> {{ job.duedate.strftime('%m/%d') }} </td>
+                            <td align='center' style="white-space:break-word" width='180px'> {{ job.matl }} </td>
+                            <td align='center'> <a href="/edit/{{ job.id }}">Edit</a> </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- <p align="right"><a href="{{ url_for('active') }}">Edit</a></p> -->
+    </div>
+    <br>
+{% endblock %}

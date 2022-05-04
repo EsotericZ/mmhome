@@ -1,0 +1,57 @@
+{% extends 'shipbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Shipping</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Job No</th>
+                    <th scope="col">Part No</th>
+                    <th scope="col">Cust</th>
+                    <th scope="col">Order</th>
+                    <th scope="col">Packing Slip</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Ship Date</th>
+                </tr>
+            {% for e in ship %}
+                <tr id={{ e[6] }}>
+                    <td><a href="/edit_ship/{{ e[14] }}"><span style="font-weight:bold">{{ e[6] }}</span></a></th>
+                    <td align='center'> {{ e[7] }} </td>
+                    <td align='center'> {{ e[2] }} </td>
+                    <td align='center'> {{ e[1] }} </td>
+                    <td align='center'> {{ e[0] }} </td>
+                    <td align='center'> {{ e[11] }} </td>
+                    <td align='center'> {{ e[16] }} </td>
+                </tr>
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[1].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+        var fourthCol = rows[i].cells[3].textContent.toUpperCase();
+        var fifthCol = rows[i].cells[4].textContent.toUpperCase();
+        var sixthCol = rows[i].cells[5].textContent.toUpperCase();
+        var seventhCol = rows[i].cells[6].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1 || sixthCol.indexOf(filter) > -1 || seventhCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+    </body>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'bdbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Bend Deduction</h1>
+    <h1 align='center'>Cold Rolled Steel / Hot Rolled Steel</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Gauge</th>
+                    <th scope="col">Thickness</th>
+                    <th scope="col">Radius</th>
+                    <th scope="col">Bend Deduction</th>
+                    <th scope="col">Punch Tooling</th>
+                    <th scope="col">Die Tooling</th>
+                    <th scope="col">Notes</th>
+                </tr>
+            {% for bd in bds %}
+                {% if bd.desc == 'CRS' %}
+                    <tr id={{ bd.id }}>
+                        <td align='center'><a href="/edit_bd/{{ bd.id }}"> {{ bd.gauge }} </a></td>
+                        <td align='center'> {{ bd.thick }} </td>
+                        <td align='center'> {{ bd.rad }} </td>
+                        <td align='center'> {{ bd.bd }} </td>
+                        <td align='center'> {{ bd.pt }} </td>
+                        <td align='center'> {{ bd.dt }} </td>
+                        <td align='center'> {{ bd.notes }} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </table>
+            <script>
+            function filterTable(event) {
+                var filter = event.target.value.toUpperCase();
+                var rows = document.querySelector("#myTable tbody").rows;
+    
+                for (var i = 1; i < rows.length; i++) {
+                    var firstCol = rows[i].cells[0].textContent.toUpperCase();
+                    var secondCol = rows[i].cells[1].textContent.toUpperCase();
+                    if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }      
+                }
+            }
+
+            document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+            </script>
+    </body>
+{% endblock %}

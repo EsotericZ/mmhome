@@ -1,0 +1,44 @@
+{% include 'navbase.html' %}
+    <!-- Page Content  -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light" id="navdrop">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn">
+                    <i class="fas fa-align-left"></i>
+                    <span>Toggle Navbar</span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+
+                <!-- PAGE LINKS -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav navcent">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('purchhome') }}">Purchasing Home</a>
+                        </li>
+                        <li class="nav item nav-link">|</li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('material_purch') }}">Need Material</a>
+                        </li>
+                        <li class="nav item nav-link">|</li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('onorder_purch') }}">On Order</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- PAGE LINKS -->
+
+            </div>
+        </nav>
+
+        <!-- PAGE CONTENT -->
+        <div>
+            <div class="justify-content-center">
+                {% block content %}  {% endblock %}
+            </div>
+        </div>
+        <!-- PAGE CONTENT -->
+
+    </div>
