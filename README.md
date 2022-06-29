@@ -20,7 +20,12 @@ Scheduling and job tracking for manufacturing company
 
 ## Technologies
 Technologies used in this application:  
-Flask, conda, HTML, JSS, bootstrap, sqlite3
+- Flask
+- conda 
+- HTML 
+- JSS  
+- bootstrap 
+- sqlite3
 
 ## Contributing
 Not for public use
