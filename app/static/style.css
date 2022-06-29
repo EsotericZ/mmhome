@@ -327,8 +327,14 @@ h3 {
     accent-color: #B82626;
 }
 
-.formBtn {
+.formBtn, .todoBtn {
     background-color: #B82626;
+}
+
+.todoBtn {
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
 }
 
 .formTitle {

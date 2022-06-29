@@ -21,7 +21,8 @@
                     <td align='center'> {{ t[1] }} </td>
                     <td align='center'> {{ t[4] }} </td>
                     <td align='center'> {{ t[14] }} </td>
-                    <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td>
+                    <!-- <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td> -->
+                    <td align='center'> {% if t[12] == 'None' %}  {% else %} {{ t[12] }} {% endif %} </td>
                 </tr>
             {% endfor %}
             </table>

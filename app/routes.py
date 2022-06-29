@@ -7,7 +7,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, jso
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes
+from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, Todo
 from werkzeug.urls import url_parse
 from database import db_session
 from datetime import datetime
@@ -38,10 +38,73 @@ def shutdown_session(exception=None):
 
 @app.route('/')
 @app.route('/index')
-# @login_required
 def index():
-    user = 'CJ'
-    return render_template('index.html', title='Monarch Home')
+    todos = Todo.query.order_by('id').all()
+    return render_template('index.html', title='Monarch Home', todos=todos)
+
+@app.route('/backend_todo', methods=["POST", "GET"])
+def backend_todo():
+    if request.method == "POST":
+        rtype = request.form["rtype"]
+        area = request.form["area"]
+        desc = request.form["desc"]
+        name = request.form["name"]
+        done = request.form["done"]
+
+        new_todo = Todo(rtype, area, desc, name, done)
+        db_session.add(new_todo)
+        db_session.commit()
+
+        data = {
+            "id": new_todo.id,
+            "rtype": rtype,
+            "area": area,
+            "desc": desc,
+            "name": name,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'new-record-todo', {'data': data })
+
+        return redirect("/index", code=302)
+    else:
+        todos = Todo.query.all()
+        return render_template('backend_todo.html', todos=todos)
+
+@app.route('/edit_todo/<int:id>', methods=["POST", "GET"])
+def update_record_todo(id):
+    if request.method == "POST":
+        rtype = request.form["rtype"]
+        area = request.form["area"]
+        desc = request.form["desc"]
+        name = request.form["name"]
+        done = request.form["done"]
+
+        update_todo = Todo.query.get(id)
+        update_todo.rtype = rtype
+        update_todo.area = area
+        update_todo.desc = desc
+        update_todo.name = name
+        update_todo.done = done
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "rtype": rtype,
+            "area": area,
+            "desc": desc,
+            "name": name,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'update-record-todo', {'data': data })
+
+        return redirect("/index", code=302)
+    else:
+        new_todo = Todo.query.get(id)
+
+        return render_template('update_todo.html', data=new_todo)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -505,8 +568,44 @@ def update_record_mach(id):
 @app.route('/tlhome')
 def tlhome():
     note = PageNotes.query.all()
-    print('note', note)
     return render_template('tlhome.html', note=note)
+
+@app.route('/jobs_tl')
+def jobs_tl():
+    df6 = dbtl()[1]
+
+    st = df6.values.tolist()
+    for t in st:
+        unCut = []
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    df7 = dbtl()[2]
+
+    sf = df7.values.tolist()
+    for t in sf:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    return render_template('jobs_tl.html', st=st, sf=sf)
 
 @app.route('/tbr_tl')
 def tbr_tl():
@@ -683,6 +782,43 @@ def sawhome():
     return render_template('sawhome.html', note=note)
     # return render_template('sawhome.html')
 
+@app.route('/jobs_saw')
+def jobs_saw():
+    df6 = dbsaw()[1]
+
+    st = df6.values.tolist()
+    for t in st:
+        unCut = []
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    df7 = dbsaw()[2]
+
+    sf = df7.values.tolist()
+    for t in sf:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    return render_template('jobs_saw.html', st=st, sf=sf)
+
 @app.route('/tbr_saw')
 def tbr_saw():
     df6 = dbsaw()[1]
@@ -749,7 +885,8 @@ def active_saw():
     tl = df5.values.tolist()
     for t in tl:
         unCut = []
-        cutRow = t[17].replace("\n", "     ").split("     ")
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
         if len(cutRow) > 3:
             onlyCut = cutRow[0::3]
             for i in onlyCut:
@@ -921,7 +1058,6 @@ def bdhome():
 @app.route('/bdcrs')
 def bdcrs():
     bds = Bendd.query.order_by('thick', 'rad').all()
-    print('bds', bds)
     return render_template('bdcrs.html', bds=bds)
 
 @app.route('/bdsss')
@@ -1426,6 +1562,43 @@ def slaserhome():
     note = SLaserNotes.query.all()
     return render_template('slaserhome.html', note=note)
 
+@app.route('/jobs_slaser')
+def jobs_slaser():
+    df6 = dbslaser()[1]
+
+    st = df6.values.tolist()
+    for t in st:
+        unCut = []
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    df7 = dbslaser()[2]
+
+    sf = df7.values.tolist()
+    for t in sf:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    return render_template('jobs_slaser.html', st=st, sf=sf)
+
 @app.route('/tbr_slaser')
 def tbr_slaser():
     df6 = dbslaser()[1]
@@ -1550,6 +1723,43 @@ def update_record_slaser(id):
 def flaserhome():
     note = FLaserNotes.query.all()
     return render_template('flaserhome.html', note=note)
+
+@app.route('/jobs_flaser')
+def jobs_flaser():
+    df6 = dbflaser()[1]
+
+    st = df6.values.tolist()
+    for t in st:
+        unCut = []
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    df7 = dbflaser()[2]
+
+    sf = df7.values.tolist()
+    for t in sf:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    return render_template('jobs_flaser.html', st=st, sf=sf)
 
 @app.route('/tbr_flaser')
 def tbr_flaser():
@@ -1676,6 +1886,43 @@ def punchhome():
     note = PunchNotes.query.all()
     return render_template('punchhome.html', note=note)
 
+@app.route('/jobs_punch')
+def jobs_punch():
+    df6 = dbpunch()[1]
+
+    st = df6.values.tolist()
+    for t in st:
+        unCut = []
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    df7 = dbpunch()[2]
+
+    sf = df7.values.tolist()
+    for t in sf:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    return render_template('jobs_punch.html', st=st, sf=sf)
+
 @app.route('/tbr_punch')
 def tbr_punch():
     df6 = dbpunch()[1]
@@ -1747,6 +1994,25 @@ def active_punch():
     df5 = dbpunch()[0]
     df5 = df5.drop_duplicates()
     tl = df5.values.tolist()
+    # return render_template('active_punch.html', tl=tl)
+
+    # df5 = dbshear()[0]
+    # df5 = df5.drop_duplicates()
+    # tl = df5.values.tolist()
+    for t in tl:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    # return render_template('active_shear.html', tl=tl)
     return render_template('active_punch.html', tl=tl)
 
 @app.route('/edit_punch/<int:id>', methods=["POST", "GET"])
@@ -1800,6 +2066,43 @@ def update_record_punch(id):
 def shearhome():
     note = ShearNotes.query.all()
     return render_template('shearhome.html', note=note)
+
+@app.route('/jobs_shear')
+def jobs_shear():
+    df6 = dbshear()[1]
+
+    st = df6.values.tolist()
+    for t in st:
+        unCut = []
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    df7 = dbshear()[2]
+
+    sf = df7.values.tolist()
+    for t in sf:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    return render_template('jobs_shear.html', st=st, sf=sf)
 
 @app.route('/tbr_shear')
 def tbr_shear():
@@ -1964,6 +2267,11 @@ def verify_ent():
     ent = Ent.query.order_by('name').all()
     return render_template('verify_ent.html', ent=ent)
 
+@app.route('/comp_ent')
+def comp_ent():
+    ent = Ent.query.order_by('name').all()
+    return render_template('comp_ent.html', ent=ent)
+
 @app.route('/backend_ent', methods=["POST", "GET"])
 def backend_ent():
     if request.method == "POST":
@@ -2053,6 +2361,43 @@ def update_record_ent(id):
 def purchhome():
     note = PurchNotes.query.all()
     return render_template('purchhome.html', note=note)
+
+@app.route('/common_purch')
+def common_purch():
+    # LASER / ENTERPRISE
+    ent = Ent.query.order_by('name').all()
+
+    # TLASER
+    dftl = dbtl()[7]
+    dftl = dftl.drop_duplicates()
+    tl = dftl.values.tolist()
+
+    # FLASER
+    dffl = dbflaser()[7]
+    dffl = dffl.drop_duplicates()
+    fl = dffl.values.tolist()
+
+    # SLASER
+    dfsl = dbslaser()[7]
+    dfsl = dfsl.drop_duplicates()
+    sl = dfsl.values.tolist()
+
+    # SAW
+    dfs = dbsaw()[7]
+    dfs = dfs.drop_duplicates()
+    sa = dfs.values.tolist()
+
+    # SHEAR
+    dfsh = dbshear()[7]
+    dfsh = dfsh.drop_duplicates()
+    sh = dfsh.values.tolist()
+
+    # PUNCH
+    dfp = dbpunch()[7]
+    dfp = dfp.drop_duplicates()
+    pu = dfp.values.tolist()
+
+    return render_template('common_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu)
 
 @app.route('/material_purch')
 def material_purch():

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 align='center'>Update Request</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Request Type</p>  <input type="text" class="form-control formJob" name="rtype" value="{{ data.rtype }}" placeholder="Request Type">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Area</p>  <input type="text" class="form-control formJob" name="area" value="{{ data.area }}" placeholder="Area">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Description</p>  <input type="text" class="form-control formJob" name="desc" value="{{ data.desc }}" placeholder="Description">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Name (Who made Request)</p>  <input type="text" class="form-control formJob" name="name" value="{{ data.name }}" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <input id='donecb' class="formVerify" type="checkbox" value='on' name="done" {% if data.done == 'on' %} checked {% else %} {% endif %}> Completed
+            <input id='donecbhidden' type="hidden" value='' name="done">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Update</button>
+    </form>
+{% endblock %}

@@ -121,7 +121,6 @@ channel.bind('update-record_tl', (data) => {
 
 
 channel.bind('new-record_bd', (data) => {
-    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
    $('#bendd').append(`
         <tr id="${data.data.id}">
             <th scope="row"> ${data.data.matl} </th>
@@ -337,6 +336,32 @@ channel.bind('update-record-ent', (data) => {
         <td> ${data.data.ordrn} </td>
         <td> ${data.data.verf} </td>
         <td> ${data.data.verfn} </td>
+        <td> ${data.data.done} </td>
+    `)
+ });
+
+
+
+
+// TODO LIST
+channel.bind('new-record-todo', (data) => {
+   $('#todo').append(`
+        <tr id="${data.data.id}">
+            <th scope="row"> ${data.data.rtype} </th>
+            <td> ${data.data.area} </td>
+            <td> ${data.data.desc} </td>
+            <td> ${data.data.name} </td>
+            <td> ${data.data.done} </td>
+        </tr>
+   `)
+});
+
+channel.bind('update-record-todo', (data) => {
+    $(`#${data.data.id}`).html(`
+        <th scope="row"> ${data.data.rtype} </th>
+        <td> ${data.data.area} </td>
+        <td> ${data.data.desc} </td>
+        <td> ${data.data.name} </td>
         <td> ${data.data.done} </td>
     `)
  });

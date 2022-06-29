@@ -65,7 +65,8 @@ def dbtl():
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
 
     # DF7 IS FOR ONLY FUTURE JOBS ON TLASER
-    df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    # df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
 
     # DF8 IS FOR ONLY JOBS THAT NEED MATERIAL ON TLASER
@@ -153,35 +154,66 @@ def dbeng():
     df3 = pd.merge(left=df1, right=df2, left_on='JobNo', right_on='job')
     df3lsr = pd.merge(left=df3, right=dflsr, left_on='JobNo', right_on='JobNo')
     if not df3lsr.empty:
-        df3lsr['DueDate'] = df3lsr['DueDate'].dt.strftime('%m/%d')
+        df3lsr['DueDate'] = df3lsr['DueDate'].dt.strftime('%y/%m/%d')
 
     df4 = df3[['JobNo', 'PartNo', 'Revision', 'EstimQty', 'DueDate', 'CustCode', 'User_Text3', 'User_Text2', 'User_Number3', 'OrderNo', 'id', 'eng', 'wip', 'hold', 'hrsn', 'qc', 'apr', 'StepNo', 'qcn', 'model', 'QuoteNo']]
     if not df4.empty:
-        df4['DueDate'] = df4['DueDate'].dt.strftime('%m/%d')
+        df4['DueDate'] = df4['DueDate'].dt.strftime('%y/%m/%d')
 
     # DF5 IS FOR ALL JOBS IN ENGINEERING
     df5 = df4.sort_values(by=['JobNo'], ascending = True)
+    if not df5.empty:
+        dfm = df5['DueDate'].str.split(pat = '/').str[1]
+        dfd = df5['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df5['ShowDate'] = dfn
 
     # DF6 IS FOR ONLY TBR JOBS IN ENGINEERING
     df6 = df4.loc[df4['User_Text2'] == '2. TBR']
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
+    if not df6.empty:
+        dfm = df6['DueDate'].str.split(pat = '/').str[1]
+        dfd = df6['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df6['ShowDate'] = dfn
 
     # DF7 IS FOR ONLY FUTURE JOBS IN ENGINEERING (NO REPEATS)
     df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
     df7 = df7.loc[df7['User_Text3'] != 'REPEAT']
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
+    if not df7.empty:
+        dfm = df7['DueDate'].str.split(pat = '/').str[1]
+        dfd = df7['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df7['ShowDate'] = dfn
 
     # DF8 IS FOR ONLY REPEAT JOBS IN ENGINEERING (SORT TOWER IN ROUTES.PY)
     df8 = df3lsr
     df8 = df8.loc[df8['User_Text2'] != '7. ON HOLD']
+    df8 = df8.sort_values(by=['DueDate'], ascending = True)
+    if not df8.empty:
+        dfm = df8['DueDate'].str.split(pat = '/').str[1]
+        dfd = df8['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df8['ShowDate'] = dfn
 
     # DF9 IS FOR JOBS THAT ARE READY TO BE CHECKED BY QC
     df9 = df4.loc[df4['qc'] == 'on']
     df9 = df9.sort_values(by=['User_Text2', 'DueDate'], ascending = (False, True))
+    if not df9.empty:
+        dfm = df9['DueDate'].str.split(pat = '/').str[1]
+        dfd = df9['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df9['ShowDate'] = dfn
 
     # DF10 IS FOR ONLY JOBS THAT ARE ON HOLD IN ENGINEERING
     df10 = df4.loc[df4['hold'] == 'on']
     df10 = df10.sort_values(by=['User_Text2', 'DueDate'], ascending = (False, True))
+    if not df3lsr.empty:
+        dfm = df10['DueDate'].str.split(pat = '/').str[1]
+        dfd = df10['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df10['ShowDate'] = dfn
 
     # DF11 IS FOR ONLY JOBS THAT HAVE NO CUSTOMER MODELS
     df11a = df4.loc[df4['User_Text3'] == 'NEW']
@@ -760,7 +792,8 @@ def dbsaw():
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
 
     # DF7 IS FOR ONLY FUTURE JOBS ON SAW
-    df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    # df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
 
     # DF8 IS FOR ONLY JOBS THAT NEED MATERIAL ON SAW
@@ -957,7 +990,8 @@ def dbshear():
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
 
     # DF7 IS FOR ONLY FUTURE JOBS ON SHEAR
-    df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    # df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
 
     # DF8 IS FOR ONLY JOBS THAT NEED MATERIAL ON SHEAR
@@ -1049,7 +1083,8 @@ def dbslaser():
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
 
     # DF7 IS FOR ONLY FUTURE JOBS ON SLASER
-    df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    # df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
 
     # DF8 IS FOR ONLY JOBS THAT NEED MATERIAL ON SLASER
@@ -1133,7 +1168,9 @@ def dbpunch():
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
 
     # DF7 IS FOR ONLY FUTURE JOBS ON PUNCH
-    df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    # df7 = df4.loc[df4['User_Text2'] != '2. TBR']
+    # df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
 
     # DF8 IS FOR ONLY JOBS THAT NEED MATERIAL ON PUNCH
@@ -1224,7 +1261,8 @@ def dbflaser():
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
 
     # DF7 IS FOR ONLY FUTURE JOBS ON FLASER
-    df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    # df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
+    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
 
     # DF8 IS FOR ONLY JOBS THAT NEED MATERIAL ON FLASER

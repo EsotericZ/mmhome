@@ -1,7 +1,7 @@
 {% extends 'entbase.html' %}
 
 {% block content %}
-    <h1 align='center'>Ready To Run</h1>
+    <h1 align='center'>Completed</h1>
     <br>
     <body>
         <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
@@ -12,7 +12,7 @@
                     <th scope="col">Program Notes</th>
                 </tr>
             {% for t in ent %}
-                {% if t.done != 'on' and t.verf == 'on' %}
+                {% if t.done == 'on' %}
                     <tr id={{ t.id }}>
                         <td><a href="/edit_ent/{{ t.id }}"><span style="font-weight:bold">{{ t.name }}</span></a></th>
                         <td align='center'> {{ t.needn }} </td>

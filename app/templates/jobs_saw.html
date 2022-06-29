@@ -1,0 +1,175 @@
+{% extends 'sawbase.html' %}
+
+{% block content %}
+    <h1 align='center'>All Jobs</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Job No</th>
+                    <th scope="col">Step No</th>
+                    <th scope="col">Part No</th>
+                    <th scope="col">Revision</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
+                    <!-- <th scope="col">Print Date</th> -->
+                    <th scope="col">Customer</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Need</th>
+                    <th scope="col">On Order</th>
+                    <th scope="col">Expected</th>
+                    <th scope="col">In House</th>
+                    <th scope="col">Materials</th>
+                    <th scope="col">Cut List</th>
+                </tr>
+                <tr class="header">
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8" style="font-weight:bold">TBR</th>
+                    <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
+                </tr>
+                <!-- <tr> -->
+                <!--     <td colspan="15" bgcolor="D1BBA8" style="font-weight:bold">TBR Jobs</td> -->
+                <!-- </tr> -->
+            {% for t in st %}
+                <tr id={{ t[10] }}>
+                    <td><a href="/edit_saw/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                    <td align='center'> {{ t[18] }} </td>
+                    <td align='center'> {{ t[1] }} </td>
+                    <td align='center'> {{ t[2] }} </td>
+                    <td align='center'> {{ t[3] }} </td>
+                    <td align='center'> {{ t[4] }} </td>
+                    <!-- <td align='center'> {{ t[19] }} </td> -->
+                    <td align='center'> {{ t[5] }} </td>
+                    <td align='center'> {{ t[6] }} </td>
+                    <td align='center'> {% if t[11] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'> {% if t[13] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'> {{ t[14] }} </td>
+                    <td align='center'> {% if t[15] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[20] }}</code></pre></td>
+                    <td><button type="button" class="clBtn btn btn-primary" data-toggle="modal" data-target="#t{{ t[0] }}">...</button></td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="t{{ t[0] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cut List   |   {{ t[1] }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <pre style="font-size:1.1em; margin: 0; top: 50%;">{{ t[17] }}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+            <tr class="header">
+                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+                <th scope="col" bgcolor="D1BBA8"></th>
+            </tr>
+            <tr class="header">
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8" style="font-weight:bold">Future</th>
+                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
+            </tr>
+            {% for t in sf %}
+                <tr id={{ t[10] }}>
+                    <td><a href="/edit_saw/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
+                    <td align='center'> {{ t[18] }} </td>
+                    <td align='center'> {{ t[1] }} </td>
+                    <td align='center'> {{ t[2] }} </td>
+                    <td align='center'> {{ t[3] }} </td>
+                    <td align='center'> {{ t[4] }} </td>
+                    <!-- <td align='center'> {{ t[19] }} </td> -->
+                    <td align='center'> {{ t[5] }} </td>
+                    <td align='center'> {{ t[6] }} </td>
+                    <td align='center'> {% if t[11] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'> {% if t[13] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'> {{ t[14] }} </td>
+                    <td align='center'> {% if t[15] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[20] }}</code></pre></td>
+                    <td><button type="button" class="clBtn btn btn-primary" data-toggle="modal" data-target="#t{{ t[0] }}">...</button></td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="t{{ t[0] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cut List   |   {{ t[1] }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <pre style="font-size:1.1em; margin: 0; top: 50%;">{{ t[17] }}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[2].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[5].textContent.toUpperCase();
+        var fourthCol = rows[i].cells[7].textContent.toUpperCase();
+        var fifthCol = rows[i].cells[8].textContent.toUpperCase();
+        var sixthCol = rows[i].cells[12].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1 || sixthCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+{% endblock %}

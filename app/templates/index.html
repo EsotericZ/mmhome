@@ -3,175 +3,31 @@
 {% block content %}
     <h1 align="center">Monarch Metal Home</h1>
     <br>
+    <h2 align="center">All Current Requests / Bug Reports</h2>
+    <br>
     <body>
-
-        <!-- <table align="center"> -->
-        <!--     <tr> -->
-        <!--         <td> -->
-        <!--             <a href="http://10.0.1.78/monarch_jobdisplay"> -->
-        <!--                 <img alt="Display List" -->
-        <!--                      src="https://ia601407.us.archive.org/4/items/owl_20200429/owl.jpg" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <td> -->
-        <!--             <a href="http://e2webserver/E2Shop/t1/"> -->
-        <!--                 <img alt="E2" -->
-        <!--                      src="https://archive.org/download/tlsched/newburgh-metals-_0001s_0004s_0000_e2logontfinal.jpg" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <td> -->
-        <!--             <a href="http://10.0.1.50:5000"> -->
-        <!--                 <img alt="Material Rack" -->
-        <!--                      src="https://ia601407.us.archive.org/4/items/owl_20200429/owl.jpg" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--     </tr> -->
-        <!--     <tr> -->
-        <!--         <td class="disabled" align="center">Display List</td> -->
-        <!--         <td class="disabled" align="center">E2 Shop System</td> -->
-        <!--         <td class="disabled" align="center">Material Rack</td> -->
-        <!--     </tr> -->
-
-
-
-
-        <!--     <tr> -->
-        <!--         <!-1- <td> -1-> -->
-        <!--         <!-1-     <a href="{{ url_for('tlhome') }}"> -1-> -->
-        <!--         <!-1-         <img alt="TL Scheduler" -1-> -->
-        <!--         <!-1-              src="https://archive.org/download/tlsched/tlsched.png" -1-> -->
-        <!--         <!-1-              width="350" height="200"> -1-> -->
-        <!--         <!-1-     </a> -1-> -->
-        <!--         <!-1- </td> -1-> -->
-        <!--         <!-1- <td> -1-> -->
-        <!--         <!-1-     <a href="http://10.0.1.73:8080/#/"> -1-> -->
-        <!--         <!-1-         <img alt="Solidworks" -1-> -->
-        <!--         <!-1-              src="https://archive.org/download/solidworks_202011/solidworks.jpg" -1-> -->
-        <!--         <!-1-              width="350" height="200"> -1-> -->
-        <!--         <!-1-     </a> -1-> -->
-        <!--         <!-1- </td> -1-> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('invhome') }}"> -->
-        <!--                 <img alt="Purchasing" -->
-        <!--                      src="https://ia601407.us.archive.org/4/items/owl_20200429/owl.jpg" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('enghome') }}"> -->
-        <!--                 <img alt="Engineering" -->
-        <!--                      src="https://archive.org/download/eng_20200608/eng.jpg" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('machhome') }}"> -->
-        <!--                 <img alt="Machining" -->
-        <!--                      src="https://archive.org/download/drillpressimage1/drillpressimage1.jpg" -->
-        <!--                      "https://archive.org/download/machining-3/machining-3.png" -->
-        <!--                      "https://archive.org/download/owl_20200429/construction.png" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--     </tr> -->
-        <!--     <tr> -->
-        <!--         <!-1- <td class="disabled" align="center">Tube Laser Scheduler</td> -1-> -->
-        <!--         <td class="disabled" align="center">Inventory Management</td> -->
-        <!--         <!-1- <td class="disabled" align="center">Solidworks</td> -1-> -->
-        <!--         <td class="disabled" align="center">Engineering</td> -->
-        <!--         <td class="disabled" align="center">Machining</td> -->
-        <!--     </tr> -->
-
-
-
-        <!--     <tr> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('forming') }}"> -->
-        <!--                 <img alt="Forming WIP" -->
-        <!--                      src="https://archive.org/download/tlsched/tlsched.png" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--             <!-1- <a href="http://10.0.1.51:5001"> -1-> -->
-        <!--             <!-1-     <img alt="Estimation" -1-> -->
-        <!--             <!-1-          src="https://archive.org/download/dn-zest/DnZest.jpg" -1-> -->
-        <!--             <!-1-          width="350" height="200"> -1-> -->
-        <!--             <!-1- </a> -1-> -->
-        <!--             <!-1- <a href="{{ url_for('test') }}"> -1-> -->
-        <!--             <!-1-     <img alt="Password Test" -1-> -->
-        <!--             <!-1-          src="https://archive.org/download/shield-2854067_960_720/shield-2854067_960_720.jpg" -1-> -->
-        <!--             <!-1-          width="350" height="200"> -1-> -->
-        <!--             <!-1- </a> -1-> -->
-        <!--         </td> -->
-        <!--         <!-1- <td> -1-> -->
-        <!--         <!-1-     <a href="{{ url_for('invhome') }}"> -1-> -->
-        <!--         <!-1-         <img alt="Purchasing" -1-> -->
-        <!--         <!-1-              src="https://ia601407.us.archive.org/4/items/owl_20200429/owl.jpg" -1-> -->
-        <!--         <!-1-              width="350" height="200"> -1-> -->
-        <!--         <!-1-     </a> -1-> -->
-        <!--         <!-1- </td> -1-> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('sawhome') }}"> -->
-        <!--                 <img alt="Saw Scheduler" -->
-        <!--                      src="https://archive.org/download/tlsched/tlsched.png" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('tlhome') }}"> -->
-        <!--                 <img alt="TL Scheduler" -->
-        <!--                      src="https://archive.org/download/tlsched/tlsched.png" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <!-1- <td> -1-> -->
-        <!--         <!-1-     <a href="{{ url_for('invhome') }}"> -1-> -->
-        <!--         <!-1-         <img alt="Converter" -1-> -->
-        <!--         <!-1-              src="https://archive.org/download/owl_20200429/construction.png" -1-> -->
-        <!--         <!-1-              width="350" height="200"> -1-> -->
-        <!--         <!-1-     </a> -1-> -->
-        <!--         <!-1- </td> -1-> -->
-        <!--     </tr> -->
-        <!--     <tr> -->
-        <!--         <!-1- <td class="disabled" align="center">Estimation</td> -1-> -->
-        <!--         <td class="disabled" align="center">Forming WIP</td> -->
-        <!--         <td class="disabled" align="center">Saw Scheduler</td> -->
-        <!--         <!-1- <td class="disabled" align="center">Converter</td> -1-> -->
-        <!--         <td class="disabled" align="center">Tube Laser Scheduler</td> -->
-        <!--     </tr> -->
-
-
-        <!--     <tr> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('shearhome') }}"> -->
-        <!--                 <img alt="Forming WIP" -->
-        <!--                      src="https://archive.org/download/tlsched/tlsched.png" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <td> -->
-        <!--             <a href="{{ url_for('slaserhome') }}"> -->
-        <!--                 <img alt="Saw Scheduler" -->
-        <!--                      src="https://archive.org/download/tlsched/tlsched.png" -->
-        <!--                      width="350" height="200"> -->
-        <!--             </a> -->
-        <!--         </td> -->
-        <!--         <!-1- <td> -1-> -->
-        <!--         <!-1-     <a href="{{ url_for('tlhome') }}"> -1-> -->
-        <!--         <!-1-         <img alt="TL Scheduler" -1-> -->
-        <!--         <!-1-              src="https://archive.org/download/tlsched/tlsched.png" -1-> -->
-        <!--         <!-1-              width="350" height="200"> -1-> -->
-        <!--         <!-1-     </a> -1-> -->
-        <!--         <!-1- </td> -1-> -->
-        <!--     </tr> -->
-        <!--     <tr> -->
-        <!--         <td class="disabled" align="center">Shear Scheduler</td> -->
-        <!--         <td class="disabled" align="center">Static Laser Scheduler</td> -->
-        <!--         <!-1- <td class="disabled" align="center">Tube Laser Scheduler</td> -1-> -->
-        <!--     </tr> -->
-
-        <!-- </table> -->
+        <table id="myTable">
+            <tr class="header">
+                <th scope="col">ID</th>
+                <th scope="col">Type</th>
+                <th scope="col">Area</th>
+                <th scope="col">Description</th>
+                <th scope="col">Requester</th>
+            </tr>
+            {% for t in todos %}
+                {% if t.done != 'on' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_todo/{{ t.id }}"><span style="font-weight:bold">{{ t.id }}</span></a></th>
+                        <td align='center'> {{ t.rtype }} </td>
+                        <td align='center'> {{ t.area }} </td>
+                        <td align='center'> {{ t.desc }} </td>
+                        <td align='center'> {{ t.name }} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <a href="backend_todo">
+            <button class="btn btn-block btn-primary todoBtn">Add New</button>
+        </a>
     </body>
 {% endblock %}
