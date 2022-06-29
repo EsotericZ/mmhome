@@ -15,6 +15,7 @@ Not for public use
 
 ## Usage
 Scheduling and job tracking for manufacturing company
+![Alt text](/public/images/background.png?raw=true "Screenshot")  
 
 ## Contributing
 Not for public use
