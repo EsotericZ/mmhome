@@ -6,22 +6,24 @@ Internal homepage for Monarch Metal Manufacturing for use in Engineering, schedu
 ## Table of Contents
 - [Installation](#Installation)
 - [Usage](#Usage)
+- [Technologies](#Technologies)
 - [Contributing](#Contributing)
-- [Tests](#Tests)
 - [Questions](#Questions)
 
 ## Installation
 Not for public use
 
 ## Usage
-Scheduling and job tracking for manufacturing company
+Scheduling and job tracking for manufacturing company  
+
 ![Alt text](/public/images/background.png?raw=true "Screenshot")  
+
+## Technologies
+Technologies used in this application:  
+Flask, conda, HTML, JSS, bootstrap, sqlite3
 
 ## Contributing
 Not for public use
-
-## Tests
-n/a
 
 ## Questions
 GitHub Profile: [EsotericZ](https://www.github.com/EsotericZ)
