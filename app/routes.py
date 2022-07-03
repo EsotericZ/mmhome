@@ -220,7 +220,7 @@ def repeat():
     eng = [x + [0] for x in eng]
     for e in eng:
         if e[1] in pr:
-            e[27] = 'x'
+            e[28] = 'x'
     return render_template('repeat.html', eng=eng)
 
 @app.route('/repeat_add')
@@ -246,7 +246,7 @@ def repeat_add():
     eng = [x + [0] for x in eng]
     for e in eng:
         if e[1] in pr:
-            e[27] = 'x'
+            e[28] = 'x'
     return render_template('repeat_add.html', eng=eng)
 
 @app.route('/quality')
@@ -573,7 +573,6 @@ def tlhome():
 @app.route('/jobs_tl')
 def jobs_tl():
     df6 = dbtl()[1]
-
     st = df6.values.tolist()
     for t in st:
         unCut = []
