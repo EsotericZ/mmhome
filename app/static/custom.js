@@ -365,3 +365,29 @@ channel.bind('update-record-todo', (data) => {
         <td> ${data.data.done} </td>
     `)
  });
+
+
+
+
+// MAINTENANCE TODO LIST
+channel.bind('new-record-mtodo', (data) => {
+   $('#mtodo').append(`
+        <tr id="${data.data.id}">
+            <th scope="row"> ${data.data.rtype} </th>
+            <td> ${data.data.area} </td>
+            <td> ${data.data.desc} </td>
+            <td> ${data.data.name} </td>
+            <td> ${data.data.done} </td>
+        </tr>
+   `)
+});
+
+channel.bind('update-record-mtodo', (data) => {
+    $(`#${data.data.id}`).html(`
+        <th scope="row"> ${data.data.rtype} </th>
+        <td> ${data.data.area} </td>
+        <td> ${data.data.desc} </td>
+        <td> ${data.data.name} </td>
+        <td> ${data.data.done} </td>
+    `)
+ });

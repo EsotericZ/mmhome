@@ -7,7 +7,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, jso
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, Todo
+from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, Todo, MTodo
 from werkzeug.urls import url_parse
 from database import db_session
 from datetime import datetime
@@ -2808,3 +2808,82 @@ def update_record_entn(id):
         new_entn = EntNotes.query.get(id)
 
         return render_template('update_entnotes.html', data=new_entn)
+
+
+
+
+
+# MAINTENANCE
+@app.route('/maintenance')
+def maintenance():
+    mtodos = MTodo.query.order_by('id').all()
+    return render_template('maintenance.html', title='Monarch Home', mtodos=mtodos)
+
+@app.route('/completed_maint')
+def completed_maint():
+    mtodos = MTodo.query.order_by('id').all()
+    return render_template('completed_maint.html', title='Monarch Home', mtodos=mtodos)
+
+@app.route('/backend_maint', methods=["POST", "GET"])
+def backend_maint():
+    if request.method == "POST":
+        rtype = request.form["rtype"]
+        area = request.form["area"]
+        desc = request.form["desc"]
+        name = request.form["name"]
+        done = request.form["done"]
+
+        new_mtodo = MTodo(rtype, area, desc, name, done)
+        db_session.add(new_mtodo)
+        db_session.commit()
+
+        data = {
+            "id": new_mtodo.id,
+            "rtype": rtype,
+            "area": area,
+            "desc": desc,
+            "name": name,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'new-record-mtodo', {'data': data })
+
+        return redirect("/maintenance", code=302)
+    else:
+        mtodos = MTodo.query.all()
+        return render_template('backend_maint.html', mtodos=mtodos)
+
+@app.route('/edit_maint/<int:id>', methods=["POST", "GET"])
+def update_record_mtodo(id):
+    if request.method == "POST":
+        rtype = request.form["rtype"]
+        area = request.form["area"]
+        desc = request.form["desc"]
+        name = request.form["name"]
+        done = request.form["done"]
+
+        update_mtodo = MTodo.query.get(id)
+        update_mtodo.rtype = rtype
+        update_mtodo.area = area
+        update_mtodo.desc = desc
+        update_mtodo.name = name
+        update_mtodo.done = done
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "rtype": rtype,
+            "area": area,
+            "desc": desc,
+            "name": name,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'update-record-mtodo', {'data': data })
+
+        return redirect("/maintenance", code=302)
+    else:
+        new_mtodo = MTodo.query.get(id)
+
+        return render_template('update_mtodo.html', data=new_mtodo)

@@ -1,0 +1,25 @@
+{% extends 'maintbase.html' %}
+
+{% block content %}
+    <h1 align='center'>New Request</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Type of Request</p> <input type="text" class="form-control formName" name="rtype">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Area / Department</p> <input type="text" class="form-control formName" name="area">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Description</p> <input type="text" class="form-control formName" name="desc">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Name (Who is Requesting)</p> <input type="text" class="form-control formName" name="name">
+        </div>
+        <div class="form-group" style="display: none">
+            <input type="text" class="form-control" name="done" placeholder="Need Checkbox">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Submit</button>
+    </form>
+{% endblock %}

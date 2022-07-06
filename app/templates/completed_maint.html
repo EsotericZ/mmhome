@@ -1,0 +1,28 @@
+{% extends "maintbase.html" %}
+
+{% block content %}
+    <h2 align="center">Maintenance Completed</h2>
+    <br>
+    <body>
+        <table id="myTable">
+            <tr class="header">
+                <th scope="col">ID</th>
+                <th scope="col">Type</th>
+                <th scope="col">Area</th>
+                <th scope="col">Description</th>
+                <th scope="col">Requester</th>
+            </tr>
+            {% for t in mtodos %}
+                {% if t.done == 'on' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_maint/{{ t.id }}"><span style="font-weight:bold">{{ t.id }}</span></a></th>
+                        <td align='center'> {{ t.rtype }} </td>
+                        <td align='center'> {{ t.area }} </td>
+                        <td align='center'> {{ t.desc }} </td>
+                        <td align='center'> {{ t.name }} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </body>
+{% endblock %}

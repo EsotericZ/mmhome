@@ -376,9 +376,57 @@ class Ent(Base):
 
 
 
+# SUPPLIES
+class Supplies(Base):
+    __tablename__ = 'supplies'
+
+    id = Column(Integer, primary_key=True)
+    dept = Column(String(120))
+    need = Column(Integer())
+    desc = Column(String(120))
+    ordr = Column(Integer())
+    ordrn = Column(String(120))
+    done = Column(Integer())
+
+    def __init__(self, dept=None, need=None, desc=None, ordr=None, ordrn=None, done=None):
+        self.dept = dept
+        self.need = need
+        self.desc = desc
+        self.ordr = ordr
+        self.ordrn = ordrn
+        self.done = done
+
+    def __repr__(self):
+        return '<Job %r>' % (self.dept)
+
+
+
 # TODO LIST
 class Todo(Base):
     __tablename__ = 'todo'
+
+    id = Column(Integer, primary_key=True)
+    rtype = Column(String(120))
+    area = Column(String(120))
+    desc = Column(String(120))
+    name = Column(String(120))
+    done = Column(Integer())
+
+    def __init__(self, rtype=None, area=None, desc=None, name=None, done=None):
+        self.rtype = rtype
+        self.area = area
+        self.desc = desc
+        self.name = name
+        self.done = done
+
+    def __repr__(self):
+        return '<Job %r>' % (self.desc)
+
+
+
+# MAINTENANCE TODO
+class MTodo(Base):
+    __tablename__ = 'mtodo'
 
     id = Column(Integer, primary_key=True)
     rtype = Column(String(120))
