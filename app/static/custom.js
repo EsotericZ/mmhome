@@ -282,6 +282,16 @@ channel.bind('update-record_entn', (data) => {
 
 
 
+// SUPPLIES NOTES
+channel.bind('update-record_supn', (data) => {
+    $(`#${data.data.id}`).html(`
+        <td> ${data.data.area} </td>
+        <td> ${data.data.notes} </td>
+    `)
+ });
+
+
+
 // PURCHASING NOTES
 channel.bind('update-record_purchn', (data) => {
     $(`#${data.data.id}`).html(`
@@ -388,6 +398,37 @@ channel.bind('update-record-mtodo', (data) => {
         <td> ${data.data.area} </td>
         <td> ${data.data.desc} </td>
         <td> ${data.data.name} </td>
+        <td> ${data.data.done} </td>
+    `)
+ });
+
+
+
+
+
+// SUPPLIES
+channel.bind('new-record-supplies', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+   $('#supplies').append(`
+        <tr id="${data.data.id}">
+            <th scope="row"> ${data.data.dept} </th>
+            <td> ${data.data.need} </td>
+            <td> ${data.data.desc} </td>
+            <td> ${data.data.ordr} </td>
+            <td> ${data.data.ordrn} </td>
+            <td> ${data.data.done} </td>
+        </tr>
+   `)
+});
+
+channel.bind('update-record-supplies', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    $(`#${data.data.id}`).html(`
+        <th scope="row"> ${data.data.dept} </th>
+        <td> ${data.data.need} </td>
+        <td> ${data.data.desc} </td>
+        <td> ${data.data.ordr} </td>
+        <td> ${data.data.ordrn} </td>
         <td> ${data.data.done} </td>
     `)
  });

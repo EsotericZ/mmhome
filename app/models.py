@@ -347,6 +347,23 @@ class EntNotes(Base):
 
 
 
+# SUPPLIES NOTES
+class SupNotes(Base):
+    __tablename__ = 'supnotes'
+
+    id = Column(Integer, primary_key=True)
+    area = Column(String(50))
+    notes = Column(String(1000))
+
+    def __init__(self, area=None, notes=None):
+        self.area = area
+        self.notes = notes
+
+    def __repr__(self):
+        return '<Notes %r>' % (self.area)
+
+
+
 # ENTERPRISE
 class Ent(Base):
     __tablename__ = 'ent'

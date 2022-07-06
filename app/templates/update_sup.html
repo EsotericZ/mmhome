@@ -1,0 +1,31 @@
+{% extends 'supbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Edit</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Department</p>  <input type="text" class="form-control formJob" name="dept" value="{{ data.dept }}" placeholder="Department for Supplies Needed">
+        </div>
+        <div class="form-group" style="display:none;">
+            <input id='mtlcb' class="formMtl" type="checkbox" value='on' name="need" {% if data.need == 'on' %} checked {% else %} {% endif %}> Supplies Needed
+            <input id='mtlcbhidden' type="hidden" value='' name="need" style="display:none">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Description</p>  <textarea type="text" class="form-control formMtlN" name="desc" value="{{ data.desc }}">{{ data.desc }}</textarea>
+        </div>
+        <div class="form-group">
+            <input id='pgmcb' class="formOrder" type="checkbox" value='on' name="ordr" {% if data.ordr == 'on' %} checked {% else %} {% endif %}> On Order
+            <input id='pgmcbhidden' type="hidden" value='' name="ordr">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Notes</p>  <input type="text" class="form-control formDate" name="ordrn" value="{{ data.ordrn }}">
+        </div>
+        <div class="form-group">
+            <input id='donecb' class="formVerify" type="checkbox" value='on' name="done" {% if data.done == 'on' %} checked {% else %} {% endif %}> Job Completed
+            <input id='donecbhidden' type="hidden" value='' name="done">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Update</button>
+    </form>
+{% endblock %}

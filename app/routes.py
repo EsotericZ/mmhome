@@ -7,7 +7,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, jso
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, Todo, MTodo
+from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies
 from werkzeug.urls import url_parse
 from database import db_session
 from datetime import datetime
@@ -2354,6 +2354,101 @@ def update_record_ent(id):
 
 
 
+# # # SUPPLIES # # #
+
+@app.route('/supplies')
+def supplies():
+    note = SupNotes.query.all()
+    return render_template('supplies.html', note=note)
+
+@app.route('/material_sup')
+def material_sup():
+    sup = Supplies.query.order_by('id').all()
+    return render_template('material_sup.html', sup=sup)
+
+@app.route('/onorder_sup')
+def onorder_sup():
+    sup = Supplies.query.order_by('id').all()
+    return render_template('onorder_sup.html', sup=sup)
+
+@app.route('/comp_sup')
+def comp_sup():
+    sup = Supplies.query.order_by('id').all()
+    return render_template('comp_sup.html', sup=sup)
+
+@app.route('/backend_sup', methods=["POST", "GET"])
+def backend_sup():
+    if request.method == "POST":
+        dept = request.form["dept"]
+        need = request.form["need"]
+        desc = request.form["desc"]
+        ordr = request.form["ordr"]
+        ordrn = request.form["ordrn"]
+        done = request.form["done"]
+
+        new_sup = Supplies(dept, need, desc, ordr, ordrn, done)
+        db_session.add(new_sup)
+        db_session.commit()
+
+        data = {
+            "id": new_sup.id,
+            "dept": dept,
+            "need": need,
+            "desc": desc,
+            "ordr": ordr,
+            "ordrn": ordrn,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'new-record-supplies', {'data': data })
+
+        return redirect("/supplies", code=302)
+    else:
+        sup = Supplies.query.all()
+        return render_template('backend_sup.html', sup=sup)
+
+@app.route('/edit_sup/<int:id>', methods=["POST", "GET"])
+def update_record_supplies(id):
+    if request.method == "POST":
+        dept = request.form["dept"]
+        need = request.form["need"]
+        desc = request.form["desc"]
+        ordr = request.form["ordr"]
+        ordrn = request.form["ordrn"]
+        done = request.form["done"]
+
+        update_sup = Supplies.query.get(id)
+        update_sup.dept = dept
+        update_sup.need = need
+        update_sup.desc = desc
+        update_sup.ordr = ordr
+        update_sup.ordrn = ordrn
+        update_sup.done = done
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "dept": dept,
+            "need": need,
+            "desc": desc,
+            "ordr": ordr,
+            "ordrn": ordrn,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'update-record-supplies', {'data': data })
+
+        return redirect("/supplies", code=302)
+    else:
+        new_sup = Supplies.query.get(id)
+
+        return render_template('update_sup.html', data=new_sup)
+
+
+
+
+
 # # # PURCHASING # # #
 
 @app.route('/purchhome')
@@ -2396,7 +2491,10 @@ def common_purch():
     dfp = dfp.drop_duplicates()
     pu = dfp.values.tolist()
 
-    return render_template('common_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu)
+    # LASER / ENTERPRISE
+    sup = Supplies.query.order_by('id').all()
+
+    return render_template('common_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
 
 @app.route('/material_purch')
 def material_purch():
@@ -2439,7 +2537,10 @@ def material_purch():
     dfp = dfp.sort_values(by = ['DueDate', 'JobNo'])
     pu = dfp.values.tolist()
 
-    return render_template('material_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu)
+    # SUPPLIES
+    sup = Supplies.query.order_by('id').all()
+
+    return render_template('material_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
 
 @app.route('/onorder_purch')
 def onorder_purch():
@@ -2482,7 +2583,10 @@ def onorder_purch():
     dfp = dfp.sort_values(by = ['DueDate', 'JobNo'])
     pu = dfp.values.tolist()
 
-    return render_template('onorder_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu)
+    # SUPPLIES
+    sup = Supplies.query.order_by('id').all()
+
+    return render_template('onorder_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
 
 
 
@@ -2808,6 +2912,35 @@ def update_record_entn(id):
         new_entn = EntNotes.query.get(id)
 
         return render_template('update_entnotes.html', data=new_entn)
+
+
+
+# PAGE NOTES SUPPLIES
+@app.route('/edit_supn/<int:id>', methods=["POST", "GET"])
+def update_record_supn(id):
+    if request.method == "POST":
+        area = request.form["area"]
+        notes = request.form["notes"]
+
+        update_supnotes = SupNotes.query.get(id)
+        update_supnotes.area = area
+        update_supnotes.notes = notes
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "area": area,
+            "notes": notes
+        }
+
+        pusher_client.trigger('table', 'update-record_supn', {'data': data })
+
+        return redirect("/supplies", code=302)
+    else:
+        new_supn = SupNotes.query.get(id)
+
+        return render_template('update_supnotes.html', data=new_supn)
 
 
 

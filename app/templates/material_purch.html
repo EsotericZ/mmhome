@@ -170,6 +170,28 @@
                 {% endfor %}
                 </table>
             {% endif %}
+            <br>
+            <br>
+            <br>
+            <h2 align='center'>Supplies</h2>
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">ID</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Notes</th>
+                </tr>
+            {% for t in sup %}
+                {% if t.done != 'on' and t.ordr != 'on' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_sup/{{ t.id }}"><span style="font-weight:bold">{{ t.id }}</span></a></th>
+                        <td align='center'> {{ t.dept }} </td>
+                        <td align='center'> {{ t.desc }} </td>
+                        <td align='center'> {{ t.ordrn }} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </table>
 
 <!-- <script> -->
 <!-- function filterTable(event) { -->

@@ -1,0 +1,49 @@
+{% extends 'supbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Supplies Needed</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">ID</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Notes</th>
+                </tr>
+            {% for t in sup %}
+                {% if t.done != 'on' and t.ordr != 'on' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_sup/{{ t.id }}"><span style="font-weight:bold">{{ t.id }}</span></a></th>
+                        <td align='center'> {{ t.dept }} </td>
+                        <td align='center'> {{ t.desc }} </td>
+                        <td align='center'> {{ t.ordrn }} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[1].textContent.toUpperCase();
+        var secondCol = rows[i].cells[2].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[3].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1) || thirdCol.indexOf(filter) > -1 {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+    </body>
+
+{% endblock %}
