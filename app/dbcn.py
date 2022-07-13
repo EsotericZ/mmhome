@@ -13,18 +13,12 @@ pd.options.mode.chained_assignment = None
 
 def dbtl():
     # TUBE LASER SCHEDULER
-    # server = '10.0.1.120\E2SQL'
-    # server = '10.0.1.224\E2SQLSERVER'
-
     server = '10.0.1.130\E2SQLSERVER'
-    # server = '10.0.1.130\E2SQLSERVER, 1433'
-    # db = 'MONARCH'
     db = 'MONARCH_SHOP'
     un = 'sa'
     pw = 'Mon@rch09'
 
     cnxn = p.connect('DRIVER={/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.5.so.2.1};SERVER='+server+';DATABASE='+db+';UID='+un+';PWD='+pw)
-    # cnxn = p.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+db+';UID='+un+';PWD='+pw)
     sql = """SELECT R.OrderNo, R.JobNo, R.StepNo, R.WorkCntr, R.Status, D.PartNo, D.PartDesc, D.Revision, D.QtyToMake, D.User_Text2, D.User_Text3, D.User_Number3, D.DueDate, O.CustCode, E.User_Memo1, D.User_Date1 \
                    FROM OrderRouting R INNER JOIN OrderDet D ON R.JobNo=D.JobNo INNER JOIN ORDERS O ON D.OrderNo=O.OrderNo INNER JOIN Estim E ON D.PartNo=E.PartNo\
                    WHERE D.Status='Open' AND R.Status!='Finished' AND R.Status!='Closed' AND R.WorkCntr='211 TLASER'"""
@@ -35,6 +29,7 @@ def dbtl():
                    FROM OrderRouting R INNER JOIN OrderDet D ON R.JobNo=D.JobNo INNER JOIN ORDERS O ON D.OrderNo=O.OrderNo \
                    WHERE D.Status='Open' AND R.Status='Finished' AND R.WorkCntr='101 ENGIN'"""
     df1 = pd.read_sql(sql, con=cnxn)
+    dff = df1.values.tolist()
     df2n = pd.read_sql(sql2, con=cnxn)
     df11 = pd.read_sql(sql11, con=cnxn)
     df12 = pd.merge(left=df1, right=df11, left_on='JobNo', right_on='JobNo')
@@ -57,6 +52,27 @@ def dbtl():
     df4['User_Date1'] = df4['User_Date1'].dt.strftime('%m/%d')
     df4['User_Date1'] = df4['User_Date1'].fillna('-')
 
+    # DOES PROGRAM EXIST FOR CURRENT JOB NUMBER
+    fe = []
+    r = []
+    for f in dff:
+        job = f[1]
+        part = f[5]
+        cust = f[13]
+        # TLASER FILE
+        cad = 'TLASER'
+        server = '/run/user/1000/gvfs/smb-share:server=tower.local,share=production/'
+        path = server+'/'+cust+'/'+part+'/'+cad
+        d = os.path.exists(path)
+        r = []
+        if d == True:
+            r += [each for each in os.listdir(path) if each.lower().endswith(('.atd'))]
+            if r:
+                fe.append(job)
+    print('fe', fe)
+    dfp = pd.DataFrame(fe, columns=['JobNo'])
+    print(dfp)
+
     # DF5 IS FOR ALL JOBS ON TLASER
     df5 = df4.sort_values(by=['JobNo'], ascending = True)
 
@@ -70,7 +86,6 @@ def dbtl():
         df6['ShowDate'] = dfn
 
     # DF7 IS FOR ONLY FUTURE JOBS ON TLASER
-    # df7 = df4.loc[df4['User_Text2'] == '1. OFFICE']
     df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
     if not df7.empty:
@@ -660,6 +675,8 @@ def ships():
     df = pd.read_sql(sql, con=cnxn)
     # print(df)
     return df
+
+
 
 
 
