@@ -385,6 +385,7 @@ def forminghome():
 @app.route('/forming')
 def forming():
     eng = dbpb()
+    # print(eng)
     return render_template('forming.html', eng=eng)
 
 

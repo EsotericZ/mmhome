@@ -683,6 +683,7 @@ def dbpb():
     se = []
     xe = []
     ye = []
+    ze = []
     r = []
     for f in dff:
         job = f[0]
@@ -698,6 +699,7 @@ def dbpb():
         server = '/run/user/1000/gvfs/smb-share:server=tower.local,share=production/'
         path = server+'/'+cust+'/'+part+'/'+cad
         d = os.path.exists(path)
+        r = []
         if d == True:
             r += [each for each in os.listdir(path) if each.lower().endswith(('.stp', '.step', '.sldprt'))]
             if not r:
@@ -726,25 +728,54 @@ def dbpb():
                         ye.append([job, 1])
                     else:
                         ye.append([job, 0])
+                for z in s:
+                    if z.startswith('AP'):
+                        ze.append([job, 1])
+                    else:
+                        ze.append([job, 0])
     xee = []
     for x in xe:
         if x[1] == 1:
             xee.append(x[0])
+    xxe = []
+    for c in xee:
+        if c not in xxe:
+            xxe.append(c)
+
     yee = []
     for y in ye:
         if y[1] == 1:
             yee.append(y[0])
+    yye = []
+    for c in yee:
+        if c not in yye:
+            yye.append(c)
+
+    zee = []
+    for z in ze:
+        if z[1] == 1:
+            zee.append(z[0])
+    zze = []
+    for c in zee:
+        if c not in zze:
+            zze.append(c)
 
     for s in se:
-        if s[0] in xee:
+        if s[0] in xxe:
             s.append(1)
         else:
             s.append(0)
-        if s[0] in yee:
+        if s[0] in yye:
             s.append(1)
         else:
             s.append(0)
-    xx = [a + [b[2]] + [b[3]] for (a,b) in zip(fe, se)]
+        if s[0] in zze:
+            s.append(1)
+        else:
+            s.append(0)
+    fe.sort(key = lambda i : i[1])
+    se.sort(key = lambda i : i[0])
+    xx = [a + [b[2]] + [b[3]] + [b[4]] for (a,b) in zip(fe, se)]
     xx.sort(key = lambda i : i[1])
     xx.sort(reverse = True, key = lambda i : i[0])
     return xx
