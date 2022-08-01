@@ -17,7 +17,7 @@ def shipsum():
     port = 465
     smtp_server = "mail.monarchmetalmfg.com"
     sender_email = "model@monarchmetalmfg.com"
-    pw = 'fV;+$%BkjY{8'
+    pw = '+4{-VUG!HcPQ'
     context = ssl.create_default_context()
 
     dfl = df.values.tolist()
@@ -38,28 +38,11 @@ def shipsum():
         df = DataFrame(lem, columns=['PO Number', 'Packing Slip', 'Part Number', 'Qty', 'Due Date', 'Job Number', 'Customer', 'Contact', 'Email'])
         df =df.drop(['Due Date', 'Customer', 'Contact', 'Email'], axis = 1)
 
-        # html = """\
-        # <html>
-        #     <head>
-        #     </head>
-        #     <body><p>Dear """ +str(contact)+ """,</p>
-        #         <p>Today the following items had packing slips created in our system:</p>
-        #         <style>
-        #             table, th, td {{ text-align: center; border: 1px solid black; border-collapse: collapse; }}
-        #             th, td {{ padding: 5px; }}
-        #         </style>
-        #             {0}
-        #         <p>If we deliver to your location or ship UPS or FedEx they will be on their way shortly <br> If you are setup for will call or arrange freight they will be ready in our shipping department</p>
-        #         <p>*This is an automated email, do not respond. Please contact your sales representation if you have any questions or concerns</p>
-        #     </body>
-        # </html>
-        # """.format(df.to_html(index=False))
-
         html = """\
         <html>
             <head>
             </head>
-            <body><p>Dear Stacey Ricketts,</p>
+            <body><p>Dear """ +str(contact)+ """,</p>
                 <p>Today the following items had packing slips created in our system:</p>
                 <style>
                     table, th, td {{ text-align: center; border: 1px solid black; border-collapse: collapse; }}
@@ -72,6 +55,23 @@ def shipsum():
         </html>
         """.format(df.to_html(index=False))
 
+        # html = """\
+        # <html>
+        #     <head>
+        #     </head>
+        #     <body><p>Dear Stacey Ricketts,</p>
+        #         <p>Today the following items had packing slips created in our system:</p>
+        #         <style>
+        #             table, th, td {{ text-align: center; border: 1px solid black; border-collapse: collapse; }}
+        #             th, td {{ padding: 5px; }}
+        #         </style>
+        #             {0}
+        #         <p>If we deliver to your location or ship UPS or FedEx they will be on their way shortly <br> If you are setup for will call or arrange freight they will be ready in our shipping department</p>
+        #         <p>*This is an automated email, do not respond. Please contact your sales representation if you have any questions or concerns</p>
+        #     </body>
+        # </html>
+        # """.format(df.to_html(index=False))
+
         part1 = MIMEText(html, 'html')
 
         # nqt=[]
@@ -82,24 +82,30 @@ def shipsum():
         # if nqt:
         # nqts = "\n".join(nqt)
         # rec_email = "brentw@monarchmetalmfg.com"
-        rec_email = "cjs@monarchmetalmfg.com"
+        # rec_email = "cjs@monarchmetalmfg.com"
         # rec_email = "zechariah.williams@stollemachinery.com"
         # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com", "zechariah.williams@stollemachinery.com"]
         # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com", "stacey.ricketts@stollemachinery.com"]
+        rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com"]
 
         message = MIMEMultipart("alternative")
         # message = MIMEMultipart("alternative", None, [MIMEText(text), MIMEText(html,'html')])
         message["Subject"] = 'Advanced Shipment Notice'
         message["From"] = sender_email
-        # message["To"] = rec_email
-        message["To"] = ", ".join(rec_email)
+        message["To"] = rec_email
+        # message["To"] = ", ".join(rec_email)
         message.attach(part1)
 
         # text = "The following are **********: \n\n"+html+"\n\nThis is an automated email"
         # part1 = MIMEText(text, "plain")
         # message.attach(part1)
-        if cust == 'STO':
-            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-                server.login(sender_email, pw)
-                server.sendmail(sender_email, rec_email, message.as_string())
-                print('Email Sent')
+        # if cust == 'STO':
+        #     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        #         server.login(sender_email, pw)
+        #         server.sendmail(sender_email, rec_email, message.as_string())
+        #         print('Email Sent')
+
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            server.login(sender_email, pw)
+            server.sendmail(sender_email, rec_email, message.as_string())
+            print('Email Sent')

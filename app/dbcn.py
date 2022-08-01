@@ -49,8 +49,9 @@ def dbtl():
 
     df4 = df3[['JobNo', 'PartNo', 'Revision', 'QtyToMake', 'DueDate', 'CustCode', 'User_Text3', 'User_Text2', 'User_Number3', 'OrderNo', 'id', 'mtl', 'mtln', 'pgm', 'pgmn', 'tlh', 'tlhn', 'User_Memo1', 'StepNo', 'User_Date1']]
     df4['DueDate'] = df4['DueDate'].dt.strftime('%Y/%m/%d')
-    df4['User_Date1'] = df4['User_Date1'].dt.strftime('%m/%d')
-    df4['User_Date1'] = df4['User_Date1'].fillna('-')
+    # if not df4['User_Date1'] == 0:
+    #     df4['User_Date1'] = df4['User_Date1'].dt.strftime('%m/%d')
+    #     df4['User_Date1'] = df4['User_Date1'].fillna('-')
 
     # DOES PROGRAM EXIST FOR CURRENT JOB NUMBER
     fe = []
@@ -673,7 +674,7 @@ def ships():
                    FROM DelTicket T INNER JOIN DelTicketDet D ON T.DelTicketNo=D.DelTicketNo INNER JOIN Contacts C ON D.ContactName=C.Contact INNER JOIN OrderDet O ON D.JobNo=O.JobNo \
                    WHERE T.ShipDate >= cast(GETDATE() as date) AND T.DTPrinted = 'Y'"""
     df = pd.read_sql(sql, con=cnxn)
-    # print(df)
+    print(df)
     return df
 
 
@@ -729,6 +730,7 @@ def dbpb():
         path = server+'/'+cust+'/'+part+'/'+form
         e = os.path.exists(path)
         if e == True:
+            print('true')
             s = []
             s += [each for each in os.listdir(path) if each.lower().endswith(('.pbpp'))]
             if not s:
@@ -750,6 +752,9 @@ def dbpb():
                         ze.append([job, 1])
                     else:
                         ze.append([job, 0])
+        else:
+            print('false')
+            print(part)
     xee = []
     for x in xe:
         if x[1] == 1:
@@ -791,7 +796,15 @@ def dbpb():
         else:
             s.append(0)
     fe.sort(key = lambda i : i[1])
+    # print('fe')
+    # print(len(fe))
+    # for f in fe:
+    #     print(f)
     se.sort(key = lambda i : i[0])
+    # print('se')
+    # print(len(se))
+    # for s in se:
+    #     print(s)
     xx = [a + [b[2]] + [b[3]] + [b[4]] for (a,b) in zip(fe, se)]
     xx.sort(key = lambda i : i[1])
     xx.sort(reverse = True, key = lambda i : i[0])
