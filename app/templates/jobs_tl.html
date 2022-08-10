@@ -20,6 +20,7 @@
                     <th scope="col">On Order</th>
                     <th scope="col">Expected</th>
                     <th scope="col">In House</th>
+                    <th scope="col">Program</th>
                     <th scope="col">Materials</th>
                     <th scope="col">Cut List</th>
                 </tr>
@@ -39,6 +40,7 @@
                     <td scope="col" bgcolor="D1BBA8"></th>
                     <td scope="col" bgcolor="D1BBA8"></th>
                     <td scope="col" bgcolor="D1BBA8"></th>
+                    <td scope="col" bgcolor="D1BBA8"></th>
                 </tr>
                 <!-- <tr> -->
                 <!--     <td colspan="15" bgcolor="D1BBA8" style="font-weight:bold">TBR Jobs</td> -->
@@ -51,7 +53,7 @@
                     <td align='center'> {{ t[2] }} </td>
                     <td align='center'> {{ t[3] }} </td>
                     <!-- <td align='center'> {{ t[4] }} </td> -->
-                    <td align='center'> {{ t[20] }} </td>
+                    <td align='center'> {{ t[21] }} </td>
                     <!-- <td align='center'> {{ t[19] }} </td> -->
                     <td align='center'> {{ t[5] }} </td>
                     <td align='center'> {{ t[6] }} </td>
@@ -59,7 +61,8 @@
                     <td align='center'> {% if t[13] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
                     <td align='center'> {{ t[14] }} </td>
                     <td align='center'> {% if t[15] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
-                    <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[21] }}</code></pre></td>
+                    <td align='center'> {% if t[20] == 'yes' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[22] }}</code></pre></td>
                     <td><button type="button" class="clBtn btn btn-primary" data-toggle="modal" data-target="#t{{ t[0] }}">...</button></td>
                 </tr>
                 <!-- Modal -->
@@ -112,6 +115,7 @@
                 <td scope="col" bgcolor="D1BBA8"></th>
                 <td scope="col" bgcolor="D1BBA8"></th>
                 <td scope="col" bgcolor="D1BBA8"></th>
+                <td scope="col" bgcolor="D1BBA8"></th>
             </tr>
             {% for t in sf %}
                 <tr id={{ t[10] }}>
@@ -121,7 +125,7 @@
                     <td align='center'> {{ t[2] }} </td>
                     <td align='center'> {{ t[3] }} </td>
                     <!-- <td align='center'> {{ t[4] }} </td> -->
-                    <td align='center'> {{ t[20] }} </td>
+                    <td align='center'> {{ t[21] }} </td>
                     <!-- <td align='center'> {{ t[19] }} </td> -->
                     <td align='center'> {{ t[5] }} </td>
                     <td align='center'> {{ t[6] }} </td>
@@ -129,7 +133,8 @@
                     <td align='center'> {% if t[13] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
                     <td align='center'> {{ t[14] }} </td>
                     <td align='center'> {% if t[15] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
-                    <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[21] }}</code></pre></td>
+                    <td align='center'> {% if t[20] == 'yes' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[22] }}</code></pre></td>
                     <td><button type="button" class="clBtn btn btn-primary" data-toggle="modal" data-target="#t{{ t[0] }}">...</button></td>
                 </tr>
                 <!-- Modal -->
