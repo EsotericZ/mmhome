@@ -1,41 +1,44 @@
 {% extends 'bdbase.html' %}
 
 {% block content %}
-    <br>
-    <br>
-    <br>
-    <br>
     <h1 align='center'>Add Bend Deduction</h1>
     <br>
     <form method="POST" id="target">
         <div class="form-group">
-            <input type="text" class="form-control" name="matl" placeholder="Material Type">
+            <p class="formTitle">Material Type</p>
+            <select name="matl" class="formDropDown">
+                <option value="ALS">Aluminum</option>
+                <option value="ARCH">Archive</option>
+                <option value="CUST">Custom</option>
+                <option value="CRS">Cold Rolled Steel</option>
+                <option value="SSS">Stainless Steel</option>
+            </select>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="desc" placeholder="Description">
+            <p class="formTitle">Description</p><input type="text" class="form-control formName" name="desc">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="gauge" placeholder="Gauge">
+            <p class="formTitle">Material Gauge</p><input type="text" class="form-control formName" name="gauge">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="thick" placeholder="Material Thickness">
+            <p class="formTitle">Material Thickness</p><input type="text" class="form-control formName" name="thick">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="rad" placeholder="Radius">
+            <p class="formTitle">Bend Radius</p><input type="text" class="form-control formName" name="rad">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="bd" placeholder="Bend Deduction">
+            <p class="formTitle">Bend Deduction</p><input type="text" class="form-control formName" name="bd">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="pt" placeholder="Punch Tooling">
+            <p class="formTitle">Punch Tooling</p><input type="text" class="form-control formName" name="pt">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="dt" placeholder="Die Tooling">
+            <p class="formTitle">Die Tooling</p><input type="text" class="form-control formName" name="dt">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="notes" placeholder="Notes">
+            <p class="formTitle">Notes</p><input type="text" class="form-control formName" name="notes">
         </div>
 
-        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+        <button type="submit" class="btn btn-block btn-primary formBtn">Submit</button>
     </form>
 {% endblock %}
