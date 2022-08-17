@@ -1,0 +1,18 @@
+{% extends 'tapbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Edit</h1>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Tap Name</p>  <input type="text" class="form-control formJob" name="tap" value="{{ data.tap }}" placeholder="Tap Name">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Hole Size</p>  <input type="text" class="form-control formJob" name="size" value="{{ data.size }}" placeholder="Pre-Tap Hole Size">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Notes</p>  <input type="text" class="form-control formMtlN" name="note" value="{{ data.note }}">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Update</button>
+    </form>
+{% endblock %}

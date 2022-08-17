@@ -1,0 +1,19 @@
+{% extends 'tapbase.html' %}
+
+{% block content %}
+    <h1 align='center'>New Tap</h1>
+    <br>
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Tap Name</p> <input type="text" class="form-control formName" name="tap">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Hole Size</p> <input type="text" class="form-control formName" name="size">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Notes</p> <input type="text" class="form-control formNote" name="note">
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Submit</button>
+    </form>
+{% endblock %}

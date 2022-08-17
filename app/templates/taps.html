@@ -1,0 +1,45 @@
+{% extends 'tapbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Tap Chart</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Tap</th>
+                    <th scope="col">Hole</th>
+                    <th scope="col">Notes</th>
+                </tr>
+            {% for t in tap %}
+                <tr id={{ t.id }}>
+                    <td><a href="/edit_tap/{{ t.id }}"><span style="font-weight:bold">{{ t.tap }}</span></a></th>
+                    <td align='center'> {{ t.size }} </td>
+                    <td align='center'> {{ t.note }} </td>
+                </tr>
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[1].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+    </body>
+
+{% endblock %}
