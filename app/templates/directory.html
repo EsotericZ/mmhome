@@ -1,0 +1,51 @@
+{% extends 'directorybase.html' %}
+
+{% block content %}
+    <h1 align='center'>Employee Directory</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Name</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Extenstion</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                </tr>
+            {% for t in dic %}
+                <tr id={{ t.id }}>
+                    <td><a href="/edit_directory/{{ t.id }}"><span style="font-weight:bold">{{ t.name }}</span></a></th>
+                    <td align='center'> {{ t.dept }} </td>
+                    <td align='center'> {{ t.ext }} </td>
+                    <td align='center'> {{ t.email }} </td>
+                    <td align='center'> {{ t.phone }} </td>
+                </tr>
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[1].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+        var fourthCol = rows[i].cells[3].textContent.toUpperCase();
+        var fifthCol = rows[i].cells[4].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+    </body>
+
+{% endblock %}
