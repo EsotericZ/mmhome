@@ -404,17 +404,65 @@ class Supplies(Base):
     ordr = Column(Integer())
     ordrn = Column(String(120))
     done = Column(Integer())
+    requester = Column(String(120))
+    link = Column(String(120))
+    jobno = Column(String(120))
 
-    def __init__(self, dept=None, need=None, desc=None, ordr=None, ordrn=None, done=None):
+    def __init__(self, dept=None, need=None, desc=None, ordr=None, ordrn=None, done=None, requester=None, link=None, jobno=None):
         self.dept = dept
         self.need = need
         self.desc = desc
         self.ordr = ordr
         self.ordrn = ordrn
         self.done = done
+        self.requester = requester
+        self.link = link
+        self.jobno = jobno
 
     def __repr__(self):
         return '<Job %r>' % (self.dept)
+
+
+
+# TAPS
+class Taps(Base):
+    __tablename__ = 'taps'
+
+    id = Column(Integer, primary_key=True)
+    tap = Column(String(50))
+    size = Column(String(50))
+    note = Column(String(120))
+
+    def __init__(self, tap=None, size=None, note=None):
+        self.tap = tap
+        self.size = size
+        self.note = note
+
+    def __repr__(self):
+        return '<Job %r>' % (self.tap)
+
+
+
+# TAPS
+class Directory(Base):
+    __tablename__ = 'directory'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(120))
+    dept = Column(String(120))
+    ext = Column(Integer())
+    email = Column(String(120))
+    phone = Column(String(120))
+
+    def __init__(self, name=None, dept=None, ext=None, email=None, phone=None):
+        self.name = name
+        self.dept = dept
+        self.ext = ext
+        self.email = email
+        self.phone = phone
+
+    def __repr__(self):
+        return '<Job %r>' % (self.name)
 
 
 

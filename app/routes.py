@@ -7,7 +7,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, jso
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies
+from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies, Taps
 from werkzeug.urls import url_parse
 from database import db_session
 from datetime import datetime
@@ -1099,6 +1099,8 @@ def backend_bd():
         notes = request.form["notes"]
 
         new_bd = Bendd(matl, desc, gauge, thick, rad, bd, pt, dt, notes)
+        print('new')
+        print(new_bd)
         db_session.add(new_bd)
         db_session.commit()
 
@@ -1117,7 +1119,7 @@ def backend_bd():
 
         pusher_client.trigger('table', 'new-record_bd', {'data': data })
 
-        return redirect("/backend_bd", code=302)
+        return redirect("/bdhome", code=302)
     else:
         bds = Bendd.query.all()
         return render_template('backend_bd.html', bds=bds)
@@ -2371,7 +2373,7 @@ def onorder_sup():
 
 @app.route('/comp_sup')
 def comp_sup():
-    sup = Supplies.query.order_by('id').all()
+    sup = Supplies.query.order_by('-id').all()
     return render_template('comp_sup.html', sup=sup)
 
 @app.route('/backend_sup', methods=["POST", "GET"])
@@ -2383,8 +2385,11 @@ def backend_sup():
         ordr = request.form["ordr"]
         ordrn = request.form["ordrn"]
         done = request.form["done"]
+        requester = request.form["requester"]
+        link = request.form["link"]
+        jobno = request.form["jobno"]
 
-        new_sup = Supplies(dept, need, desc, ordr, ordrn, done)
+        new_sup = Supplies(dept, need, desc, ordr, ordrn, done, requester, link, jobno)
         db_session.add(new_sup)
         db_session.commit()
 
@@ -2395,7 +2400,10 @@ def backend_sup():
             "desc": desc,
             "ordr": ordr,
             "ordrn": ordrn,
-            "done": done
+            "done": done,
+            "requester": requester,
+            "link": link,
+            "jobno": jobno
         }
 
         pusher_client.trigger('table', 'new-record-supplies', {'data': data })
@@ -2414,6 +2422,9 @@ def update_record_supplies(id):
         ordr = request.form["ordr"]
         ordrn = request.form["ordrn"]
         done = request.form["done"]
+        requester = request.form["requester"]
+        link = request.form["link"]
+        jobno = request.form["jobno"]
 
         update_sup = Supplies.query.get(id)
         update_sup.dept = dept
@@ -2422,6 +2433,9 @@ def update_record_supplies(id):
         update_sup.ordr = ordr
         update_sup.ordrn = ordrn
         update_sup.done = done
+        update_sup.requester = requester
+        update_sup.link = link
+        update_sup.jobno = jobno
 
         db_session.commit()
 
@@ -2432,7 +2446,10 @@ def update_record_supplies(id):
             "desc": desc,
             "ordr": ordr,
             "ordrn": ordrn,
-            "done": done
+            "done": done,
+            "requester": requester,
+            "link": link,
+            "jobno": jobno
         }
 
         pusher_client.trigger('table', 'update-record-supplies', {'data': data })
@@ -2585,6 +2602,148 @@ def onorder_purch():
     sup = Supplies.query.order_by('id').all()
 
     return render_template('onorder_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
+
+
+
+
+
+# # # TAPS # # #
+
+@app.route('/taps')
+def taps():
+    # note = PurchNotes.query.all()
+    tap = Taps.query.order_by('size').all()
+    return render_template('taps.html', tap=tap)
+
+@app.route('/backend_taps', methods=["POST", "GET"])
+def backend_taps():
+    if request.method == "POST":
+        tap = request.form["tap"]
+        size = request.form["size"]
+        note = request.form["note"]
+
+        new_tap = Taps(tap, size, note)
+        db_session.add(new_tap)
+        db_session.commit()
+
+        data = {
+            "id": new_tap.id,
+            "tap": tap,
+            "size": size,
+            "note": note
+        }
+
+        pusher_client.trigger('table', 'new-record-taps', {'data': data })
+
+        return redirect("/taps", code=302)
+    else:
+        tap = Taps.query.all()
+        return render_template('backend_taps.html', tap=tap)
+
+@app.route('/edit_tap/<int:id>', methods=["POST", "GET"])
+def update_record_taps(id):
+    if request.method == "POST":
+        tap = request.form["tap"]
+        size = request.form["size"]
+        note = request.form["note"]
+
+        update_tap = Taps.query.get(id)
+        update_tap.tap = tap
+        update_tap.size = size
+        update_tap.note = note
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "tap": tap,
+            "size": size,
+            "note": note
+        }
+
+        pusher_client.trigger('table', 'update-record-taps', {'data': data })
+
+        return redirect("/taps", code=302)
+    else:
+        new_tap = Taps.query.get(id)
+
+        return render_template('update_tap.html', data=new_tap)
+
+
+
+
+
+# # # DIRECTORY # # #
+
+@app.route('/directory')
+def directory():
+    # note = PurchNotes.query.all()
+    dic = Directory.query.order_by('ext').all()
+    return render_template('directory.html', dic=dic)
+
+@app.route('/backend_directory', methods=["POST", "GET"])
+def backend_directory():
+    if request.method == "POST":
+        name = request.form["name"]
+        dept = request.form["dept"]
+        ext = request.form["ext"]
+        email = request.form["email"]
+        phone = request.form["phone"]
+
+        new_directory = Directory(name, dept, ext, email, phone)
+        db_session.add(new_directory)
+        db_session.commit()
+
+        data = {
+            "id": new_directory.id,
+            "name": name,
+            "dept": dept,
+            "ext": ext,
+            "email": email,
+            "phone": phone
+        }
+
+        pusher_client.trigger('table', 'new-record-directory', {'data': data })
+
+        return redirect("/directory", code=302)
+    else:
+        dic = Directory.query.all()
+        return render_template('backend_directory.html', dic=dic)
+
+@app.route('/edit_directory/<int:id>', methods=["POST", "GET"])
+def update_record_directory(id):
+    if request.method == "POST":
+        name = request.form["name"]
+        dept = request.form["dept"]
+        ext = request.form["ext"]
+        email = request.form["email"]
+        phone = request.form["phone"]
+
+        update_directory = Directory.query.get(id)
+        update_directory.name = name
+        update_directory.dept = dept
+        update_directory.ext = ext
+        update_directory.email = email
+        update_directory.phone = phone
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "name": name,
+            "dept": dept,
+            "ext": ext,
+            "email": email,
+            "phone": phone
+        }
+
+        pusher_client.trigger('table', 'update-record-directory', {'data': data })
+
+        return redirect("/directory", code=302)
+    else:
+        new_directory = Directory.query.get(id)
+
+        return render_template('update_directory.html', data=new_directory)
 
 
 

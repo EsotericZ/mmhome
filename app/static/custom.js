@@ -417,6 +417,9 @@ channel.bind('new-record-supplies', (data) => {
             <td> ${data.data.ordr} </td>
             <td> ${data.data.ordrn} </td>
             <td> ${data.data.done} </td>
+            <td> ${data.data.requester} </td>
+            <td> ${data.data.link} </td>
+            <td> ${data.data.jobno} </td>
         </tr>
    `)
 });
@@ -430,5 +433,62 @@ channel.bind('update-record-supplies', (data) => {
         <td> ${data.data.ordr} </td>
         <td> ${data.data.ordrn} </td>
         <td> ${data.data.done} </td>
+        <td> ${data.data.requester} </td>
+        <td> ${data.data.link} </td>
+        <td> ${data.data.jobno} </td>
+    `)
+ });
+
+
+
+
+
+// TAPS
+channel.bind('new-record-taps', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+   $('#taps').append(`
+        <tr id="${data.data.id}">
+            <th scope="row"> ${data.data.tap} </th>
+            <td> ${data.data.size} </td>
+            <td> ${data.data.note} </td>
+        </tr>
+   `)
+});
+
+channel.bind('update-record-taps', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    $(`#${data.data.id}`).html(`
+        <th scope="row"> ${data.data.tap} </th>
+        <td> ${data.data.size} </td>
+        <td> ${data.data.note} </td>
+    `)
+ });
+
+
+
+
+
+// SUPPLIES
+channel.bind('new-record-directory', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+   $('#directory').append(`
+        <tr id="${data.data.id}">
+            <th scope="row"> ${data.data.name} </th>
+            <td> ${data.data.dept} </td>
+            <td> ${data.data.ext} </td>
+            <td> ${data.data.email} </td>
+            <td> ${data.data.phone} </td>
+        </tr>
+   `)
+});
+
+channel.bind('update-record-diectory', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    $(`#${data.data.id}`).html(`
+        <th scope="row"> ${data.data.name} </th>
+        <td> ${data.data.dept} </td>
+        <td> ${data.data.ext} </td>
+        <td> ${data.data.email} </td>
+        <td> ${data.data.phone} </td>
     `)
  });

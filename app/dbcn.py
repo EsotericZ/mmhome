@@ -70,9 +70,12 @@ def dbtl():
             r += [each for each in os.listdir(path) if each.lower().endswith(('.atd'))]
             if r:
                 fe.append(job)
-    print('fe', fe)
-    dfp = pd.DataFrame(fe, columns=['JobNo'])
-    print(dfp)
+    df4['tlp'] = 'no'
+    i = 0;
+    for r in df4.JobNo:
+        if r in fe:
+            df4.at[i, 'tlp'] = 'yes'
+        i = i+1
 
     # DF5 IS FOR ALL JOBS ON TLASER
     df5 = df4.sort_values(by=['JobNo'], ascending = True)
