@@ -1,0 +1,48 @@
+{% extends 'hwbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Hardware</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Hole Size</th>
+                    <th scope="col">Link</th>
+                </tr>
+            {% for t in hw %}
+                <tr id={{ t.id }}>
+                    <td><a href="/edit_hardware/{{ t.id }}"><span style="font-weight:bold">{{ t.name }}</span></a></th>
+                    <td align='center'> {{ t.desc }} </td>
+                    <td align='center'> {{ t.hole }} </td>
+                    <td align='center'> {% if t.link == None %} - {% elif t.link == 'None' %} - {% elif t.link == '' %} - {% else %} <a href="{{ t.link }}" target="_blank" class="external">Click</a></span> {% endif %} </td>
+                </tr>
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[1].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+        var fourthCol = rows[i].cells[3].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+    </body>
+
+{% endblock %}
