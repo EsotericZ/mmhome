@@ -443,7 +443,7 @@ class Taps(Base):
 
 
 
-# TAPS
+# DIRECTORY
 class Directory(Base):
     __tablename__ = 'directory'
 
@@ -462,7 +462,27 @@ class Directory(Base):
         self.phone = phone
 
     def __repr__(self):
-        return '<Job %r>' % (self.name)
+
+
+
+# HARDWARE
+class Hardware(Base):
+    __tablename__ = 'hardware'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(120))
+    desc = Column(String(120))
+    hole = Column(String(25))
+    link = Column(String(120))
+
+    def __init__(self, name=None, desc=None, hole=None, link=None):
+        self.name = name
+        self.desc = desc
+        self.hole = hole
+        self.link = link
+
+    def __repr__(self):
+        ret       return '<Job %r>' % (self.name)
 
 
 

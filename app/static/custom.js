@@ -492,3 +492,30 @@ channel.bind('update-record-diectory', (data) => {
         <td> ${data.data.phone} </td>
     `)
  });
+
+
+
+
+
+// HARDWARE
+channel.bind('new-record-hardware', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+   $('#hardware').append(`
+        <tr id="${data.data.id}">
+            <th scope="row"> ${data.data.name} </th>
+            <td> ${data.data.desc} </td>
+            <td> ${data.data.hole} </td>
+            <td> ${data.data.link} </td>
+        </tr>
+   `)
+});
+
+channel.bind('update-record-hardware', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    $(`#${data.data.id}`).html(`
+        <th scope="row"> ${data.data.name} </th>
+        <td> ${data.data.desc} </td>
+        <td> ${data.data.hole} </td>
+        <td> ${data.data.link} </td>
+    `)
+ });

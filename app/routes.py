@@ -7,7 +7,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, jso
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies, Taps
+from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies, Taps, Directory, Hardware
 from werkzeug.urls import url_parse
 from database import db_session
 from datetime import datetime
@@ -2744,6 +2744,77 @@ def update_record_directory(id):
         new_directory = Directory.query.get(id)
 
         return render_template('update_directory.html', data=new_directory)
+
+
+
+
+
+# # # HARDWARE # # #
+
+@app.route('/hardware')
+def hardware():
+    # note = PurchNotes.query.all()
+    hw = Hardware.query.order_by('name').all()
+    return render_template('hardware.html', hw=hw)
+
+@app.route('/backend_hardware', methods=["POST", "GET"])
+def backend_hardware():
+    if request.method == "POST":
+        name = request.form["name"]
+        desc = request.form["desc"]
+        hole = request.form["hole"]
+        link = request.form["link"]
+
+        new_hw = Hardware(name, desc, hole, link)
+        db_session.add(new_hw)
+        db_session.commit()
+
+        data = {
+            "id": new_hw.id,
+            "name": name,
+            "desc": desc,
+            "hole": hole,
+            "link": link
+        }
+
+        pusher_client.trigger('table', 'new-record-hardware', {'data': data })
+
+        return redirect("/hardware", code=302)
+    else:
+        hw = Hardware.query.all()
+        return render_template('backend_hardware.html', hw=hw)
+
+@app.route('/edit_hardware/<int:id>', methods=["POST", "GET"])
+def update_record_hardware(id):
+    if request.method == "POST":
+        name = request.form["name"]
+        desc = request.form["desc"]
+        hole = request.form["hole"]
+        link = request.form["link"]
+
+        update_hw = Hardware.query.get(id)
+        update_hw.name = name
+        update_hw.desc = desc
+        update_hw.hole = hole
+        update_hw.link = link
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "name": name,
+            "desc": desc,
+            "hole": hole,
+            "link": link
+        }
+
+        pusher_client.trigger('table', 'update-record-hardware', {'data': data })
+
+        return redirect("/hardware", code=302)
+    else:
+        new_hw = Hardware.query.get(id)
+
+        return render_template('update_hardware.html', data=new_hw)
 
 
 
