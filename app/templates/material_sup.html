@@ -21,10 +21,10 @@
                         <td><a href="/edit_sup/{{ t.id }}"><span style="font-weight:bold">{{ t.id }}</span></a></th>
                         <td align='center'> {{ t.dept }} </td>
                         <td align='center'> {% if t.requester == None %} - {% elif t.requester == 'None' %} - {% else %} {{ t.requester }} {% endif %} </td>
-                        <td align='center'> {% if t.jobno == None %} - {% elif t.jobno == 'None' %} - {% else %} {{ t.jobno }} {% endif %} </td>
+                        <td align='center'> {% if t.jobno == None %} - {% elif t.jobno == 'None' %} - {% elif t.jobno == '' %} - {% else %} {{ t.jobno }} {% endif %} </td>
                         <td align='center'> {{ t.desc }} </td>
                         <td align='center'> {{ t.ordrn }} </td>
-                        <td align='center'> {% if t.link == None %} - {% elif t.link == 'None' %} - {% else %} <a href="{{ t.link }}" target="_blank" class="external">Click</a></span> {% endif %} </td>
+                        <td align='center'> {% if t.link == None %} - {% elif t.link == 'None' %} - {% elif t.link == '' %} - {% else %} <a href="{{ t.link }}" target="_blank" class="external">Click</a></span> {% endif %} </td>
                     </tr>
                 {% endif %}
             {% endfor %}
