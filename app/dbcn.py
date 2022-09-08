@@ -1264,7 +1264,8 @@ def dbpunch():
     df3 = pd.merge(left=df1, right=df2, left_on='JobNo', right_on='job')
 
     df4 = df3[['JobNo', 'PartNo', 'Revision', 'QtyToMake', 'DueDate', 'CustCode', 'User_Text3', 'User_Text2', 'User_Number3', 'OrderNo', 'id', 'mtl', 'mtln', 'pgm', 'pgmn', 'tlh', 'tlhn', 'User_Memo1', 'StepNo', 'User_Date1']]
-    df4['DueDate'] = df4['DueDate'].dt.strftime('%Y/%m/%d')
+    if not df4.empty:
+        df4['DueDate'] = df4['DueDate'].dt.strftime('%Y/%m/%d')
 
     # DF5 IS FOR ALL JOBS ON PUNCH
     df5 = df4.sort_values(by=['JobNo'], ascending = True)

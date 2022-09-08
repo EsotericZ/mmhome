@@ -1566,6 +1566,7 @@ def jobs_slaser():
     df6 = dbslaser()[1]
 
     st = df6.values.tolist()
+    print(st)
     for t in st:
         unCut = []
         if t[17]:
@@ -1888,7 +1889,6 @@ def punchhome():
 @app.route('/jobs_punch')
 def jobs_punch():
     df6 = dbpunch()[1]
-
     st = df6.values.tolist()
     for t in st:
         unCut = []

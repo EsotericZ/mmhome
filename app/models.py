@@ -462,6 +462,7 @@ class Directory(Base):
         self.phone = phone
 
     def __repr__(self):
+        return '<Job %r>' % (self.name)
 
 
 
@@ -482,7 +483,7 @@ class Hardware(Base):
         self.link = link
 
     def __repr__(self):
-        ret       return '<Job %r>' % (self.name)
+        return '<Job %r>' % (self.name)
 
 
 
