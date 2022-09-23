@@ -11,6 +11,7 @@ from os.path import isfile, join
 
 pd.options.mode.chained_assignment = None
 
+# combine all the servers
 def dbtl():
     # TUBE LASER SCHEDULER
     server = '10.0.1.130\E2SQLSERVER'
