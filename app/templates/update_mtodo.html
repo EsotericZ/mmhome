@@ -1,21 +1,54 @@
 {% extends 'maintbase.html' %}
 
 {% block content %}
-<h1 align='center'>Update Request</h1>
+<h1 align='center'>Update Maintenance Request</h1>
     <br>
     <form method="POST" id="target">
+
         <div class="form-group">
-            <p class="formTitle">Request Type</p>  <input type="text" class="form-control formJob" name="rtype" value="{{ data.rtype }}" placeholder="Request Type">
+            <p class="formTitle">Requested By</p>  <input type="text" class="form-control formJob" name="rname" value="{{ data.rname }}" placeholder="" readonly>
         </div>
+
         <div class="form-group">
-            <p class="formTitle">Area</p>  <input type="text" class="form-control formJob" name="area" value="{{ data.area }}" placeholder="Area">
+            <p class="formTitle">Area / Department</p>  <input type="text" class="form-control formJob" name="area" value="{{ data.area }}" placeholder="">
         </div>
+
         <div class="form-group">
-            <p class="formTitle">Description</p>  <input type="text" class="form-control formJob" name="desc" value="{{ data.desc }}" placeholder="Description">
+            <p class="formTitle">Machine / Equipment / Other</p>  <input type="text" class="form-control formJob" name="rmach" value="{{ data.rmach }}" placeholder="">
         </div>
+
         <div class="form-group">
-            <p class="formTitle">Name (Who made Request)</p>  <input type="text" class="form-control formJob" name="name" value="{{ data.name }}" placeholder="Name">
+            <p class="formTitle">Request Date</p>  <input type="text" class="form-control formJob" name="rdate" value="{{ data.rdate }}" placeholder="">
         </div>
+
+        <div class="form-group">
+            <p class="formTitle">Type of Request</p>  <input type="text" class="form-control formJob" name="rtype" value="{{ data.rtype }}" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <p class="formTitle">Description of Problem</p>  <input type="text" class="form-control formJob" name="rdesc" value="{{ data.rdesc }}" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <p class="formTitle">Repairs Authorized By</p>  <input type="text" class="form-control formJob" name="aname" value="{{ data.aname }}" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <p class="formTitle">Repair Person</p>  <input type="text" class="form-control formJob" name="rpname" value="{{ data.rpname }}" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <p class="formTitle">Description of Repair</p>  <input type="text" class="form-control formJob" name="rpdesc" value="{{ data.rpdesc }}" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <p class="formTitle">Total Repair Time</p>  <input type="text" class="form-control formJob" name="rptime" value="{{ data.rptime }}" placeholder="">
+        </div>
+
+        <div class="form-group">
+            <p class="formTitle">Date Repair Complete</p>  <input type="text" class="form-control formJob" name="rpdate" value="{{ data.rpdate }}" placeholder="MM/DD/YY">
+        </div>
+
         <div class="form-group">
             <input id='donecb' class="formVerify" type="checkbox" value='on' name="done" {% if data.done == 'on' %} checked {% else %} {% endif %}> Completed
             <input id='donecbhidden' type="hidden" value='' name="done">

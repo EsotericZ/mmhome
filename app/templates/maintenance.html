@@ -10,7 +10,9 @@
                 <th scope="col">Type</th>
                 <th scope="col">Area</th>
                 <th scope="col">Description</th>
-                <th scope="col">Requester</th>
+                <th scope="col">Requested By</th>
+                <th scope="col">Request Date</th>
+                <th scope="col">Authorized By</th>
             </tr>
             {% for t in mtodos %}
                 {% if t.done != 'on' %}
@@ -18,8 +20,10 @@
                         <td><a href="/edit_maint/{{ t.id }}"><span style="font-weight:bold">{{ t.id }}</span></a></th>
                         <td align='center'> {{ t.rtype }} </td>
                         <td align='center'> {{ t.area }} </td>
-                        <td align='center'> {{ t.desc }} </td>
-                        <td align='center'> {{ t.name }} </td>
+                        <td align='center'> {{ t.rdesc }} </td>
+                        <td align='center'> {{ t.rname }} </td>
+                        <td align='center'> {{ t.rdate }} </td>
+                        <td align='center'> {{ t.aname }} </td>
                     </tr>
                 {% endif %}
             {% endfor %}

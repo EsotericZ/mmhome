@@ -7,19 +7,23 @@
         <table id="myTable">
             <tr class="header">
                 <th scope="col">ID</th>
-                <th scope="col">Type</th>
                 <th scope="col">Area</th>
+                <th scope="col">Issue</th>
+                <th scope="col">Repaired By</th>
                 <th scope="col">Description</th>
-                <th scope="col">Requester</th>
+                <th scope="col">Repair Time</th>
+                <th scope="col">Repair Date</th>
             </tr>
             {% for t in mtodos %}
                 {% if t.done == 'on' %}
                     <tr id={{ t.id }}>
                         <td><a href="/edit_maint/{{ t.id }}"><span style="font-weight:bold">{{ t.id }}</span></a></th>
-                        <td align='center'> {{ t.rtype }} </td>
                         <td align='center'> {{ t.area }} </td>
-                        <td align='center'> {{ t.desc }} </td>
-                        <td align='center'> {{ t.name }} </td>
+                        <td align='center'> {{ t.rdesc }} </td>
+                        <td align='center'> {{ t.rpname }} </td>
+                        <td align='center'> {{ t.rpdesc }} </td>
+                        <td align='center'> {{ t.rptime }} </td>
+                        <td align='center'> {{ t.rpdate }} </td>
                     </tr>
                 {% endif %}
             {% endfor %}
