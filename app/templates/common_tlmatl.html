@@ -1,0 +1,55 @@
+{% extends 'tlmatlbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Current Program Materials</h1>
+    <br>
+    <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Program</th>
+                    <th scope="col">Material Notes</th>
+                    <th scope="col">Check</th>
+                    <th scope="col">Need Material</th>
+                    <th scope="col">On Order</th>
+                    <th scope="col">Verified / In House</th>
+                </tr>
+            {% for t in tlm %}
+                {% if t.done != 'on' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_tlm/{{ t.id }}"><span style="font-weight:bold">{{ t.name }}</span></a></th>
+                        <td align='center'> {{ t.needn }} </td>
+                        <td align='center'> {% if t.need == '' and t.ordr == '' and t.verf == '' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                        <td align='center'> {% if t.need == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                        <td align='center'> {% if t.ordr == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                        <td align='center'> {% if t.verf == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </table>
+
+<script>
+function filterTable(event) {
+    var filter = event.target.value.toUpperCase();
+    var rows = document.querySelector("#myTable tbody").rows;
+    
+    for (var i = 1; i < rows.length; i++) {
+        var firstCol = rows[i].cells[0].textContent.toUpperCase();
+        var secondCol = rows[i].cells[1].textContent.toUpperCase();
+        var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+        var fourthCol = rows[i].cells[3].textContent.toUpperCase();
+        var fifthCol = rows[i].cells[4].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }      
+    }
+}
+
+document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+</script>
+
+    </body>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'tlmatlbase.html' %}
+
+{% block content %}
+<h1 align='center'>Tube Laser</h1>
+<h1 align='center'>Maerial Scheduler</h1>
+    <div class="line"></div>
+    {% for n in note %}
+        <h1 align='center'>Notes</h1>
+        <div class="pnotes">
+            <h3 align='center'>{{ n.notes }}</h3>
+        </div>
+        <a href="/edit_entn/{{ n.id }}"><span class="pnBtn" style="font-weight:bold">Edit</span></a>
+    {% endfor %}
+{% endblock %}
