@@ -81,8 +81,8 @@ def dbtl():
     # DF5 IS FOR ALL JOBS ON TLASER
     df5 = df4.sort_values(by=['JobNo'], ascending = True)
 
-    # DF6 IS FOR ONLY TBR JOBS ON TLASER
-    df6 = df4.loc[df4['User_Text2'] == '2. TBR']
+    # DF6 IS FOR ONLY TBR JOBS ON TLASER THAT NEED TO BE NESTED
+    df6 = df4.loc[(df4['User_Text2'] == '2. TBR') & (df4['mtl'] != 'on')]
     df6 = df6.sort_values(by=['User_Number3'], ascending = True)
     if not df6.empty:
         dfm = df6['DueDate'].str.split(pat = '/').str[1]
@@ -90,8 +90,8 @@ def dbtl():
         dfn = dfm +'/'+ dfd
         df6['ShowDate'] = dfn
 
-    # DF7 IS FOR ONLY FUTURE JOBS ON TLASER
-    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')]
+    # DF7 IS FOR ONLY FUTURE JOBS ON TLASER THAT NEED TO BE NESTED
+    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP') & (df4['mtl'] != 'on')]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
     if not df7.empty:
         dfm = df7['DueDate'].str.split(pat = '/').str[1]
@@ -126,7 +126,25 @@ def dbtl():
     df12n['index'] = df12n.index
     df12 = df12n.sort_values(by=['index'], ascending = True)
 
-    return [df5, df6, df7, df8, df9, df10, df11, df12]
+    # DF13 IS FOR ONLY TBR JOBS ON TLASER THAT HAVE ALREADY BEEN NESTED
+    df13 = df4.loc[(df4['User_Text2'] == '2. TBR') & (df4['mtl'] == 'on')]
+    df13 = df13.sort_values(by=['User_Number3'], ascending = True)
+    if not df13.empty:
+        dfm = df13['DueDate'].str.split(pat = '/').str[1]
+        dfd = df13['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df13['ShowDate'] = dfn
+
+    # DF14 IS FOR ONLY FUTURE JOBS ON TLASER THAT NEED TO BE NESTED
+    df14 = df4.loc[((df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')) & (df4['mtl'] == 'on')]
+    df14 = df14.sort_values(by=['DueDate'], ascending = True)
+    if not df14.empty:
+        dfm = df14['DueDate'].str.split(pat = '/').str[1]
+        dfd = df14['DueDate'].str.split(pat = '/').str[2]
+        dfn = dfm +'/'+ dfd
+        df14['ShowDate'] = dfn
+
+    return [df5, df6, df7, df8, df9, df10, df11, df12, df13, df14]
 
 
 

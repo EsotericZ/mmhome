@@ -515,17 +515,31 @@ class MTodo(Base):
     __tablename__ = 'mtodo'
 
     id = Column(Integer, primary_key=True)
-    rtype = Column(String(120))
+    rname = Column(String(120))
     area = Column(String(120))
-    desc = Column(String(120))
-    name = Column(String(120))
+    rmach = Column(String(120))
+    rdate = Column(String(120))
+    rtype = Column(String(120))
+    rdesc = Column(String(120))
+    aname = Column(String(120))
+    rpname = Column(String(120))
+    rpdesc = Column(String(120))
+    rptime = Column(String(120))
+    rpdate = Column(String(120))
     done = Column(Integer())
 
-    def __init__(self, rtype=None, area=None, desc=None, name=None, done=None):
-        self.rtype = rtype
+    def __init__(self, rname=None, area=None, rmach=None, rdate=None, rtype=None, rdesc=None, aname=None, rpname=None, rpdesc=None, rptime=None, rpdate=None, done=None):
+        self.rname = rname
         self.area = area
-        self.desc = desc
-        self.name = name
+        self.rmach = rmach
+        self.rdate = rdate
+        self.rtype = rtype
+        self.rdesc = rdesc
+        self.aname = aname
+        self.rpname = rpname
+        self.rpdesc = rpdesc
+        self.rptime = rptime
+        self.rpdate = rpdate
         self.done = done
 
     def __repr__(self):

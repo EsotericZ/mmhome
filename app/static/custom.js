@@ -380,13 +380,42 @@ channel.bind('update-record-todo', (data) => {
 
 
 // MAINTENANCE TODO LIST
+// channel.bind('new-record-mtodo', (data) => {
+//    $('#mtodo').append(`
+//         <tr id="${data.data.id}">
+//             <th scope="row"> ${data.data.rtype} </th>
+//             <td> ${data.data.area} </td>
+//             <td> ${data.data.desc} </td>
+//             <td> ${data.data.name} </td>
+//             <td> ${data.data.done} </td>
+//         </tr>
+//    `)
+// });
+
+// channel.bind('update-record-mtodo', (data) => {
+//     $(`#${data.data.id}`).html(`
+//         <th scope="row"> ${data.data.rtype} </th>
+//         <td> ${data.data.area} </td>
+//         <td> ${data.data.desc} </td>
+//         <td> ${data.data.name} </td>
+//         <td> ${data.data.done} </td>
+//     `)
+//  });
+
 channel.bind('new-record-mtodo', (data) => {
    $('#mtodo').append(`
         <tr id="${data.data.id}">
-            <th scope="row"> ${data.data.rtype} </th>
+            <th scope="row"> ${data.data.rname} </th>
             <td> ${data.data.area} </td>
-            <td> ${data.data.desc} </td>
-            <td> ${data.data.name} </td>
+            <td> ${data.data.rmach} </td>
+            <td> ${data.data.rdate} </td>
+            <td> ${data.data.rtype} </td>
+            <td> ${data.data.rdesc} </td>
+            <td> ${data.data.aname} </td>
+            <td> ${data.data.rpname} </td>
+            <td> ${data.data.rpdesc} </td>
+            <td> ${data.data.rptime} </td>
+            <td> ${data.data.rpdate} </td>
             <td> ${data.data.done} </td>
         </tr>
    `)
@@ -394,14 +423,20 @@ channel.bind('new-record-mtodo', (data) => {
 
 channel.bind('update-record-mtodo', (data) => {
     $(`#${data.data.id}`).html(`
-        <th scope="row"> ${data.data.rtype} </th>
+        <th scope="row"> ${data.data.rname} </th>
         <td> ${data.data.area} </td>
-        <td> ${data.data.desc} </td>
-        <td> ${data.data.name} </td>
+        <td> ${data.data.rmach} </td>
+        <td> ${data.data.rdate} </td>
+        <td> ${data.data.rtype} </td>
+        <td> ${data.data.rdesc} </td>
+        <td> ${data.data.aname} </td>
+        <td> ${data.data.rpname} </td>
+        <td> ${data.data.rpdesc} </td>
+        <td> ${data.data.rptime} </td>
+        <td> ${data.data.rpdate} </td>
         <td> ${data.data.done} </td>
     `)
  });
-
 
 
 

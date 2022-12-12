@@ -377,3 +377,7 @@ h3 {
         display: none;
     }
 }
+
+.hidden {
+    display: none;
+}

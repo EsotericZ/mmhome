@@ -606,6 +606,42 @@ def jobs_tl():
 
     return render_template('jobs_tl.html', st=st, sf=sf)
 
+@app.route('/tl_nest')
+def tl_nest():
+    df13 = dbtl()[8]
+    st = df13.values.tolist()
+    for t in st:
+        unCut = []
+        if t[17]:
+            cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    df14 = dbtl()[9]
+
+    sf = df14.values.tolist()
+    for t in sf:
+        unCut = []
+        cutRow = t[17].replace("\n", "     ").split("     ")
+        if len(cutRow) > 3:
+            onlyCut = cutRow[0::3]
+            for i in onlyCut:
+                if i not in unCut:
+                    unCut.append(i)
+            finalCut = "\n".join(unCut)
+        else:
+            finalCut = cutRow[0]
+        t.append(finalCut)
+
+    return render_template('tl_nest.html', st=st, sf=sf)
+
 @app.route('/tbr_tl')
 def tbr_tl():
     df6 = dbtl()[1]
@@ -803,6 +839,7 @@ def jobs_saw():
     df7 = dbsaw()[2]
 
     sf = df7.values.tolist()
+    print('check!!!!!!!!!!!!!!', sf)
     for t in sf:
         unCut = []
         cutRow = t[17].replace("\n", "     ").split("     ")
@@ -3188,22 +3225,36 @@ def completed_maint():
 @app.route('/backend_maint', methods=["POST", "GET"])
 def backend_maint():
     if request.method == "POST":
-        rtype = request.form["rtype"]
+        rname = request.form["rname"]
         area = request.form["area"]
-        desc = request.form["desc"]
-        name = request.form["name"]
+        rmach = request.form["rmach"]
+        rdate = request.form["rdate"]
+        rtype = request.form["rtype"]
+        rdesc = request.form["rdesc"]
+        aname = request.form["aname"]
+        rpname = request.form["rpname"]
+        rpdesc = request.form["rpdesc"]
+        rptime = request.form["rptime"]
+        rpdate = request.form["rpdate"]
         done = request.form["done"]
 
-        new_mtodo = MTodo(rtype, area, desc, name, done)
+        new_mtodo = MTodo(rname, area, rmach, rdate, rtype, rdesc, aname, rpname, rpdesc, rptime, rpdate, done)
         db_session.add(new_mtodo)
         db_session.commit()
 
         data = {
             "id": new_mtodo.id,
-            "rtype": rtype,
+            "rname": rname,
             "area": area,
-            "desc": desc,
-            "name": name,
+            "rmach": rmach,
+            "rdate": rdate,
+            "rtype": rtype,
+            "rdesc": rdesc,
+            "aname": aname,
+            "rpname": rpname,
+            "rpdesc": rpdesc,
+            "rptime": rptime,
+            "rpdate": rpdate,
             "done": done
         }
 
@@ -3217,27 +3268,48 @@ def backend_maint():
 @app.route('/edit_maint/<int:id>', methods=["POST", "GET"])
 def update_record_mtodo(id):
     if request.method == "POST":
-        rtype = request.form["rtype"]
+        rname = request.form["rname"]
         area = request.form["area"]
-        desc = request.form["desc"]
-        name = request.form["name"]
+        rmach = request.form["rmach"]
+        rdate = request.form["rdate"]
+        rtype = request.form["rtype"]
+        rdesc = request.form["rdesc"]
+        aname = request.form["aname"]
+        rpname = request.form["rpname"]
+        rpdesc = request.form["rpdesc"]
+        rptime = request.form["rptime"]
+        rpdate = request.form["rpdate"]
         done = request.form["done"]
 
         update_mtodo = MTodo.query.get(id)
-        update_mtodo.rtype = rtype
+        update_mtodo.rname = rname
         update_mtodo.area = area
-        update_mtodo.desc = desc
-        update_mtodo.name = name
+        update_mtodo.rmach = rmach
+        update_mtodo.rdate = rdate
+        update_mtodo.rtype = rtype
+        update_mtodo.rdesc = rdesc
+        update_mtodo.aname = aname
+        update_mtodo.rpname = rpname
+        update_mtodo.rpdesc = rpdesc
+        update_mtodo.rptime = rptime
+        update_mtodo.rpdate = rpdate
         update_mtodo.done = done
 
         db_session.commit()
 
         data = {
             "id": id,
-            "rtype": rtype,
+            "rname": rname,
             "area": area,
-            "desc": desc,
-            "name": name,
+            "rmach": rmach,
+            "rdate": rdate,
+            "rtype": rtype,
+            "rdesc": rdesc,
+            "aname": aname,
+            "rpname": rpname,
+            "rpdesc": rpdesc,
+            "rptime": rptime,
+            "rpdate": rpdate,
             "done": done
         }
 

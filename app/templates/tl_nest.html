@@ -1,7 +1,7 @@
 {% extends 'tlbase.html' %}
 
 {% block content %}
-    <h1 align='center'>All Jobs</h1>
+    <h1 align='center'>Nested Jobs</h1>
     <br>
     <body>
         <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
@@ -15,7 +15,7 @@
                     <th scope="col"><time datetime="MM-YYYY">Due Date</time></th>
                     <!-- <th scope="col">Print Date</th> -->
                     <th scope="col">Customer</th>
-                    <th scope="col">Type</th>
+                    <!-- <th scope="col">Type</th> -->
                     <!-- <th scope="col">Need</th> -->
                     <!-- <th scope="col">On Order</th> -->
                     <!-- <th scope="col">Expected</th> -->
@@ -30,7 +30,7 @@
                     <td scope="col" bgcolor="D1BBA8"></th>
                     <td scope="col" bgcolor="D1BBA8"></th>
                     <td scope="col" bgcolor="D1BBA8"></th>
-                    <td scope="col" bgcolor="D1BBA8"></th>
+                    <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
                     <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
                     <td scope="col" bgcolor="D1BBA8" style="font-weight:bold">TBR</th>
                     <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
@@ -56,12 +56,13 @@
                     <td align='center'> {{ t[21] }} </td>
                     <!-- <td align='center'> {{ t[19] }} </td> -->
                     <td align='center'> {{ t[5] }} </td>
-                    <td align='center'> {{ t[6] }} </td>
+                    <!-- <td align='center'> {{ t[6] }} </td> -->
+                    <td align='center'> {{ t[12] }} </td>
                     <!-- <td align='center'> {% if t[11] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
                     <!-- <td align='center'> {% if t[13] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
                     <!-- <td align='center'> {{ t[14] }} </td> -->
                     <!-- <td align='center'> {% if t[15] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
-                    <td align='center'> {% if t[20] == 'yes' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <!-- <td align='center'> {% if t[20] == 'yes' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
                     <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[22] }}</code></pre></td>
                     <td><button type="button" class="clBtn btn btn-primary" data-toggle="modal" data-target="#t{{ t[0] }}">...</button></td>
                 </tr>
@@ -88,13 +89,13 @@
                 <th scope="col" bgcolor="D1BBA8"></th>
                 <th scope="col" bgcolor="D1BBA8"></th>
                 <th scope="col" bgcolor="D1BBA8"></th>
-                <th scope="col" bgcolor="D1BBA8"></th>
-                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
-                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
-                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
                 <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
                 <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
                 <th scope="col" bgcolor="D1BBA8"></th>
+                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
+                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
+                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
+                <!-- <th scope="col" bgcolor="D1BBA8"></th> -->
                 <th scope="col" bgcolor="D1BBA8"></th>
                 <th scope="col" bgcolor="D1BBA8"></th>
                 <th scope="col" bgcolor="D1BBA8"></th>
@@ -105,15 +106,15 @@
                 <td scope="col" bgcolor="D1BBA8"></th>
                 <td scope="col" bgcolor="D1BBA8"></th>
                 <td scope="col" bgcolor="D1BBA8"></th>
-                <td scope="col" bgcolor="D1BBA8"></th>
+                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
                 <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
                 <td scope="col" bgcolor="D1BBA8" style="font-weight:bold">Future</th>
-                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
-                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
-                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
-                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
                 <td scope="col" bgcolor="D1BBA8"></th>
                 <td scope="col" bgcolor="D1BBA8"></th>
+                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
+                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
+                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
+                <!-- <td scope="col" bgcolor="D1BBA8"></th> -->
                 <td scope="col" bgcolor="D1BBA8"></th>
                 <td scope="col" bgcolor="D1BBA8"></th>
             </tr>
@@ -128,12 +129,13 @@
                     <td align='center'> {{ t[21] }} </td>
                     <!-- <td align='center'> {{ t[19] }} </td> -->
                     <td align='center'> {{ t[5] }} </td>
-                    <td align='center'> {{ t[6] }} </td>
+                    <!-- <td align='center'> {{ t[6] }} </td> -->
+                    <td align='center'> {{ t[12] }} </td>
                     <!-- <td align='center'> {% if t[11] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
                     <!-- <td align='center'> {% if t[13] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
                     <!-- <td align='center'> {{ t[14] }} </td> -->
                     <!-- <td align='center'> {% if t[15] == 'on' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
-                    <td align='center'> {% if t[20] == 'yes' %} <span>&#10003;</span> {% else %} {% endif %} </td>
+                    <!-- <td align='center'> {% if t[20] == 'yes' %} <span>&#10003;</span> {% else %} {% endif %} </td> -->
                     <td align='center'><pre style="font-size:1.1em; margin: 0; top: 50%;"><code>{{ t[22] }}</code></pre></td>
                     <td><button type="button" class="clBtn btn btn-primary" data-toggle="modal" data-target="#t{{ t[0] }}">...</button></td>
                 </tr>
@@ -167,7 +169,7 @@ function filterTable(event) {
         var thirdCol = rows[i].cells[5].textContent.toUpperCase();
         var fourthCol = rows[i].cells[6].textContent.toUpperCase();
         var fifthCol = rows[i].cells[7].textContent.toUpperCase();
-        var sixthCol = rows[i].cells[9].textContent.toUpperCase();
+        var sixthCol = rows[i].cells[8].textContent.toUpperCase();
         if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1 || fourthCol.indexOf(filter) > -1 || fifthCol.indexOf(filter) > -1 || sixthCol.indexOf(filter) > -1) {
             rows[i].style.display = "";
         } else {
