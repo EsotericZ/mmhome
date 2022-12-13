@@ -4,18 +4,21 @@
     <h1 align='center'>Add Bend Deduction</h1>
     <form method="POST" id="target">
         <div class="form-group">
-            <p class="formTitle">Material Type</p>
-            <select name="matl" class="formDropDown">
-                <option value="ALS">Aluminum</option>
-                <option value="ARCH">Archive</option>
-                <option value="CUST">Custom</option>
-                <option value="CRS">Cold Rolled Steel</option>
-                <option value="SSS">Stainless Steel</option>
-            </select>
+            <p class="formTitle">Material Type</p><input type="text" class="form-control formName" name="matl">
         </div>
         <div class="form-group">
-            <p class="formTitle">Description</p><input type="text" class="form-control formName" name="desc">
+            <p class="formTitle">Description</p>
+            <select name="desc" class="formDropDown">
+                <option value="ALS">ALUMINUM</option>
+                <option value="ARCH">ARCHIVE</option>
+                <option value="CUST">CUSTOM</option>
+                <option value="CRS">CARBON STEEL</option>
+                <option value="SSS">STAINLESS STEEL</option>
+            </select>
         </div>
+        <!-- <div class="form-group"> -->
+        <!--     <p class="formTitle">Description</p><input type="text" class="form-control formName" name="desc"> -->
+        <!-- </div> -->
         <div class="form-group">
             <p class="formTitle">Material Gauge</p><input type="text" class="form-control formName" name="gauge">
         </div>
