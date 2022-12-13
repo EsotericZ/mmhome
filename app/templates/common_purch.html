@@ -23,26 +23,44 @@
             <br>
             <br>
             <br>
-            {% if tl %}
-                <h2 align='center'>Tube Laser</h2>
-                <table id="myTable">
-                    <tr class="header">
-                        <th scope="col">Material Type</th>
-                        <th scope="col">Job Number</th>
+            <h2 align='center'>Tube Laser</h2>
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Program</th>
+                    <th scope="col">Material Notes</th>
+                </tr>
+            {% for t in tlm %}
+                {% if t.done != 'on' and t.need == '' and t.ordr == '' and t.verf == '' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_tlm/{{ t.id }}"><span style="font-weight:bold">{{ t.name }}</span></a></th>
+                        <td align='center'> {{ t.needn }} </td>
                     </tr>
-                {% for t in tl %}
-                    <tr id={{ t[10] }}>
-                        {% if t[1]|length > 3 %}
-                            <td align='center'> {{ t[4] }} </td>
-                            <td align='center'> {{ t[1] }} </td>
-                        {% endif %} 
-                    </tr>
-                {% endfor %}
-                </table>
-                <br>
-                <br>
-                <br>
-            {% endif %}
+                {% endif %}
+            {% endfor %}
+            </table>
+            <br>
+            <br>
+            <br>
+            <!-- {% if tl %} -->
+            <!--     <h2 align='center'>Tube Laser</h2> -->
+            <!--     <table id="myTable"> -->
+            <!--         <tr class="header"> -->
+            <!--             <th scope="col">Material Type</th> -->
+            <!--             <th scope="col">Job Number</th> -->
+            <!--         </tr> -->
+            <!--     {% for t in tl %} -->
+            <!--         <tr id={{ t[10] }}> -->
+            <!--             {% if t[1]|length > 3 %} -->
+            <!--                 <td align='center'> {{ t[4] }} </td> -->
+            <!--                 <td align='center'> {{ t[1] }} </td> -->
+            <!--             {% endif %} --> 
+            <!--         </tr> -->
+            <!--     {% endfor %} -->
+            <!--     </table> -->
+            <!--     <br> -->
+            <!--     <br> -->
+            <!--     <br> -->
+            <!-- {% endif %} -->
             {% if sl %}
                 <h2 align='center'>Static Laser</h2>
                 <table id="myTable">

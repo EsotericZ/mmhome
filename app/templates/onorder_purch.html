@@ -25,31 +25,51 @@
             <br>
             <br>
             <br>
-            {% if tl %}
-                <h2 align='center'>Tube Laser</h2>
-                <table id="myTable">
-                    <tr class="header">
-                        <th scope="col">Job No</th>
-                        <th scope="col">Order No</th>
-                        <th scope="col">Part No</th>
-                        <th scope="col">Expected Date</th>
-                        <th scope="col">Material Notes</th>
+            <h2 align='center'>Tube Laser</h2>
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Program</th>
+                    <th scope="col">Material Notes</th>
+                    <th scope="col">Date Expected</th>
+                </tr>
+            {% for t in tlm %}
+                {% if t.done != 'on' and t.ordr == 'on' %}
+                    <tr id={{ t.id }}>
+                        <td><a href="/edit_tlm/{{ t.id }}"><span style="font-weight:bold">{{ t.name }}</span></a></th>
+                        <td align='center'> {{ t.needn }} </td>
+                        <td align='center'> {{ t.ordrn }} </td>
                     </tr>
-                {% for t in tl %}
-                    <tr id={{ t[10] }}>
-                        <td><a href="/edit_tl/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th>
-                        <td align='center'> {{ t[9] }} </td>
-                        <td align='center'> {{ t[1] }} </td>
-                        <td align='center'> {{ t[14] }} </td>
-                        <!-- <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td> -->
-                        <td align='center'> {% if t[12] == 'None' %}  {% else %} {{ t[12] }} {% endif %} </td>
-                    </tr>
-                {% endfor %}
-                </table>
-                <br>
-                <br>
-                <br>
-            {% endif %}
+                {% endif %}
+            {% endfor %}
+            </table>
+            <br>
+            <br>
+            <br>
+            <!-- {% if tl %} -->
+            <!--     <h2 align='center'>Tube Laser</h2> -->
+            <!--     <table id="myTable"> -->
+            <!--         <tr class="header"> -->
+            <!--             <th scope="col">Job No</th> -->
+            <!--             <th scope="col">Order No</th> -->
+            <!--             <th scope="col">Part No</th> -->
+            <!--             <th scope="col">Expected Date</th> -->
+            <!--             <th scope="col">Material Notes</th> -->
+            <!--         </tr> -->
+            <!--     {% for t in tl %} -->
+            <!--         <tr id={{ t[10] }}> -->
+            <!--             <td><a href="/edit_tl/{{ t[10] }}"><span style="font-weight:bold">{{ t[0] }}</span></a></th> -->
+            <!--             <td align='center'> {{ t[9] }} </td> -->
+            <!--             <td align='center'> {{ t[1] }} </td> -->
+            <!--             <td align='center'> {{ t[14] }} </td> -->
+            <!--             <!-1- <td align='center' style="width: 200px"><pre style="font-size:16px;"><code>{{ t[12] }}</code></pre></td> -1-> -->
+            <!--             <td align='center'> {% if t[12] == 'None' %}  {% else %} {{ t[12] }} {% endif %} </td> -->
+            <!--         </tr> -->
+            <!--     {% endfor %} -->
+            <!--     </table> -->
+            <!--     <br> -->
+            <!--     <br> -->
+            <!--     <br> -->
+            <!-- {% endif %} -->
             {% if sl %}
                 <h2 align='center'>Static Laser</h2>
                 <table id="myTable">
