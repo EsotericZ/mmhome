@@ -91,7 +91,8 @@ def dbtl():
         df6['ShowDate'] = dfn
 
     # DF7 IS FOR ONLY FUTURE JOBS ON TLASER THAT NEED TO BE NESTED
-    df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP') & (df4['mtl'] != 'on')]
+    # df7 = df4.loc[(df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP') & (df4['mtl'] != 'on')]
+    df7 = df4.loc[((df4['User_Text2'] == '1. OFFICE') & (df4['mtl'] != 'on')) | ((df4['User_Text2'] == '3. WIP') & (df4['mtl'] != 'on'))]
     df7 = df7.sort_values(by=['DueDate'], ascending = True)
     if not df7.empty:
         dfm = df7['DueDate'].str.split(pat = '/').str[1]
@@ -136,7 +137,7 @@ def dbtl():
         df13['ShowDate'] = dfn
 
     # DF14 IS FOR ONLY FUTURE JOBS ON TLASER THAT NEED TO BE NESTED
-    df14 = df4.loc[((df4['User_Text2'] == '1. OFFICE') | (df4['User_Text2'] == '3. WIP')) & (df4['mtl'] == 'on')]
+    df14 = df4.loc[((df4['User_Text2'] == '1. OFFICE') & (df4['mtl'] == 'on')) | ((df4['User_Text2'] == '3. WIP') & (df4['mtl'] == 'on'))]
     df14 = df14.sort_values(by=['DueDate'], ascending = True)
     if not df14.empty:
         dfm = df14['DueDate'].str.split(pat = '/').str[1]

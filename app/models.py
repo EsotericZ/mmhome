@@ -347,6 +347,23 @@ class EntNotes(Base):
 
 
 
+# TUBE LASER MATERIAL NOTES
+class TlmNotes(Base):
+    __tablename__ = 'tlmnotes'
+
+    id = Column(Integer, primary_key=True)
+    area = Column(String(50))
+    notes = Column(String(1000))
+
+    def __init__(self, area=None, notes=None):
+        self.area = area
+        self.notes = notes
+
+    def __repr__(self):
+        return '<Notes %r>' % (self.area)
+
+
+
 # SUPPLIES NOTES
 class SupNotes(Base):
     __tablename__ = 'supnotes'
@@ -367,6 +384,35 @@ class SupNotes(Base):
 # ENTERPRISE
 class Ent(Base):
     __tablename__ = 'ent'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(10))
+    need = Column(Integer())
+    needn = Column(String(120))
+    ordr = Column(Integer())
+    ordrn = Column(String(120))
+    verf = Column(Integer())
+    verfn = Column(String(120))
+    done = Column(Integer())
+
+    def __init__(self, name=None, need=None, needn=None, ordr=None, ordrn=None, verf=None, verfn=None, done=None):
+        self.name = name
+        self.need = need
+        self.needn = needn
+        self.ordr = ordr
+        self.ordrn = ordrn
+        self.verf = verf
+        self.verfn = verfn
+        self.done = done
+
+    def __repr__(self):
+        return '<Job %r>' % (self.name)
+
+
+
+# TUBE LASER MATERIAL
+class MatlTL(Base):
+    __tablename__ = 'matltl'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(10))

@@ -282,6 +282,16 @@ channel.bind('update-record_entn', (data) => {
 
 
 
+// TUBE LASER MATERIAL NOTES
+channel.bind('update-record_tlmn', (data) => {
+    $(`#${data.data.id}`).html(`
+        <td> ${data.data.area} </td>
+        <td> ${data.data.notes} </td>
+    `)
+ });
+
+
+
 // SUPPLIES NOTES
 channel.bind('update-record_supn', (data) => {
     $(`#${data.data.id}`).html(`
@@ -337,6 +347,40 @@ channel.bind('new-record-ent', (data) => {
 });
 
 channel.bind('update-record-ent', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+    $(`#${data.data.id}`).html(`
+        <th scope="row"> ${data.data.name} </th>
+        <td> ${data.data.need} </td>
+        <td> ${data.data.needn} </td>
+        <td> ${data.data.ordr} </td>
+        <td> ${data.data.ordrn} </td>
+        <td> ${data.data.verf} </td>
+        <td> ${data.data.verfn} </td>
+        <td> ${data.data.done} </td>
+    `)
+ });
+
+
+
+
+// TUBE LASER MATERIAL
+channel.bind('new-record-tlmatl', (data) => {
+    // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
+   $('#matltl').append(`
+        <tr id="${data.data.id}">
+            <th scope="row"> ${data.data.name} </th>
+            <td> ${data.data.need} </td>
+            <td> ${data.data.needn} </td>
+            <td> ${data.data.ordr} </td>
+            <td> ${data.data.ordrn} </td>
+            <td> ${data.data.verf} </td>
+            <td> ${data.data.verfn} </td>
+            <td> ${data.data.done} </td>
+        </tr>
+   `)
+});
+
+channel.bind('update-record-tlmatl', (data) => {
     // const duedate = moment(`${data.data.duedate}`, 'DD/MM/YYYY').format('YYYY-MM-DD')
     $(`#${data.data.id}`).html(`
         <th scope="row"> ${data.data.name} </th>

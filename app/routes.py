@@ -7,7 +7,7 @@ from flask import Flask, render_template, flash, redirect, request, url_for, jso
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies, Taps, Directory, Hardware
+from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies, Taps, Directory, Hardware, MatlTL, TlmNotes
 from werkzeug.urls import url_parse
 from database import db_session
 from datetime import datetime
@@ -266,6 +266,11 @@ def hold_eng():
     df10 = df10.sort_values(by = ['DueDate', 'JobNo'])
     eng = df10.values.tolist()
     return render_template('hold_eng.html', eng=eng)
+
+@app.route('/engform')
+def engform():
+    eng = dbpb()
+    return render_template('engform.html', eng=eng)
 
 @app.route('/mmodels')
 def mmodels():
@@ -2391,6 +2396,121 @@ def update_record_ent(id):
 
 
 
+# # # TUBE LASER MATERIAL # # #
+
+@app.route('/tlmatlhome')
+def tlmatlhome():
+    note = TlmNotes.query.all()
+    return render_template('tlmatlhome.html', note=note)
+
+@app.route('/material_tlmatl')
+def material_tlmatl():
+    tlm = MatlTL.query.order_by('name').all()
+    return render_template('material_tlmatl.html', tlm=tlm)
+
+@app.route('/onorder_tlmatl')
+def onorder_tlmatl():
+    tlm = MatlTL.query.order_by('name').all()
+    return render_template('onorder_tlmatl.html', tlm=tlm)
+
+@app.route('/common_tlmatl')
+def common_tlmatl():
+    tlm = MatlTL.query.order_by('name').all()
+    return render_template('common_tlmatl.html', tlm=tlm)
+
+@app.route('/verify_tlmatl')
+def verify_tlmatl():
+    tlm = MatlTL.query.order_by('name').all()
+    return render_template('verify_tlmatl.html', tlm=tlm)
+
+@app.route('/comp_tlmatl')
+def comp_tlmatl():
+    tlm = MatlTL.query.order_by('name').all()
+    return render_template('comp_tlmatl.html', tlm=tlm)
+
+@app.route('/backend_tlmatl', methods=["POST", "GET"])
+def backend_tlmatl():
+    if request.method == "POST":
+        name = request.form["name"]
+        need = request.form["need"]
+        needn = request.form["needn"]
+        ordr = request.form["ordr"]
+        ordrn = request.form["ordrn"]
+        verf = request.form["verf"]
+        verfn = request.form["verfn"]
+        done = request.form["done"]
+
+        new_tlm = MatlTL(name, need, needn, ordr, ordrn, verf, verfn)
+        db_session.add(new_tlm)
+        db_session.commit()
+
+        data = {
+            "id": new_tlm.id,
+            "name": name,
+            "need": need,
+            "needn": needn,
+            "ordr": ordr,
+            "ordrn": ordrn,
+            "verf": verf,
+            "verfn": verfn,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'new-record-tlmatl', {'data': data })
+
+        return redirect("/common_tlmatl", code=302)
+    else:
+        tlm = MatlTL.query.all()
+        return render_template('backend_tlmatl.html', tlm=tlm)
+
+@app.route('/edit_tlm/<int:id>', methods=["POST", "GET"])
+def update_record_tlmatl(id):
+    if request.method == "POST":
+        name = request.form["name"]
+        need = request.form["need"]
+        needn = request.form["needn"]
+        ordr = request.form["ordr"]
+        ordrn = request.form["ordrn"]
+        verf = request.form["verf"]
+        verfn = request.form["verfn"]
+        done = request.form["done"]
+
+        update_tlm = MatlTL.query.get(id)
+        update_tlm.name = name
+        update_tlm.need = need
+        update_tlm.needn = needn
+        update_tlm.ordr = ordr
+        update_tlm.ordrn = ordrn
+        update_tlm.verf = verf
+        update_tlm.verfn = verfn
+        update_tlm.done = done
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "name": name,
+            "need": need,
+            "needn": needn,
+            "ordr": ordr,
+            "ordrn": ordrn,
+            "verf": verf,
+            "verfn": verfn,
+            "done": done
+        }
+
+        pusher_client.trigger('table', 'update-record-tlmatl', {'data': data })
+
+        return redirect("/tlmatlhome", code=302)
+    else:
+        new_tlm = MatlTL.query.get(id)
+
+        return render_template('update_tlmatl.html', data=new_tlm)
+
+
+
+
+
 # # # SUPPLIES # # #
 
 @app.route('/supplies')
@@ -2514,9 +2634,12 @@ def common_purch():
     ent = Ent.query.order_by('name').all()
 
     # TLASER
-    dftl = dbtl()[7]
-    dftl = dftl.drop_duplicates()
-    tl = dftl.values.tolist()
+    tlm = MatlTL.query.order_by('name').all()
+
+    # TLASER
+    # dftl = dbtl()[7]
+    # dftl = dftl.drop_duplicates()
+    # tl = dftl.values.tolist()
 
     # FLASER
     dffl = dbflaser()[7]
@@ -2546,7 +2669,8 @@ def common_purch():
     # LASER / ENTERPRISE
     sup = Supplies.query.order_by('id').all()
 
-    return render_template('common_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
+    # return render_template('common_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
+    return render_template('common_purch.html', ent=ent, tlm=tlm, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
 
 @app.route('/material_purch')
 def material_purch():
@@ -2554,10 +2678,13 @@ def material_purch():
     ent = Ent.query.order_by('name').all()
 
     # TLASER
-    dftl = dbtl()[3]
-    dftl = dftl.drop_duplicates()
-    dftl = dftl.sort_values(by = ['DueDate', 'JobNo'])
-    tl = dftl.values.tolist()
+    tlm = MatlTL.query.order_by('name').all()
+
+    # TLASER
+    # dftl = dbtl()[3]
+    # dftl = dftl.drop_duplicates()
+    # dftl = dftl.sort_values(by = ['DueDate', 'JobNo'])
+    # tl = dftl.values.tolist()
 
     # FLASER
     dffl = dbflaser()[3]
@@ -2592,7 +2719,8 @@ def material_purch():
     # SUPPLIES
     sup = Supplies.query.order_by('id').all()
 
-    return render_template('material_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
+    # return render_template('material_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
+    return render_template('material_purch.html', ent=ent, tlm=tlm, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
 
 @app.route('/onorder_purch')
 def onorder_purch():
@@ -2600,10 +2728,13 @@ def onorder_purch():
     ent = Ent.query.order_by('name').all()
 
     # TLASER
-    dftl = dbtl()[6]
-    dftl = dftl.drop_duplicates()
-    dftl = dftl.sort_values(by = ['DueDate', 'JobNo'])
-    tl = dftl.values.tolist()
+    tlm = MatlTL.query.order_by('name').all()
+
+    # TLASER
+    # dftl = dbtl()[6]
+    # dftl = dftl.drop_duplicates()
+    # dftl = dftl.sort_values(by = ['DueDate', 'JobNo'])
+    # tl = dftl.values.tolist()
 
     # FLASER
     dffl = dbflaser()[6]
@@ -2638,7 +2769,8 @@ def onorder_purch():
     # SUPPLIES
     sup = Supplies.query.order_by('id').all()
 
-    return render_template('onorder_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
+    # return render_template('onorder_purch.html', ent=ent, tl=tl, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
+    return render_template('onorder_purch.html', ent=ent, tlm=tlm, sl=sl, fl=fl, sa=sa, sh=sh, pu=pu, sup=sup)
 
 
 
@@ -3177,6 +3309,35 @@ def update_record_entn(id):
         new_entn = EntNotes.query.get(id)
 
         return render_template('update_entnotes.html', data=new_entn)
+
+
+
+# PAGE NOTES TUBE LASER MATERIAL
+@app.route('/edit_tlmn/<int:id>', methods=["POST", "GET"])
+def update_record_tlmn(id):
+    if request.method == "POST":
+        area = request.form["area"]
+        notes = request.form["notes"]
+
+        update_tlmnotes = TlmNotes.query.get(id)
+        update_tlmnotes.area = area
+        update_tlmnotes.notes = notes
+
+        db_session.commit()
+
+        data = {
+            "id": id,
+            "area": area,
+            "notes": notes
+        }
+
+        pusher_client.trigger('table', 'update-record_tlmn', {'data': data })
+
+        return redirect("/tlmatlhome", code=302)
+    else:
+        new_tlmn = TlmNotes.query.get(id)
+
+        return render_template('update_tlmnotes.html', data=new_tlmn)
 
 
 
