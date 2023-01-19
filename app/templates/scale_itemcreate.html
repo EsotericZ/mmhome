@@ -1,0 +1,30 @@
+{% extends 'supbase.html' %}
+
+{% block content %}
+    <h1 align='center'>Create Item</h1>
+
+    {% if scales != None %}
+    <form method="POST" id="target">
+        <div class="form-group">
+            <p class="formTitle">Item Name</p> <input type="text" class="form-control formVerify" name="description">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Part Number</p> <input type="text" class="form-control formVerify" name="partNumber">
+        </div>
+        <div class="form-group">
+            <p class="formTitle">Sample Quantity</p> <input type="number" class="form-control formVerify" name="quantity" value=1>
+        </div>
+        <div class="form-group">
+            <select name="scaleId" id="scaleId">
+                {% for t in scales %}
+                        <option value='{{ t.ScaleId }}'>{{t.Name}}</option>
+                {% endfor %}
+              </select>
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary formBtn">Submit</button>
+    </form>
+    {% else %}
+    <div> No scales available, please either create a new scale or delete the item of an existing scale.</div>
+    {% endif %}
+{% endblock %}
