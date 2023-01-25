@@ -4,38 +4,68 @@
     <h1 align='center'>Scales</h1>
     <br>
     <body>
+        <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter Table">
         {% if edit == True %}
-        <a href="{{ url_for('scale_display') }}"><button>Cancel Edit</button></a>
+            <a href="{{ url_for('scale_display') }}"><button>Cancel Edit</button></a>
         {% else %}
-        <a href="{{ url_for('scale_display', editMode=True) }}"><button>Edit Scales</button></a>
+            <a href="{{ url_for('scale_display', editMode=True) }}"><button>Edit Scales</button></a>
         {% endif %}
             <table id="myTable">
                 <tr class="header">
                     <th scope="col">Scale ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Item</th>
+                    <th scope="col">Item Description</th>
                     <th scope="col">Part Number</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Connected</th>
-                    <th scope="col">Zero Weight</th>
+                    <th scope="col">Alert Threshold</th>
+                    {% if edit == True %}
+                        <th scope="col">Connected</th>
+                        <th scope="col">Zero Weight</th>
+                        <th scope="col">Zero</th>
+                        <th scope="col">Delete Scale</th>
+                        <th scope="col">Delete Item</th>
+                    {% endif %}                        
                 </tr>
             {% for t in scales %}
                     <tr id={{ t.ScaleId }}>
-                        <td><span style="font-weight:bold">{{ t.ScaleId }}</span></th>
+                        <!-- <td><span style="font-weight:bold">{{ t.ScaleId }}</span></th> -->
                         <td align='center'> {{ t.Name }} </td>
                         <td align='center'> {{ t.ItemDescription }} </td>
                         <td align='center'> {{ t.ItemPartNumber }}  </td>
-                        <td align='center'> {{ t.Quantity }} </td>
-                        <td align='center'> {{ t.Connected }} </td>
-                        <td align='center'> {{ t.ZeroWeight }} </td>
+                        {% if t.Quantity < 0 %}
+                            <td align='center'>Bin Removed</td>
+                        {% else %}
+                            <td align='center'> {{ t.Quantity }} </td>
+                        {% endif %}
+                        <td align='center'> {{ t.AlertThreshold }} </td>
                         {% if edit == True %}
-                        <td align='center'> <a href="{{ url_for('zeroScale', scaleId=t.ScaleId) }}"><button>Zero Scale</button></a> </td>
-                        <td align='center'> <a href="{{ url_for('deleteScale', scaleId=t.ScaleId) }}"><button>Delete Scale</button></a> </td>
-                        <td align='center'>{% if t.ItemId == None %} - {% else %} <a href="{{ url_for('deleteItem', itemId=t.ItemId) }}"><button>Delete Item</button></a> {% endif %}</td>
+                            <td align='center'> {{ t.Connected }} </td>
+                            <td align='center'> {{ t.ZeroWeight }} </td>
+                            <td align='center'> <a href="{{ url_for('zeroScale', scaleId=t.ScaleId) }}"><button>Zero Scale</button></a> </td>
+                            <td align='center'> <a href="{{ url_for('deleteScale', scaleId=t.ScaleId) }}"><button>Delete Scale</button></a> </td>
+                            <td align='center'>{% if t.ItemId == None %} - {% else %} <a href="{{ url_for('deleteItem', itemId=t.ItemId) }}"><button>Delete Item</button></a> {% endif %}</td>
                         {% endif %}                        
                     </tr>
             {% endfor %}
-                </table>
+            </table>
+        <script>
+            function filterTable(event) {
+                var filter = event.target.value.toUpperCase();
+                var rows = document.querySelector("#myTable tbody").rows;
+    
+                for (var i = 1; i < rows.length; i++) {
+                    var firstCol = rows[i].cells[0].textContent.toUpperCase();
+                    var secondCol = rows[i].cells[1].textContent.toUpperCase();
+                    var thirdCol = rows[i].cells[2].textContent.toUpperCase();
+                    if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }      
+                }
+            }
+
+            document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+        </script>
     </body>
 
 {% endblock %}

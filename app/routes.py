@@ -2540,6 +2540,7 @@ def comp_sup():
 @app.route('/scale_display/<editMode>')
 def scale_display(editMode = False):
     scales = GetScales()
+    print('scales: ', scales)
     return render_template('scale_display.html', scales=scales, edit=bool(editMode))
 
 @app.route('/scale_logs')
@@ -2577,7 +2578,7 @@ def scale_itemcreate():
             scales = None
         return render_template('scale_itemcreate.html', scales=scales)
 
-        
+
 @app.route('/zeroScale/<scaleId>', methods=["GET"])
 def zeroScale(scaleId):
     ZeroScale(int(scaleId))
