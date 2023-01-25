@@ -1,11 +1,12 @@
 from __future__ import unicode_literals
 from xlwt import Workbook
 import io
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 
 from flask import Flask, render_template, flash, redirect, request, url_for, jsonify
 from app import app
 from app.forms import LoginForm
+from app.scaleModels import Scale
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Job, TJob, MJob, Bendd, Ship, PageNotes, SawNotes, ShearNotes, PunchNotes, SLaserNotes, FLaserNotes, FormingNotes, MachiningNotes, EngNotes, Ent, EntNotes, PurchNotes, SupNotes, Todo, MTodo, Supplies, Taps, Directory, Hardware, MatlTL, TlmNotes
 from werkzeug.urls import url_parse
@@ -17,6 +18,8 @@ from app.dbcn import dbtl, dbeng, dbmach, dbsl, dbfl, dbpp, dbemail, dbpb, dbsaw
 from app.shipsum import shipsum
 # from app.invman import invman
 from app.email import email
+from app.scaleApi import *
+import json
 import pusher
 import os
 import pandas as pd
@@ -2532,6 +2535,63 @@ def onorder_sup():
 def comp_sup():
     sup = Supplies.query.order_by('-id').all()
     return render_template('comp_sup.html', sup=sup)
+
+@app.route('/scale_display')
+@app.route('/scale_display/<editMode>')
+def scale_display(editMode = False):
+    scales = GetScales()
+    return render_template('scale_display.html', scales=scales, edit=bool(editMode))
+
+@app.route('/scale_logs')
+def scale_logs():
+    logs = GetLogs()
+    return render_template('scale_quantitylog.html', logs = logs)
+
+@app.route('/scale_create', methods=["POST", "GET"])
+def scale_create():
+    if request.method == "POST":
+        channelIds = [int(x) for x in request.form.to_dict(flat=False)["channelIds"]]
+        scale = Scale(request.form["name"],int(request.form["scaleWeightType"]), float(request.form["alertThreshold"]), channelIds)
+        CreateScale(scale)
+        return redirect(url_for("scale_display"), code=302)
+    else:
+        sensors = GetSensors()
+        sensors = [x for x in sensors if x['ScaleName']== 'Unused']
+        if len(sensors) == 0:
+            sensors = None
+        return render_template('scale_create.html', sensors=sensors)
+
+@app.route('/scale_itemcreate', methods=["POST", "GET"])
+def scale_itemcreate():
+    if request.method == "POST":
+        scaleId = request.form["scaleId"]
+        itemName = request.form["description"]
+        quantity = request.form["quantity"]
+        partNumber = request.form["partNumber"]
+        CreateItem({"ScaleId":int(scaleId), "Description": itemName, "Quantity": int(quantity), "PartNumber": partNumber})
+        return redirect(url_for("scale_display"), code=302)
+    else:
+        scales = GetScales()
+        scales = [x for x in scales if x['ItemId'] == None]
+        if len(scales) == 0:
+            scales = None
+        return render_template('scale_itemcreate.html', scales=scales)
+
+        
+@app.route('/zeroScale/<scaleId>', methods=["GET"])
+def zeroScale(scaleId):
+    ZeroScale(int(scaleId))
+    return redirect(url_for("scale_display"), code=302)
+
+@app.route('/deleteScale/<scaleId>', methods=["GET"])
+def deleteScale(scaleId):
+    DeleteScale(int(scaleId))
+    return redirect(url_for("scale_display"), code=302)
+
+@app.route('/deleteItem/<itemId>', methods=["GET"])
+def deleteItem(itemId):
+    DeleteItem(int(itemId))
+    return redirect(url_for("scale_display"), code=302)
 
 @app.route('/backend_sup', methods=["POST", "GET"])
 def backend_sup():
