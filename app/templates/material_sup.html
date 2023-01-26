@@ -29,6 +29,26 @@
                 {% endif %}
             {% endfor %}
             </table>
+            <br> 
+            <table id="myTable">
+                <tr class="header">
+                    <th scope="col">Item ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Part Number</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Threshold</th>
+                </tr>
+            {% for a in auto %}
+                <tr id={{ a[6] }}>
+                    <td align='center'> {{ a[6] }} </td>
+                    <td align='center'> {{ a[0] }} </td>
+                    <td align='center'> {{ a[4] }} </td>
+                    <td align='center'> {{ a[5] }} </td>
+                    <td align='center'> {{ a[2] }} </td>
+                    <td align='center'> {{ a[3] }} </td>
+            {% endfor %}
+            </table>
 
 <script>
 function filterTable(event) {

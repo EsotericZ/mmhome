@@ -2524,7 +2524,18 @@ def supplies():
 @app.route('/material_sup')
 def material_sup():
     sup = Supplies.query.order_by('id').all()
-    return render_template('material_sup.html', sup=sup)
+    scales = GetScales()
+    auto = []
+    print(scales)
+    for s in scales:
+        print(s['Quantity'], s['AlertThreshold'])
+        if s['Quantity'] < s['AlertThreshold']:
+            if s['Quantity'] >= 0:
+                print(s['Name'])
+                add = [s['Name'], s['ScaleId'], s['Quantity'], s['AlertThreshold'], s['ItemPartNumber'], s['ItemDescription'], s['ItemId']]
+                auto.append(add)
+    print(auto)
+    return render_template('material_sup.html', sup=sup, auto=auto)
 
 @app.route('/onorder_sup')
 def onorder_sup():
@@ -2540,7 +2551,6 @@ def comp_sup():
 @app.route('/scale_display/<editMode>')
 def scale_display(editMode = False):
     scales = GetScales()
-    print('scales: ', scales)
     return render_template('scale_display.html', scales=scales, edit=bool(editMode))
 
 @app.route('/scale_logs')
