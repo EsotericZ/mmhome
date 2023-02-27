@@ -12,7 +12,14 @@
         </div>
         
         <div class="form-group">
-            <p class="formTitle">Machine / Equipment / Other</p> <input type="text" class="form-control formName" name="rmach">
+            <!-- <p class="formTitle">Machine / Equipment / Other</p> <input type="text" class="form-control formName" name="rmach"> -->
+            <p class="formTitle">Equipment</p>
+            <select name="rmach" class="formDropDown">
+                <option value="Routine">-</option>
+                {% for q in eq %}
+                    <option value="{{ q }}">{{ q }}</option>
+                {% endfor %}
+            </select>
         </div>
         
         <div class="form-group">

@@ -19,6 +19,7 @@ from app.shipsum import shipsum
 # from app.invman import invman
 from app.email import email
 from app.scaleApi import *
+from app.e2db import equip
 import json
 import pusher
 import os
@@ -3456,6 +3457,7 @@ def completed_maint():
 
 @app.route('/backend_maint', methods=["POST", "GET"])
 def backend_maint():
+    eq = equip()
     if request.method == "POST":
         rname = request.form["rname"]
         area = request.form["area"]
@@ -3495,7 +3497,7 @@ def backend_maint():
         return redirect("/maintenance", code=302)
     else:
         mtodos = MTodo.query.all()
-        return render_template('backend_maint.html', mtodos=mtodos)
+        return render_template('backend_maint.html', mtodos=mtodos, eq=eq)
 
 @app.route('/edit_maint/<int:id>', methods=["POST", "GET"])
 def update_record_mtodo(id):
