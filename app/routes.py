@@ -3471,8 +3471,9 @@ def backend_maint():
         rptime = request.form["rptime"]
         rpdate = request.form["rpdate"]
         done = request.form["done"]
+        comment = request.form["comment"]
 
-        new_mtodo = MTodo(rname, area, rmach, rdate, rtype, rdesc, aname, rpname, rpdesc, rptime, rpdate, done)
+        new_mtodo = MTodo(rname, area, rmach, rdate, rtype, rdesc, aname, rpname, rpdesc, rptime, rpdate, done, comment)
         db_session.add(new_mtodo)
         db_session.commit()
 
@@ -3489,7 +3490,8 @@ def backend_maint():
             "rpdesc": rpdesc,
             "rptime": rptime,
             "rpdate": rpdate,
-            "done": done
+            "done": done,
+            "comment": comment
         }
 
         pusher_client.trigger('table', 'new-record-mtodo', {'data': data })
@@ -3514,6 +3516,7 @@ def update_record_mtodo(id):
         rptime = request.form["rptime"]
         rpdate = request.form["rpdate"]
         done = request.form["done"]
+        comment = request.form["comment"]
 
         update_mtodo = MTodo.query.get(id)
         update_mtodo.rname = rname
@@ -3528,6 +3531,7 @@ def update_record_mtodo(id):
         update_mtodo.rptime = rptime
         update_mtodo.rpdate = rpdate
         update_mtodo.done = done
+        update_mtodo.comment = comment
 
         db_session.commit()
 
@@ -3544,7 +3548,8 @@ def update_record_mtodo(id):
             "rpdesc": rpdesc,
             "rptime": rptime,
             "rpdate": rpdate,
-            "done": done
+            "done": done,
+            "comment": comment
         }
 
         pusher_client.trigger('table', 'update-record-mtodo', {'data': data })

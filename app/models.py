@@ -573,8 +573,9 @@ class MTodo(Base):
     rptime = Column(String(120))
     rpdate = Column(String(120))
     done = Column(Integer())
+    comment = Column(String(120))
 
-    def __init__(self, rname=None, area=None, rmach=None, rdate=None, rtype=None, rdesc=None, aname=None, rpname=None, rpdesc=None, rptime=None, rpdate=None, done=None):
+    def __init__(self, rname=None, area=None, rmach=None, rdate=None, rtype=None, rdesc=None, aname=None, rpname=None, rpdesc=None, rptime=None, rpdate=None, done=None, comment=None):
         self.rname = rname
         self.area = area
         self.rmach = rmach
@@ -587,6 +588,7 @@ class MTodo(Base):
         self.rptime = rptime
         self.rpdate = rpdate
         self.done = done
+        self.comment = comment
 
     def __repr__(self):
         return '<Job %r>' % (self.desc)

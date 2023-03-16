@@ -1387,7 +1387,8 @@ def dbflaser():
 
     # df4 = df3[['JobNo', 'PartNo', 'Revision', 'QtyToMake', 'DueDate', 'CustCode', 'User_Text3', 'User_Text2', 'User_Number3', 'OrderNo', 'id', 'eng', 'wip', 'hold', 'hrsn', 'qc', 'apr', 'StepNo', 'qcn', 'model']]
     df4 = df3[['JobNo', 'PartNo', 'Revision', 'QtyToMake', 'DueDate', 'CustCode', 'User_Text3', 'User_Text2', 'User_Number3', 'OrderNo', 'id', 'mtl', 'mtln', 'pgm', 'pgmn', 'tlh', 'tlhn', 'User_Memo1', 'StepNo', 'User_Date1']]
-    df4['DueDate'] = df4['DueDate'].dt.strftime('%Y/%m/%d')
+    if not df4.empty:
+        df4['DueDate'] = df4['DueDate'].dt.strftime('%Y/%m/%d')
     # df4['User_Date1'] = df4['User_Date1'].dt.strftime('%m/%d')
     # df4['User_Date1'] = df4['User_Date1'].fillna('-')
 

@@ -461,6 +461,7 @@ channel.bind('new-record-mtodo', (data) => {
             <td> ${data.data.rptime} </td>
             <td> ${data.data.rpdate} </td>
             <td> ${data.data.done} </td>
+            <td> ${data.data.comment} </td>
         </tr>
    `)
 });
@@ -479,9 +480,9 @@ channel.bind('update-record-mtodo', (data) => {
         <td> ${data.data.rptime} </td>
         <td> ${data.data.rpdate} </td>
         <td> ${data.data.done} </td>
+        <td> ${data.data.comment} </td>
     `)
  });
-
 
 
 

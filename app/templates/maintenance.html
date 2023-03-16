@@ -14,6 +14,7 @@
                 <th scope="col">Requested By</th>
                 <th scope="col">Request Date</th>
                 <th scope="col">Authorized By</th>
+                <th scope="col">Comments</th>
             </tr>
             {% for t in mtodos %}
                 {% if t.done != 'on' %}
@@ -25,6 +26,7 @@
                         <td align='center'> {{ t.rname }} </td>
                         <td align='center'> {{ t.rdate }} </td>
                         <td align='center'> {{ t.aname }} </td>
+                        <td align='center'> {{ t.comment }} </td>
                     </tr>
                 {% endif %}
             {% endfor %}
