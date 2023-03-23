@@ -2563,7 +2563,7 @@ def scale_logs():
 def scale_create():
     if request.method == "POST":
         channelIds = [int(x) for x in request.form.to_dict(flat=False)["channelIds"]]
-        scale = Scale(request.form["name"],int(request.form["scaleWeightType"]), float(request.form["alertThreshold"]), channelIds)
+        scale = Scale(request.form["name"],int(request.form["scaleWeightType"]), channelIds)
         CreateScale(scale)
         return redirect(url_for("scale_display"), code=302)
     else:
@@ -2580,7 +2580,8 @@ def scale_itemcreate():
         itemName = request.form["description"]
         quantity = request.form["quantity"]
         partNumber = request.form["partNumber"]
-        CreateItem({"ScaleId":int(scaleId), "Description": itemName, "Quantity": int(quantity), "PartNumber": partNumber})
+        alertThreshold = float(request.form["alertThreshold"])
+        CreateItem({"ScaleId":int(scaleId), "Description": itemName, "Quantity": int(quantity), "PartNumber": partNumber, "AlertThreshold": alertThreshold})
         return redirect(url_for("scale_display"), code=302)
     else:
         scales = GetScales()
