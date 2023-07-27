@@ -1,4 +1,5 @@
 from app.dbcn import ships
+# from dbcn import ships
 import sqlite3
 from sqlite3 import Error
 from pandas import DataFrame
@@ -82,11 +83,11 @@ def shipsum():
         # if nqt:
         # nqts = "\n".join(nqt)
         # rec_email = "brentw@monarchmetalmfg.com"
-        # rec_email = "cjs@monarchmetalmfg.com"
+        rec_email = "cjs@monarchmetalmfg.com"
         # rec_email = "zechariah.williams@stollemachinery.com"
         # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com", "zechariah.williams@stollemachinery.com"]
         # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com", "stacey.ricketts@stollemachinery.com"]
-        rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com"]
+        # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com"]
 
         message = MIMEMultipart("alternative")
         # message = MIMEMultipart("alternative", None, [MIMEText(text), MIMEText(html,'html')])

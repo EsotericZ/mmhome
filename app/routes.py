@@ -19,6 +19,7 @@ from app.shipsum import shipsum
 # from app.invman import invman
 from app.email import email
 from app.scaleApi import *
+from app.rfidApi import *
 from app.e2db import equip
 import json
 import pusher
@@ -1936,6 +1937,7 @@ def punchhome():
 def jobs_punch():
     df6 = dbpunch()[1]
     st = df6.values.tolist()
+    print(st)
     for t in st:
         unCut = []
         if t[17]:
@@ -2526,8 +2528,11 @@ def supplies():
 def material_sup():
     sup = Supplies.query.order_by('id').all()
     scales = GetScales()
+    rfid = GetRFID()
     auto = []
     print(scales)
+    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    print(rfid)
     for s in scales:
         print(s['Quantity'], s['AlertThreshold'])
         if s['Quantity'] < s['AlertThreshold']:

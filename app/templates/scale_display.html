@@ -13,8 +13,8 @@
             <table id="myTable">
                 <tr class="header">
                     <th scope="col">Scale ID</th>
-                    <th scope="col">Item Description</th>
                     <th scope="col">Part Number</th>
+                    <th scope="col">Item Description</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Alert Threshold</th>
                     {% if edit == True %}
@@ -29,8 +29,8 @@
                     <tr id={{ t.ScaleId }}>
                         <!-- <td><span style="font-weight:bold">{{ t.ScaleId }}</span></th> -->
                         <td align='center'> {{ t.Name }} </td>
-                        <td align='center'> {{ t.ItemDescription }} </td>
                         <td align='center'> {{ t.ItemPartNumber }}  </td>
+                        <td align='center'> {{ t.ItemDescription }} </td>
                         {% if t.Quantity < 0 %}
                             <td align='center'>Bin Removed</td>
                         {% else %}

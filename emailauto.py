@@ -21,7 +21,7 @@ pw = 'Mon@rch09'
 cnxn = p.connect('DRIVER={/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.5.so.2.1};SERVER='+server+';DATABASE='+db+';UID='+un+';PWD='+pw)
 sql = """SELECT T.DelTicketNo, T.OrderNo, T.CustCode, T.CustDesc, T.ShipDate, T.DTPrinted, T.CustPONum, D.JobNo, D.PartNo, D.ContactName, D.Qty2Ship, C.Contact, C.Email, O.DueDate \
                 FROM DelTicket T INNER JOIN DelTicketDet D ON T.DelTicketNo=D.DelTicketNo INNER JOIN Contacts C ON D.ContactName=C.Contact INNER JOIN OrderDet O ON D.JobNo=O.JobNo \
-                WHERE T.ShipDate >= cast(GETDATE() as date) AND T.DTPrinted = 'Y'"""
+                WHERE T.ShipDate = cast(GETDATE() as date) AND T.DTPrinted = 'Y'"""
 df = pd.read_sql(sql, con=cnxn)
 print(df)
 
@@ -72,9 +72,9 @@ for x in cont:
 
         part1 = MIMEText(html, 'html')
 
-        # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com", "stacey.ricketts@stollemachinery.com"]
+        rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com"]
         # rec_email = ["cjs@monarchmetalmfg.com"]
-        rec_email = ["stacey.ricketts@stollemachinery.com"]
+        # rec_email = ["stacey.ricketts@stollemachinery.com"]
 
         message = MIMEMultipart("alternative")
         message["Subject"] = 'Advanced Shipment Notice'
@@ -117,8 +117,8 @@ for x in cont:
         # rec_email = "cjsand03@gmail.com"
     # rec_email = "zechariah.williams@stollemachinery.com"
         # rec_email = "cjs@monarchmetalmfg.com"
-        rec_email = email
-        # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com"]
+        # rec_email = email
+        rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com"]
 
         message = MIMEMultipart("alternative")
     # message = MIMEMultipart("alternative", None, [MIMEText(text), MIMEText(html,'html')])
@@ -160,7 +160,7 @@ part1 = MIMEText(html, 'html')
 # rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com", "shipping@monarchmetalmfg.com", "customerservice@monarchmetalmfg.com"]
 rec_email = ["cjs@monarchmetalmfg.com", "brentw@monarchmetalmfg.com", "shipping@monarchmetalmfg.com"]
 
-message = MIMEMultiparta"alternative")
+# message = MIMEMultiparta"alternative")
 message["Subject"] = 'Combined Advanced Shipment Notice'
 message["From"] = sender_email
 message["To"] = ", ".join(rec_email)
